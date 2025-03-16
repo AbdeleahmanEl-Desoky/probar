@@ -1,0 +1,14 @@
+{
+    "name": "Shop",
+    "alias": "shop",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Barber\\Shop\\Providers\\ShopServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Barber"
+}
