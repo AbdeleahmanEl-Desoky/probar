@@ -1,0 +1,14 @@
+{
+    "name": "CoreClient",
+    "alias": "coreclient",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Client\\CoreClient\\Providers\\CoreClientServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Client"
+}

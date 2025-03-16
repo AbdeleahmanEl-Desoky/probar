@@ -1,0 +1,14 @@
+{
+    "name": "AuthClient",
+    "alias": "authclient",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Client\\AuthClient\\Providers\\AuthClientServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Client"
+}

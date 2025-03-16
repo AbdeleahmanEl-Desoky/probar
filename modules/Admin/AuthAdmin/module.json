@@ -1,0 +1,14 @@
+{
+    "name": "AuthAdmin",
+    "alias": "authadmin",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Admin\\AuthAdmin\\Providers\\AuthAdminServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Admin"
+}

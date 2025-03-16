@@ -1,0 +1,14 @@
+{
+    "name": "CoreAdmin",
+    "alias": "coreadmin",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Admin\\CoreAdmin\\Providers\\CoreAdminServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Admin"
+}

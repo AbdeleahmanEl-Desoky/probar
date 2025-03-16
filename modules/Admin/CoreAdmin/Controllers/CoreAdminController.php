@@ -1,0 +1,76 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Modules\Admin\CoreAdmin\Controllers;
+
+use BasePackage\Shared\Presenters\Json;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
+use Modules\Admin\CoreAdmin\Handlers\DeleteCoreAdminHandler;
+use Modules\Admin\CoreAdmin\Handlers\UpdateCoreAdminHandler;
+use Modules\Admin\CoreAdmin\Presenters\CoreAdminPresenter;
+use Modules\Admin\CoreAdmin\Requests\CreateCoreAdminRequest;
+use Modules\Admin\CoreAdmin\Requests\DeleteCoreAdminRequest;
+use Modules\Admin\CoreAdmin\Requests\GetCoreAdminListRequest;
+use Modules\Admin\CoreAdmin\Requests\GetCoreAdminRequest;
+use Modules\Admin\CoreAdmin\Requests\UpdateCoreAdminRequest;
+use Modules\Admin\CoreAdmin\Services\CoreAdminCRUDService;
+use Ramsey\Uuid\Uuid;
+
+class CoreAdminController extends Controller
+{
+    public function __construct(
+        private CoreAdminCRUDService $coreAdminService,
+        private UpdateCoreAdminHandler $updateCoreAdminHandler,
+        private DeleteCoreAdminHandler $deleteCoreAdminHandler,
+    ) {
+    }
+
+    public function index(GetCoreAdminListRequest $request): JsonResponse
+    {
+        $list = $this->coreAdminService->list(
+            (int) $request->get('page', 1),
+            (int) $request->get('per_page', 10)
+        );
+
+        return Json::buildItems(null,['core_admins' => CoreAdminPresenter::collection($list['data']),'pagination' => $list['pagination']]);
+    }
+
+    public function show(GetCoreAdminRequest $request): JsonResponse
+    {
+        $item = $this->coreAdminService->get(Uuid::fromString($request->route('id')));
+
+        $presenter = new CoreAdminPresenter($item);
+
+        return Json::buildItems('core_admin', $presenter->getData());
+    }
+
+    public function store(CreateCoreAdminRequest $request): JsonResponse
+    {
+        $createdItem = $this->coreAdminService->create($request->createCreateCoreAdminDTO());
+
+        $presenter = new CoreAdminPresenter($createdItem);
+
+        return Json::buildItems('core_admin', $presenter->getData());
+    }
+
+    public function update(UpdateCoreAdminRequest $request): JsonResponse
+    {
+        $command = $request->createUpdateCoreAdminCommand();
+        $this->updateCoreAdminHandler->handle($command);
+
+        $item = $this->coreAdminService->get($command->getId());
+
+        $presenter = new CoreAdminPresenter($item);
+
+        return Json::buildItems('core_admin', $presenter->getData());
+    }
+
+    public function delete(DeleteCoreAdminRequest $request): JsonResponse
+    {
+        $this->deleteCoreAdminHandler->handle(Uuid::fromString($request->route('id')));
+
+        return Json::deleted();
+    }
+}

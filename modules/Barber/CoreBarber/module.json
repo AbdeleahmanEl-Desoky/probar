@@ -1,0 +1,14 @@
+{
+    "name": "CoreBarber",
+    "alias": "corebarber",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Barber\\CoreBarber\\Providers\\CoreBarberServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Barber"
+}
