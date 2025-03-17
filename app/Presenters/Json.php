@@ -69,20 +69,20 @@ class Json extends BaseJson
 
     /**
      * @param string          $description
+     * @param int             $httpStatus
      * @param string|int|null $code
      * @param string|null     $name
      * @param array|string    $data
-     * @param int             $httpStatus
      * @param array           $extraHeaders
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public static function error(
         $description = '',
+        $httpStatus = 200,
         $code = null,
         $name = null,
         $data = [],
-        $httpStatus = 200,
         $extraHeaders = []
     ) {
         $content['status'] = 'error';
@@ -91,9 +91,7 @@ class Json extends BaseJson
         $content['message'] = $description;
 
         // Optionally include other data if provided, like code or additional data
-        if ($code !== null) {
-            $content['code'] = $code;
-        }
+            $content['code'] = $code??"";
 
         if ($name !== null) {
             $content['name'] = $name;
@@ -334,7 +332,7 @@ class Json extends BaseJson
 
         $data['code'] = $code;
 
-        $data['message'] = $message;
+        $data['message'] = $message??"";
 
         $data['payload'] = $item;
 
