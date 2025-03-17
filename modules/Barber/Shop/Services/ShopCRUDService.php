@@ -41,7 +41,7 @@ class ShopCRUDService
         $shop->save();
 
         // Return the shop object
-        return $this->repository->getMyShop($createShopDTO->barber_id);
+        return $this->repository->getMyShop($createShopDTO->barber_id) ;
         ;
     }
 
