@@ -28,7 +28,7 @@ class CoreBarberServiceProvider extends ModuleServiceProvider
 
     public function mapRoutes(): void
     {
-        Route::prefix('api/v1/barbers')
+        Route::prefix('api/v1/barber')
             ->middleware('api')
             ->group($this->getModulePath() . '/Resources/routes/api.php');
 

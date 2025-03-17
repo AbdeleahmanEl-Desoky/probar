@@ -33,6 +33,13 @@ class ShopRepository extends BaseRepository
         ]);
     }
 
+    public function getMyShop(UuidInterface $barber_id): ?Shop
+    {
+        return $this->model->where([
+            'barber_id' => $barber_id->toString(),
+        ])->first();
+    }
+
     public function createShop(array $data): Shop
     {
         return $this->create($data);

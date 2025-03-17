@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Admin\CoreAdmin\Controllers;
 
-use BasePackage\Shared\Presenters\Json;
+use App\Presenters\Json;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Modules\Admin\CoreAdmin\Handlers\DeleteCoreAdminHandler;

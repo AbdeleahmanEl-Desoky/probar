@@ -20,18 +20,17 @@ class LoginCoreBarberService
         ];
 
         // Attempt login
-        if (!$token = auth('api')->attempt($credentials)) {
+        if (!$token = auth('api_barbers')->attempt($credentials)) {
             throw new \Exception('Unauthorized: Invalid email or password.', 401);
         }
         // Get the authenticated user
-        $user = auth('api')->user();
+        $user = auth('api_barbers')->user();
         // Return the token and user
         return [$this->respondWithToken($token), $user];
     }
 
     protected function respondWithToken(string $token)
     {
-
         return  $token;
     }
 }

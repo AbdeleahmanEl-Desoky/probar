@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Barber\Shop\Controllers;
 
-use BasePackage\Shared\Presenters\Json;
+use App\Presenters\Json;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Modules\Barber\Shop\Handlers\DeleteShopHandler;
@@ -27,29 +27,32 @@ class ShopController extends Controller
     ) {
     }
 
-    public function index(GetShopListRequest $request): JsonResponse
+    public function show(GetShopRequest $request)//: JsonResponse
     {
-        $list = $this->shopService->list(
-            (int) $request->get('page', 1),
-            (int) $request->get('per_page', 10)
-        );
-
-        return Json::items(ShopPresenter::collection($list['data']), paginationSettings: $list['pagination']);
-    }
-
-    public function show(GetShopRequest $request): JsonResponse
-    {
-        $item = $this->shopService->get(Uuid::fromString($request->route('id')));
-
-        $presenter = new ShopPresenter($item);
+        $item = $this->shopService->getMyShop(Uuid::fromString(auth('api_barbers')->user()->id));
+        if(!$item){
+            return Json::error('Item not found', 404);
+        }
+       $presenter = new ShopPresenter($item);
 
         return Json::item($presenter->getData());
     }
-
     public function store(CreateShopRequest $request): JsonResponse
     {
-        $createdItem = $this->shopService->create($request->createCreateShopDTO());
+        // Extract name and description translations from the request
+        $nameTranslations = $request->input('name'); // An array of translations like ['en' => 'English name', 'ar' => 'Arabic name']
+        $descriptionTranslations = $request->input('description'); // Similarly for description
 
+        // Create the DTO with other required fields
+        $createShopDTO = $request->createCreateShopDTO();
+
+        // Add the barber_id to the DTO, assuming it needs to be saved with the shop
+        $createShopDTO->barber_id =  Uuid::fromString(auth('api_barbers')->user()->id);
+
+        // Call the service to create or update the shop with translations
+        $createdItem = $this->shopService->create($createShopDTO, $nameTranslations, $descriptionTranslations);
+
+        // Create presenter for the created or updated item
         $presenter = new ShopPresenter($createdItem);
 
         return Json::item($presenter->getData());

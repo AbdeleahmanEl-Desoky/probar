@@ -21,6 +21,12 @@ class ShopPresenter extends AbstractPresenter
         return [
             'id' => $this->shop->id,
             'name' => $this->shop->name,
+            'description' => $this->shop->description,
+            'worker_no'=> $this->shop->worker_no,
+            'city_id'=> $this->shop->city_id,
+            'street'=> $this->shop->street,
+            'address_1'=> $this->shop->address_1,
+            'address_2'=> $this->shop->address_2,
         ];
     }
 }

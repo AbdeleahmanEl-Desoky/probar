@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Client\CoreClient\Controllers;
 
-use BasePackage\Shared\Presenters\Json;
+use App\Presenters\Json;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Modules\Client\CoreClient\Handlers\DeleteCoreClientHandler;

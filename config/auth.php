@@ -41,7 +41,7 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'api' => [
+        'api_barbers' => [
             'driver' => 'jwt',
             'provider' => 'barbers',
         ],

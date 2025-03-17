@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Barber\CoreBarber\Controllers;
 
-use BasePackage\Shared\Presenters\Json;
+use App\Presenters\Json;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Modules\Barber\CoreBarber\Commands\LoginCoreBarberCommand;
@@ -44,7 +44,7 @@ class CoreBarberController extends Controller
         try {
             [$token, $user] = $this->loginCoreBarberService->login($command);
         } catch (\Exception $e) {
-            return Json::buildItems(data: ["message" => $e->getMessage()], httpStatus: $e->getCode());
+            return Json::error( $e->getMessage(),$e->getCode());
         }
 
        $userPresenter = (new CoreBarberPresenter($user))->getData();
@@ -55,7 +55,7 @@ class CoreBarberController extends Controller
     }
     public function me(): JsonResponse
     {
-        $item = $this->coreBarberService->get(Uuid::fromString(auth('api')->user()->id));
+        $item = $this->coreBarberService->get(Uuid::fromString(auth('api_barbers')->user()->id));
 
         $presenter = new CoreBarberPresenter($item);
 
@@ -75,7 +75,7 @@ class CoreBarberController extends Controller
         try {
             [$token, $user] = $this->loginCoreBarberService->login($loginCommand);
         } catch (\Exception $e) {
-            return Json::buildItems(data: ["message" => "Registration successful, but login failed."], httpStatus: 401);
+            return Json::error('Registration successful, but login failed.', 401);
         }
 
         // Format user response
@@ -103,9 +103,12 @@ class CoreBarberController extends Controller
     {
         try {
             $this->forgotPasswordService->generateAndSendOtp($request->email);
-            return Json::buildItems(data: ["message" => "OTP sent to your email."]);
+
+            // Correctly pass the item parameter with key-value pair.
+            return Json::done("OTP sent to your email.",200);
         } catch (\Exception $e) {
-            return Json::buildItems(data: ["message" => $e->getMessage()], httpStatus: 500);
+            // Correctly pass the error message and HTTP status code.
+            return Json::error($e->getMessage(), $e->getCode());
         }
     }
 
@@ -115,9 +118,11 @@ class CoreBarberController extends Controller
             // Call the service to handle the reset
             $message = $this->resetPasswordService->resetPassword($request->email, $request->otp, $request->password);
 
-            return Json::buildItems(data: ["message" => $message]);
+            // Return success message
+            return Json::done($message);
         } catch (\Exception $e) {
-            return Json::buildItems(data: ["message" => $e->getMessage()], httpStatus: $e->getCode());
+            // Return error message with exception code or default to 500
+            return Json::error($e->getMessage(), $e->getCode() ?: 500);
         }
     }
 

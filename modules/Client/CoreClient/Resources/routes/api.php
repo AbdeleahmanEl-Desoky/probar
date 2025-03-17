@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Client\CoreClient\Controllers\CoreClientController;
 
-Route::group(['middleware' => ['auth:api']], function () {
+Route::group(['middleware' => ['auth:api_barbers']], function () {
     Route::get('/', [CoreClientController::class, 'index']);
     Route::post('/', [CoreClientController::class, 'store']);
     Route::get('/{id}', [CoreClientController::class, 'show']);

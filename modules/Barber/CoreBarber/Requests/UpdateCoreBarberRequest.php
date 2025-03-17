@@ -16,7 +16,7 @@ class UpdateCoreBarberRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'email' => 'required|email|unique:barbers,email,'. auth('api')->user()->id,
+            'email' => 'required|email|unique:barbers,email,'. auth('api_barbers')->user()->id,
             'password'=>'nullable'
         ];
     }
@@ -25,7 +25,7 @@ class UpdateCoreBarberRequest extends FormRequest
     {
 
         return new UpdateCoreBarberCommand(
-            id: Uuid::fromString(auth('api')->user()->id),
+            id: Uuid::fromString(auth('api_barbers')->user()->id),
             name: $this->get('name'),
             email:$this->get('email'),
             password:$this->get('password')?? null,
