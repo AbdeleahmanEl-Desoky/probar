@@ -37,12 +37,13 @@ class ShopController extends Controller
 
         return Json::item($presenter->getData());
     }
-    public function store(CreateShopRequest $request): JsonResponse
+    public function store(CreateShopRequest $request)//: JsonResponse
     {
+
         // Extract name and description translations from the request
         $nameTranslations = $request->input('name'); // An array of translations like ['en' => 'English name', 'ar' => 'Arabic name']
         $descriptionTranslations = $request->input('description'); // Similarly for description
-
+        $file = $request->file('file');
         // Create the DTO with other required fields
         $createShopDTO = $request->createCreateShopDTO();
 
@@ -50,7 +51,7 @@ class ShopController extends Controller
         $createShopDTO->barber_id =  Uuid::fromString(auth('api_barbers')->user()->id);
 
         // Call the service to create or update the shop with translations
-        $createdItem = $this->shopService->create($createShopDTO, $nameTranslations, $descriptionTranslations);
+      return $createdItem = $this->shopService->create($createShopDTO, $nameTranslations, $descriptionTranslations,$file);
 
         // Create presenter for the created or updated item
         $presenter = new ShopPresenter($createdItem);

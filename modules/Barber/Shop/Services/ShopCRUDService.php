@@ -18,7 +18,7 @@ class ShopCRUDService
     ) {
     }
 
-    public function create(CreateShopDTO $createShopDTO, array $nameTranslations, array $descriptionTranslations): Shop
+    public function create(CreateShopDTO $createShopDTO, array $nameTranslations, array $descriptionTranslations,$file): Shop
     {
         // Ensure barber_id is part of the data passed to the repository
         $data = $createShopDTO->toArray();
@@ -34,6 +34,10 @@ class ShopCRUDService
             $this->repository->updateShop(Uuid::fromString($shop->id), $data);
         }
 
+        if ($file) {
+            $shop->clearMediaCollection('images');
+            $shop->addMedia($file)->toMediaCollection('images');
+        }
         // Assign translations for name and description
         $this->assignTranslations($shop, $nameTranslations, $descriptionTranslations);
 

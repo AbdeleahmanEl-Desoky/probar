@@ -14,6 +14,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 
@@ -64,4 +65,6 @@ class Barber extends Authenticatable implements JWTSubject//, Auditable
     {
         return [];
     }
+
+
 }

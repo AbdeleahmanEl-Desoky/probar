@@ -18,7 +18,7 @@ class CreateShopDTO
         private string $street,
         private string $address_1,
         public ?string $address_2,
-    ) {
+        ) {
     }
 
     public function toArray(): array

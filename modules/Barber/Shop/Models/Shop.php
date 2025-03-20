@@ -10,13 +10,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Barber\Shop\Database\factories\ShopFactory;
 use BasePackage\Shared\Traits\BaseFilterable;
 use BasePackage\Shared\Traits\HasTranslations;
-
-class Shop extends Model
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+class Shop extends Model implements HasMedia
 {
     use HasFactory;
     use UuidTrait;
     use BaseFilterable;
     use HasTranslations;
+    use InteractsWithMedia;
     //use SoftDeletes;
 
     public array $translatable = [
@@ -42,10 +44,19 @@ class Shop extends Model
     protected $casts = [
         'id' => 'string',
     ];
+    protected $appends = ['pictures'];
 
     protected static function newFactory(): ShopFactory
     {
         return ShopFactory::new();
     }
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('images')->useDisk('public');
+    }
 
+    public function getPicturesAttribute()
+    {
+        return $this->getMedia('images');
+    }
 }
