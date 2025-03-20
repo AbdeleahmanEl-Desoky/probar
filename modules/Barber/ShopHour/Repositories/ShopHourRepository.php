@@ -76,4 +76,7 @@ class ShopHourRepository extends BaseRepository
         ];
     }
 
+    public function getShopHours( array $conditions = []){
+        return $this->model->where($conditions)->get();
+    }
 }

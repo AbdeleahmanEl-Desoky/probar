@@ -12,9 +12,6 @@ use Modules\Barber\CoreBarber\Handlers\DeleteCoreBarberHandler;
 use Modules\Barber\CoreBarber\Handlers\UpdateCoreBarberHandler;
 use Modules\Barber\CoreBarber\Presenters\CoreBarberPresenter;
 use Modules\Barber\CoreBarber\Requests\CreateCoreBarberRequest;
-use Modules\Barber\CoreBarber\Requests\DeleteCoreBarberRequest;
-use Modules\Barber\CoreBarber\Requests\GetCoreBarberListRequest;
-use Modules\Barber\CoreBarber\Requests\GetCoreBarberRequest;
 use Modules\Barber\CoreBarber\Requests\LoginCoreBarberRequest;
 use Modules\Barber\CoreBarber\Requests\UpdateCoreBarberRequest;
 use Modules\Barber\CoreBarber\Services\CoreBarberCRUDService;
@@ -22,6 +19,7 @@ use Modules\Barber\CoreBarber\Services\LoginCoreBarberService;
 use Ramsey\Uuid\Uuid;
 use Modules\Barber\CoreBarber\Requests\ForgotPasswordRequest;
 use Modules\Barber\CoreBarber\Requests\ResetPasswordRequest;
+use Modules\Barber\CoreBarber\Services\DataCompleteService;
 use Modules\Barber\CoreBarber\Services\ForgotPasswordService;
 use Modules\Barber\CoreBarber\Services\ResetPasswordService;
 use Modules\Barber\Shop\Repositories\ShopRepository;
@@ -36,7 +34,7 @@ class CoreBarberController extends Controller
         private ForgotPasswordService $forgotPasswordService,
         private ResetPasswordService $resetPasswordService,
         private ShopRepository $shopRepository,
-
+        private DataCompleteService $dataCompleteService
     ) {
     }
 
@@ -49,13 +47,15 @@ class CoreBarberController extends Controller
         } catch (\Exception $e) {
             return Json::error( $e->getMessage(),$e->getCode());
         }
-        $dataComplete = $this->shopRepository->getMyShop(Uuid::fromString($user->id));
-        
-       $userPresenter = (new CoreBarberPresenter($user))->getData();
+
+        $userPresenter = (new CoreBarberPresenter($user))->getData();
+
+        $dataComplete = $this->dataCompleteService->dataComplete($user->id);
+
         return Json::item(item: [
             'token' => $token,
             'users' => $userPresenter,
-            'data_complete' =>   $dataComplete ? true : false ,
+             'data_complete' =>   $dataComplete ,
         ]);
     }
     public function me(): JsonResponse

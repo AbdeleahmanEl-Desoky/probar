@@ -7,6 +7,7 @@ namespace Modules\Barber\ShopHour\Controllers;
 use App\Presenters\Json;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Modules\Barber\Shop\Repositories\ShopRepository;
 use Modules\Barber\ShopHour\Handlers\DeleteShopHourHandler;
 use Modules\Barber\ShopHour\Handlers\UpdateShopHourHandler;
 use Modules\Barber\ShopHour\Presenters\ShopHourPresenter;
@@ -25,16 +26,24 @@ class ShopHourController extends Controller
         private ShopHourCRUDService $shopHourService,
         private UpdateShopHourHandler $updateShopHourHandler,
         private DeleteShopHourHandler $deleteShopHourHandler,
+        private ShopRepository $shopRepository,
+
     ) {
     }
 
     public function index(GetShopHourListRequest $request)//: JsonResponse
     {
+        $userId = auth()->user()->id;
+        $barberId = Uuid::fromString($userId);
+
+       $shop = $this->shopRepository->getMyShop($barberId);
+
         $list = $this->shopHourService->list(
             (int) $request->get('page', 1),
-            (int) $request->get('per_page', 10)
+            (int) $request->get('per_page', 10),
+            Uuid::fromString($shop->id),
         );
-
+        
         return Json::items(ShopHourPresenter::collection($list['data']), paginationSettings: $list['pagination']);
     }
 

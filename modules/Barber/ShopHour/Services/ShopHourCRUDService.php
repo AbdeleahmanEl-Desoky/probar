@@ -67,9 +67,9 @@ class ShopHourCRUDService
         }
     }
 
-    public function list(int $page = 1, int $perPage = 10): array
+    public function list(int $page = 1, int $perPage = 10,$shopId): array
     {
-        return $this->repository->paginatedRelations(page: $page, perPage: $perPage);
+        return $this->repository->paginatedRelations(['shop_id'=>$shopId],page: $page, perPage: $perPage);
     }
 
     public function get(UuidInterface $id): ShopHour
