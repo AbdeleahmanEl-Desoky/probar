@@ -16,6 +16,7 @@ class CreateCoreBarberRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|email|unique:barbers,email',
             'password'=>'required|string',
+            'phone'=> 'required|string',
         ];
     }
 
@@ -25,6 +26,7 @@ class CreateCoreBarberRequest extends FormRequest
             name: $this->get('name'),
             email:$this->get('email'),
             password:$this->get('password'),
+            phone: $this->get('phone'),
         );
     }
 }

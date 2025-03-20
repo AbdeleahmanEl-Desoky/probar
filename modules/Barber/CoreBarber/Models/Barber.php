@@ -38,12 +38,14 @@ class Barber extends Authenticatable implements JWTSubject//, Auditable
         'name',
         'email',
         'password',
+        'phone'
     ];
 
     protected $casts = [
         'id' => 'string',
         'email',
         'password',
+        'phone'
     ];
     protected function casts(): array
     {

@@ -24,6 +24,7 @@ use Modules\Barber\CoreBarber\Requests\ForgotPasswordRequest;
 use Modules\Barber\CoreBarber\Requests\ResetPasswordRequest;
 use Modules\Barber\CoreBarber\Services\ForgotPasswordService;
 use Modules\Barber\CoreBarber\Services\ResetPasswordService;
+use Modules\Barber\Shop\Repositories\ShopRepository;
 
 class CoreBarberController extends Controller
 {
@@ -33,7 +34,9 @@ class CoreBarberController extends Controller
         private DeleteCoreBarberHandler $deleteCoreBarberHandler,
         private LoginCoreBarberService $loginCoreBarberService,
         private ForgotPasswordService $forgotPasswordService,
-        private ResetPasswordService $resetPasswordService
+        private ResetPasswordService $resetPasswordService,
+        private ShopRepository $shopRepository,
+
     ) {
     }
 
@@ -46,11 +49,13 @@ class CoreBarberController extends Controller
         } catch (\Exception $e) {
             return Json::error( $e->getMessage(),$e->getCode());
         }
-
+        $dataComplete = $this->shopRepository->getMyShop(Uuid::fromString($user->id));
+        
        $userPresenter = (new CoreBarberPresenter($user))->getData();
         return Json::item(item: [
             'token' => $token,
-            'users' => $userPresenter
+            'users' => $userPresenter,
+            'data_complete' =>   $dataComplete ? true : false ,
         ]);
     }
     public function me(): JsonResponse

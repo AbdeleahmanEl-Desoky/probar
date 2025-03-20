@@ -12,6 +12,7 @@ class CreateCoreBarberDTO
         public string $name,
         public string $email,
         public string $password,
+        public string $phone,
     ) {
     }
 
@@ -20,7 +21,8 @@ class CreateCoreBarberDTO
         return [
             'name' => $this->name,
             'email' => $this->email,
-            'password'=> $this->password
+            'password'=> $this->password,
+            'phone' => $this->phone
         ];
     }
 }

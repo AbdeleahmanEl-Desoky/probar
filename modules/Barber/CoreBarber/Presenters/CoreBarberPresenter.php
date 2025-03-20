@@ -21,6 +21,8 @@ class CoreBarberPresenter extends AbstractPresenter
         return [
             'id' => $this->coreBarber->id,
             'name' => $this->coreBarber->name,
+            'email' => $this->coreBarber->email,
+            'phone' => $this->coreBarber->phone
         ];
     }
 }
