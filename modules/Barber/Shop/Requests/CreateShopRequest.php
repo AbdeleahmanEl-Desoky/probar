@@ -22,7 +22,9 @@ class CreateShopRequest extends FormRequest
             'street'=> 'required|string|max:255',
             'address_1'=> 'required|string|max:255',
             'address_2'=> 'nullable|string|max:255',
-            'file' => 'required|file|mimes:jpg,jpeg,png|max:2048', // Ensure file is uploaded
+            'file' => 'nullable|file|mimes:jpg,jpeg,png|max:2048', // Ensure file is uploaded
+            'longitude'=> 'nullable',
+            'latitude'=> 'nullable',
         ];
     }
 
@@ -36,6 +38,8 @@ class CreateShopRequest extends FormRequest
             street: $this->get('street'),
             address_1: $this->get('address_1'),
             address_2: $this->get('address_2') ?? null,
+            latitude: $this->input('latitude') !== null ? (float) $this->input('latitude') : null,
+            longitude: $this->input('longitude') !== null ? (float) $this->input('longitude') : null
         );
     }
 }

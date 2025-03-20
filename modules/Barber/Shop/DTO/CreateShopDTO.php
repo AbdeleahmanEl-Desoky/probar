@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Barber\Shop\DTO;
 
+use Ramsey\Uuid\Type\Decimal;
 use Ramsey\Uuid\UuidInterface;
 
 class CreateShopDTO
@@ -18,6 +19,8 @@ class CreateShopDTO
         private string $street,
         private string $address_1,
         public ?string $address_2,
+        public ?float $latitude,
+        public ?float $longitude
         ) {
     }
 
@@ -31,6 +34,8 @@ class CreateShopDTO
             'street'=> $this->street,
             'address_1'=> $this->address_1,
             'address_2'=> $this->address_2,
+            'latitude' => $this->latitude,
+            'longitude'=> $this->longitude
         ];
     }
 }

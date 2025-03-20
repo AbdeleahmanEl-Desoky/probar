@@ -1,0 +1,14 @@
+{
+    "name": "ShopHour",
+    "alias": "shophour",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Barber\\ShopHour\\Providers\\ShopHourServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Barber"
+}

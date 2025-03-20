@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('address_1')->nullable();
             $table->string('address_2')->nullable();
             $table->timestamps();
+
+            $table->foreign('barber_id')->references('id')->on('barbers')->onDelete('cascade');
         });
     }
 

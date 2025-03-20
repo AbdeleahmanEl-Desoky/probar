@@ -30,8 +30,12 @@ class ShopController extends Controller
     public function show(GetShopRequest $request)//: JsonResponse
     {
         $item = $this->shopService->getMyShop(Uuid::fromString(auth('api_barbers')->user()->id));
-        if(!$item){
-            return Json::error('Item not found', 404);
+        if (!$item) {
+            return response()->json([
+                'code' => 'SUCCESS_WITH_SINGLE_PAYLOAD_OBJECT',
+                'message' => '',
+                'payload' =>null,
+            ]);
         }
        $presenter = new ShopPresenter($item);
 
@@ -51,7 +55,7 @@ class ShopController extends Controller
         $createShopDTO->barber_id =  Uuid::fromString(auth('api_barbers')->user()->id);
 
         // Call the service to create or update the shop with translations
-      return $createdItem = $this->shopService->create($createShopDTO, $nameTranslations, $descriptionTranslations,$file);
+       $createdItem = $this->shopService->create($createShopDTO, $nameTranslations, $descriptionTranslations,$file);
 
         // Create presenter for the created or updated item
         $presenter = new ShopPresenter($createdItem);

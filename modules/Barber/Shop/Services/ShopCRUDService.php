@@ -35,8 +35,8 @@ class ShopCRUDService
         }
 
         if ($file) {
-            $shop->clearMediaCollection('images');
-            $shop->addMedia($file)->toMediaCollection('images');
+            $shop->clearMediaCollection('shops');
+            $shop->addMedia($file)->toMediaCollection('shops');
         }
         // Assign translations for name and description
         $this->assignTranslations($shop, $nameTranslations, $descriptionTranslations);
