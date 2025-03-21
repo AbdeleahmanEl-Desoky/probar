@@ -11,6 +11,7 @@ use Modules\Barber\Shop\Database\factories\ShopFactory;
 use BasePackage\Shared\Traits\BaseFilterable;
 use BasePackage\Shared\Traits\HasTranslations;
 use Modules\Barber\ShopHour\Models\ShopHour;
+use Modules\Barber\ShopService\Models\ShopService;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 class Shop extends Model implements HasMedia
@@ -65,5 +66,13 @@ class Shop extends Model implements HasMedia
     public function shopHours()
     {
         return $this->hasMany(ShopHour::class);
+    }
+    public function shopServices()
+    {
+        return $this->hasMany(ShopService::class);
+    }
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
     }
 }

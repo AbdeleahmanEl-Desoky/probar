@@ -13,14 +13,22 @@ class CreateShopServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|array',
+            'name.*' => 'required|string|max:255',
+            'description' => 'required|array',  // 'description' is an array of translations
+            'description.*' => 'required|string|max:255', // Each translation must be a string
+            'price' => 'required|numeric',
+            'time' => 'required|numeric',
         ];
     }
 
     public function createCreateShopServiceDTO(): CreateShopServiceDTO
     {
         return new CreateShopServiceDTO(
-            name: $this->get('name'),
+            $this->get('name'),
+            $this->get('description'),
+            (int) $this->input('time'), // Ensure time is an integer
+            (int) $this->input('price') // Ensure price is an integer
         );
     }
 }

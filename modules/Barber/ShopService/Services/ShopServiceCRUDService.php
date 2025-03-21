@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Barber\ShopService\Services;
 
 use Illuminate\Support\Collection;
+use Modules\Barber\Shop\Models\Shop;
 use Modules\Barber\ShopService\DTO\CreateShopServiceDTO;
 use Modules\Barber\ShopService\Models\ShopService;
 use Modules\Barber\ShopService\Repositories\ShopServiceRepository;
@@ -17,14 +18,39 @@ class ShopServiceCRUDService
     ) {
     }
 
-    public function create(CreateShopServiceDTO $createShopServiceDTO): ShopService
+    public function create(CreateShopServiceDTO $createShopServiceDTO,$nameTranslations, $descriptionTranslations,$file): ShopService
     {
-         return $this->repository->createShopService($createShopServiceDTO->toArray());
+        $data = $createShopServiceDTO->toArray();
+
+        $data['shop_id'] = $createShopServiceDTO->shop_id;
+
+        $shopService = $this->repository->createShopService($data);
+
+        if ($file) {
+            $shopService->clearMediaCollection('shop_service');
+            $shopService->addMedia($file)->toMediaCollection('shop_service');
+        }
+        $this->assignTranslations($shopService, $nameTranslations, $descriptionTranslations);
+
+        $shopService->save();
+        return $shopService;
     }
 
-    public function list(int $page = 1, int $perPage = 10): array
+    private function assignTranslations(ShopService $shopService, array $nameTranslations, array $descriptionTranslations): void
+    {
+        foreach ($nameTranslations as $locale => $value) {
+            $shopService->setTranslation('name', $locale, $value);
+        }
+
+        foreach ($descriptionTranslations as $locale => $value) {
+            $shopService->setTranslation('description', $locale, $value);
+        }
+    }
+
+    public function list(int $page = 1, int $perPage = 10,$shop): array
     {
         return $this->repository->paginated(
+            ['shop_id'=>$shop],
             page: $page,
             perPage: $perPage,
         );

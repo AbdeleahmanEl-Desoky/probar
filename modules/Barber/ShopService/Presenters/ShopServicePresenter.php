@@ -21,6 +21,10 @@ class ShopServicePresenter extends AbstractPresenter
         return [
             'id' => $this->shopService->id,
             'name' => $this->shopService->name,
+            'description'=> $this->shopService->description,
+            'price' =>  $this->shopService->price,
+            'time'  => $this->shopService->time,
+            'picture_url' => $this->shopService->getFirstMediaUrl('shop_service')
         ];
     }
 }

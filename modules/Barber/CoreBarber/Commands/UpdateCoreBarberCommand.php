@@ -12,6 +12,7 @@ class UpdateCoreBarberCommand
         private UuidInterface $id,
         private string $name,
         private string $email,
+        private string $phone,
         private ?string $password
     ) {
     }
@@ -32,6 +33,7 @@ class UpdateCoreBarberCommand
             'name' => $this->name,
             'email' => $this->email,
             'password' => $this->password,
+            'phone' => $this->phone
         ]);
     }
 }

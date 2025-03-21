@@ -16,7 +16,7 @@ class CreateCoreBarberRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|email|unique:barbers,email',
             'password'=>'required|string',
-            'phone'=> 'required|string',
+            'phone'=> 'required|unique:barbers,phone',
         ];
     }
 

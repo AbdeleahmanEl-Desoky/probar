@@ -48,5 +48,8 @@ class ShopHour extends Model
         return $this->hasMany(ShopHourDetail::class);
     }
 
-
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
+    }
 }

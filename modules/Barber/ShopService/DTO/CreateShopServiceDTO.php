@@ -9,7 +9,10 @@ use Ramsey\Uuid\UuidInterface;
 class CreateShopServiceDTO
 {
     public function __construct(
-        public string $name,
+        public array  $name,
+        private array  $description,
+        private int $time,
+        private int $price,
     ) {
     }
 
@@ -17,6 +20,9 @@ class CreateShopServiceDTO
     {
         return [
             'name' => $this->name,
+            'description'=>  $this->description,
+            'price'=>  $this->price,
+            'time'=> $this->time,
         ];
     }
 }

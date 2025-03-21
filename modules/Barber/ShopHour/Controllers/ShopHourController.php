@@ -37,13 +37,15 @@ class ShopHourController extends Controller
         $barberId = Uuid::fromString($userId);
 
        $shop = $this->shopRepository->getMyShop($barberId);
-
+       if (!$shop) {
+        return Json::done("Please add a shop first before proceeding.");
+        }
         $list = $this->shopHourService->list(
             (int) $request->get('page', 1),
             (int) $request->get('per_page', 10),
             Uuid::fromString($shop->id),
         );
-        
+
         return Json::items(ShopHourPresenter::collection($list['data']), paginationSettings: $list['pagination']);
     }
 
@@ -58,9 +60,17 @@ class ShopHourController extends Controller
 
     public function store(CreateShopHourRequest $request)//: JsonResponse
     {
-        $createdItem = $this->shopHourService->create($request->createCreateShopHourDTO());
 
-        return Json::done("");
+        $shop = $this->shopRepository->getMyShop(Uuid::fromString(auth('api_barbers')->user()->id));
+        if (!$shop) {
+            return Json::done("Please add a shop first before proceeding.");
+        }
+        $createCreateShopHour = $request->createCreateShopHourDTO();
+        $createCreateShopHour->shop_id = $shop->id;
+
+        $createdItem = $this->shopHourService->create($createCreateShopHour);
+
+        return Json::done(message: "");
     }
 
     public function update(UpdateShopHourRequest $request): JsonResponse

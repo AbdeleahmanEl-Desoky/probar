@@ -28,7 +28,7 @@ class ShopServiceServiceProvider extends ModuleServiceProvider
 
     public function mapRoutes(): void
     {
-        Route::prefix('api/v1/shop_services')
+        Route::prefix('api/v1/barber/shop_services')
             ->middleware('api')
             ->group($this->getModulePath() . '/Resources/routes/api.php');
 

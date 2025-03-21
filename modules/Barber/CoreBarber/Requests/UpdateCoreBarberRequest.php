@@ -17,7 +17,8 @@ class UpdateCoreBarberRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'required|email|unique:barbers,email,'. auth('api_barbers')->user()->id,
-            'password'=>'nullable'
+            'password'=>'nullable',
+            'phone' => 'required|unique:barbers,phone,'. auth('api_barbers')->user()->id,
         ];
     }
 
@@ -28,6 +29,7 @@ class UpdateCoreBarberRequest extends FormRequest
             id: Uuid::fromString(auth('api_barbers')->user()->id),
             name: $this->get('name'),
             email:$this->get('email'),
+            phone: $this->get('phone'),
             password:$this->get('password')?? null,
         );
     }

@@ -14,7 +14,12 @@ class UpdateShopServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|array',
+            'name.*' => 'required|string|max:255',
+            'description' => 'required|array',  // 'description' is an array of translations
+            'description.*' => 'required|string|max:255', // Each translation must be a string
+            'price' => 'required|numeric',
+            'time' => 'required|numeric',
         ];
     }
 
@@ -22,7 +27,12 @@ class UpdateShopServiceRequest extends FormRequest
     {
         return new UpdateShopServiceCommand(
             id: Uuid::fromString($this->route('id')),
-            name: $this->get('name'),
+            name: $this->input('name', []), // Ensure array format
+            description: $this->input('description', []), // Ensure array format
+            price: (int) $this->input('price'), // Convert to integer
+            time: (int) $this->input('time'), // Convert to integer
+            shop_id: $this->input('shop_id') // Ensure shop_id is included
         );
     }
+
 }

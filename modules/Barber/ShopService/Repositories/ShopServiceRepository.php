@@ -38,13 +38,17 @@ class ShopServiceRepository extends BaseRepository
         return $this->create($data);
     }
 
-    public function updateShopService(UuidInterface $id, array $data): bool
+    public function updateShopService(UuidInterface $id, array $data)
     {
-        return $this->update($id, $data);
+         $this->update($id, $data);
+         return $this->getShopService($id);
     }
 
     public function deleteShopService(UuidInterface $id): bool
     {
         return $this->delete($id);
+    }
+    public function getShopServices( array $conditions = []){
+        return $this->model->where($conditions)->get();
     }
 }

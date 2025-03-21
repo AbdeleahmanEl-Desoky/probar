@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('shops', function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
             $table->string('barber_id')->index();
-            // $table->string('name');
-            // $table->text('description');
             $table->integer('worker_no')->default(1);
             $table->string('city_id')->index();
             $table->string('street')->nullable();

@@ -21,6 +21,9 @@ class ShopHourCRUDService
     public function create(CreateShopHourDTO $createShopHourDTO): void
     {
         $days = ['Saturday', 'Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+        $data = $createShopHourDTO->toArray();
+
+        $data['shop_id'] = $createShopHourDTO->shop_id;
 
         $this->repository->deleteAllShopHour();
 

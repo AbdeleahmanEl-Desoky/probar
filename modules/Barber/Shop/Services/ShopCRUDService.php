@@ -20,16 +20,12 @@ class ShopCRUDService
 
     public function create(CreateShopDTO $createShopDTO, array $nameTranslations, array $descriptionTranslations,$file): Shop
     {
-        // Ensure barber_id is part of the data passed to the repository
         $data = $createShopDTO->toArray();
 
-        // If barber_id is not in the data, it will throw an error, so ensure it's always set
         $data['barber_id'] = $createShopDTO->barber_id;
 
-        // Fetch or create shop
         $shop = $this->repository->getMyShop($createShopDTO->barber_id) ?? $this->repository->createShop($data);
 
-        // Update shop if it already exists
         if ($shop->exists) {
             $this->repository->updateShop(Uuid::fromString($shop->id), $data);
         }
@@ -38,15 +34,11 @@ class ShopCRUDService
             $shop->clearMediaCollection('shops');
             $shop->addMedia($file)->toMediaCollection('shops');
         }
-        // Assign translations for name and description
         $this->assignTranslations($shop, $nameTranslations, $descriptionTranslations);
 
-        // Save the shop with translations
         $shop->save();
 
-        // Return the shop object
         return $this->repository->getMyShop($createShopDTO->barber_id) ;
-        ;
     }
 
     private function assignTranslations(Shop $shop, array $nameTranslations, array $descriptionTranslations): void
