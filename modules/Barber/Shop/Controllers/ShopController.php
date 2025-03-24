@@ -16,6 +16,7 @@ use Modules\Barber\Shop\Requests\GetShopListRequest;
 use Modules\Barber\Shop\Requests\GetShopRequest;
 use Modules\Barber\Shop\Requests\UpdateShopRequest;
 use Modules\Barber\Shop\Services\ShopCRUDService;
+use Modules\Barber\Shop\Services\ShopStatusService;
 use Ramsey\Uuid\Uuid;
 
 class ShopController extends Controller
@@ -24,6 +25,7 @@ class ShopController extends Controller
         private ShopCRUDService $shopService,
         private UpdateShopHandler $updateShopHandler,
         private DeleteShopHandler $deleteShopHandler,
+        private ShopStatusService $shopStatusService
     ) {
     }
 
@@ -65,6 +67,17 @@ class ShopController extends Controller
         $item = $this->shopService->get($command->getId());
 
         $presenter = new ShopPresenter($item);
+
+        return Json::item( $presenter->getData());
+    }
+
+    public function updateShopStatus()//: JsonResponse
+    {
+        $item = $this->shopService->getMyShop(Uuid::fromString(auth('api_barbers')->user()->id));
+
+        $shopStatusServiceUpdated = $this->shopStatusService->updateStatus($item->id);
+
+        $presenter = new ShopPresenter($shopStatusServiceUpdated);
 
         return Json::item( $presenter->getData());
     }

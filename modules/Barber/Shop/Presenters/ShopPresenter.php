@@ -27,7 +27,9 @@ class ShopPresenter extends AbstractPresenter
             'street'=> $this->shop->street,
             'address_1'=> $this->shop->address_1,
             'address_2'=> $this->shop->address_2,
-            'picture_url' => $this->shop->getFirstMediaUrl('shops')
+            'picture_url' => $this->shop->getFirstMediaUrl('shops'),
+            'rate'=>'5',
+            'is_open'=>$this->shop->is_open,
         ];
     }
 }

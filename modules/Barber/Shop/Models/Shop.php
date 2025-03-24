@@ -42,7 +42,8 @@ class Shop extends Model implements HasMedia
         'address_1',
         'address_2',
         'longitude',
-        'latitude'
+        'latitude',
+        'is_open'
     ];
 
     protected $casts = [

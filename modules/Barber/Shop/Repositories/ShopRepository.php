@@ -45,6 +45,16 @@ class ShopRepository extends BaseRepository
         return $this->create($data);
     }
 
+    public function updateShopStatus($id)//: bool
+    {
+        $shop = $this->model->whereId($id)->first();
+
+        $shop->update([
+            'is_open' =>$shop->is_open ^1,
+        ]);
+        
+        return $shop->refresh();
+    }
     public function updateShop(UuidInterface $id, array $data): bool
     {
         return $this->update($id, $data);

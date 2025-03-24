@@ -8,4 +8,5 @@ Route::group(['middleware' => ['auth:api_barbers']], function () {
     Route::post('/', [ShopController::class, 'store']);
     Route::put('/{id}', [ShopController::class, 'update']);
     Route::delete('/{id}', [ShopController::class, 'delete']);
+    Route::post('/update-status', [ShopController::class, 'updateShopStatus']);
 });
