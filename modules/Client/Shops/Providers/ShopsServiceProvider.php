@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Modules\Client\CoreClient\Providers;
+namespace Modules\Client\Shops\Providers;
 
 use Illuminate\Support\Facades\Route;
 use BasePackage\Shared\Module\ModuleServiceProvider;
 
-class CoreClientServiceProvider extends ModuleServiceProvider
+class ShopsServiceProvider extends ModuleServiceProvider
 {
     public static function getModuleName(): string
     {
-        return 'CoreClient';
+        return 'Shops';
     }
 
     public function boot(): void
@@ -28,7 +28,7 @@ class CoreClientServiceProvider extends ModuleServiceProvider
 
     public function mapRoutes(): void
     {
-        Route::prefix('api/v1/clients')
+        Route::prefix('api/v1/clients/shops')
             ->middleware('api')
             ->group($this->getModulePath() . '/Resources/routes/api.php');
 

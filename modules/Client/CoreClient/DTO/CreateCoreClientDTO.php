@@ -10,6 +10,9 @@ class CreateCoreClientDTO
 {
     public function __construct(
         public string $name,
+        public string $email,
+        public string $password,
+        public string $phone,
     ) {
     }
 
@@ -17,6 +20,9 @@ class CreateCoreClientDTO
     {
         return [
             'name' => $this->name,
+            'email' => $this->email,
+            'password'=> $this->password,
+            'phone' => $this->phone
         ];
     }
 }

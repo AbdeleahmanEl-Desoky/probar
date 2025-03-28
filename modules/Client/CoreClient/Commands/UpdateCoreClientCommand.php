@@ -11,6 +11,9 @@ class UpdateCoreClientCommand
     public function __construct(
         private UuidInterface $id,
         private string $name,
+        private string $email,
+        private string $phone,
+        private ?string $password
     ) {
     }
 
@@ -28,6 +31,9 @@ class UpdateCoreClientCommand
     {
         return array_filter([
             'name' => $this->name,
+            'email' => $this->email,
+            'password' => $this->password,
+            'phone' => $this->phone
         ]);
     }
 }

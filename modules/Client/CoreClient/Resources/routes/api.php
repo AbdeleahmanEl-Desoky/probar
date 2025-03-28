@@ -3,10 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Client\CoreClient\Controllers\CoreClientController;
 
-Route::group(['middleware' => ['auth:api_barbers']], function () {
-    Route::get('/', [CoreClientController::class, 'index']);
-    Route::post('/', [CoreClientController::class, 'store']);
-    Route::get('/{id}', [CoreClientController::class, 'show']);
-    Route::put('/{id}', [CoreClientController::class, 'update']);
-    Route::delete('/{id}', [CoreClientController::class, 'delete']);
+
+Route::post('/register', [CoreClientController::class, 'register']);
+Route::post('/login', [CoreClientController::class, 'login']);
+Route::post('forgot-password', [CoreClientController::class, 'forgotPassword']);
+Route::post('reset-password', [CoreClientController::class, 'resetPassword']);
+
+Route::group(['middleware' => ['auth:api_clients']], function () {
+    Route::get('/', [CoreClientController::class, 'me']);
+    Route::put('/', [CoreClientController::class, 'update']);
 });

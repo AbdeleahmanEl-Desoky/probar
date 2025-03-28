@@ -7,16 +7,16 @@ namespace Modules\Client\CoreClient\Repositories;
 use BasePackage\Shared\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Ramsey\Uuid\UuidInterface;
-use Modules\Client\CoreClient\Models\CoreClient;
+use Modules\Client\CoreClient\Models\Client;
 
 /**
- * @property CoreClient $model
+ * @property Client $model
  * @method CoreClient findOneOrFail($id)
  * @method CoreClient findOneByOrFail(array $data)
  */
 class CoreClientRepository extends BaseRepository
 {
-    public function __construct(CoreClient $model)
+    public function __construct(Client $model)
     {
         parent::__construct($model);
     }
@@ -26,14 +26,12 @@ class CoreClientRepository extends BaseRepository
         return $this->paginatedList([], $page, $perPage);
     }
 
-    public function getCoreClient(UuidInterface $id): CoreClient
+    public function getCoreClient(UuidInterface $id): Client
     {
-        return $this->findOneByOrFail([
-            'id' => $id->toString(),
-        ]);
+        return $this->model->where('id', $id->toString())->firstOrFail();
     }
 
-    public function createCoreClient(array $data): CoreClient
+    public function createCoreClient(array $data): Client
     {
         return $this->create($data);
     }
@@ -46,5 +44,10 @@ class CoreClientRepository extends BaseRepository
     public function deleteCoreClient(UuidInterface $id): bool
     {
         return $this->delete($id);
+    }
+
+    public function getCoreClientByEmail( $email):Client
+    {
+        return $this->model->where('email', $email)->firstOrFail();
     }
 }

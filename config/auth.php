@@ -45,6 +45,10 @@ return [
             'driver' => 'jwt',
             'provider' => 'barbers',
         ],
+        'api_clients' => [
+            'driver' => 'jwt',
+            'provider' => 'clients',
+        ],
     ],
 
     /*
@@ -73,6 +77,10 @@ return [
         'barbers' => [
             'driver' => 'eloquent',
             'model' => Modules\Barber\CoreBarber\Models\Barber::class,
+        ],
+        'clients' => [
+            'driver' => 'eloquent',
+            'model' => Modules\Client\CoreClient\Models\Client::class,
         ],
     ],
 
