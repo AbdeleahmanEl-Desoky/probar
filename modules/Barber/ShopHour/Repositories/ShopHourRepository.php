@@ -8,6 +8,7 @@ use BasePackage\Shared\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Ramsey\Uuid\UuidInterface;
 use Modules\Barber\ShopHour\Models\ShopHour;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @property ShopHour $model
@@ -43,9 +44,9 @@ class ShopHourRepository extends BaseRepository
         return $this->update($id, $data);
     }
 
-    public function deleteShopHour(UuidInterface $id): bool
+    public function deleteShopHour(string $id)//: bool
     {
-        return $this->delete($id);
+        return $this->model->where('shop_id', Uuid::fromString($id))->delete();
     }
 
     public function deleteAllShopHour(): mixed

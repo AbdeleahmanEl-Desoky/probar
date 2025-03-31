@@ -20,7 +20,6 @@ return new class extends Migration
             $table->time('closing_time');
             $table->timestamps();
 
-            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
         });
     }
 

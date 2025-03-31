@@ -25,7 +25,7 @@ class ShopHourCRUDService
 
         $data['shop_id'] = $createShopHourDTO->shop_id;
 
-        $this->repository->deleteAllShopHour();
+        $this->repository->deleteShopHour($data['shop_id']);
 
         foreach ($days as $day) {
             $openingTime = $createShopHourDTO->custom_hours[$day][0] ?? $createShopHourDTO->opening_time;

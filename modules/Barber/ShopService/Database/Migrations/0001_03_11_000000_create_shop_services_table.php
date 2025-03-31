@@ -18,7 +18,6 @@ return new class extends Migration
             $table->integer('time');
             $table->timestamps();
 
-            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
         });
     }
 
