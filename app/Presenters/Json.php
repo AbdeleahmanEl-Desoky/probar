@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Response;
 
 use BasePackage\Shared\Presenters\Json as BaseJson;
-class Json //extends BaseJson
+class Json extends BaseJson
 {
     private const SUCCESS_WITH_SINGLE_PAYLOAD_OBJECT = 'SUCCESS_WITH_SINGLE_PAYLOAD_OBJECT';
     private const SUCCESS_WITH_LIST_PAYLOAD_OBJECTS = 'SUCCESS_WITH_LIST_PAYLOAD_OBJECTS';

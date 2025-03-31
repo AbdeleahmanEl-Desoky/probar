@@ -14,6 +14,9 @@ class CreateCoreClientRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'email' => 'required|email|unique:clients,email',
+            'password'=>'required|string',
+            'phone'=> 'required|unique:clients,phone'
         ];
     }
 
@@ -21,6 +24,9 @@ class CreateCoreClientRequest extends FormRequest
     {
         return new CreateCoreClientDTO(
             name: $this->get('name'),
+            email:$this->get('email'),
+            password:$this->get('password'),
+            phone: $this->get('phone'),
         );
     }
 }

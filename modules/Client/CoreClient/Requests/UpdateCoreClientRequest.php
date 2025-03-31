@@ -21,8 +21,11 @@ class UpdateCoreClientRequest extends FormRequest
     public function createUpdateCoreClientCommand(): UpdateCoreClientCommand
     {
         return new UpdateCoreClientCommand(
-            id: Uuid::fromString($this->route('id')),
+            id: Uuid::fromString(auth('api_clients')->user()->id),
             name: $this->get('name'),
+            email:$this->get('email'),
+            phone: $this->get('phone'),
+            password:$this->get('password')?? null,
         );
     }
 }

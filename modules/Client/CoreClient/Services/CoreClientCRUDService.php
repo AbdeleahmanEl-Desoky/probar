@@ -6,7 +6,7 @@ namespace Modules\Client\CoreClient\Services;
 
 use Illuminate\Support\Collection;
 use Modules\Client\CoreClient\DTO\CreateCoreClientDTO;
-use Modules\Client\CoreClient\Models\CoreClient;
+use Modules\Client\CoreClient\Models\Client;
 use Modules\Client\CoreClient\Repositories\CoreClientRepository;
 use Ramsey\Uuid\UuidInterface;
 
@@ -17,7 +17,7 @@ class CoreClientCRUDService
     ) {
     }
 
-    public function create(CreateCoreClientDTO $createCoreClientDTO): CoreClient
+    public function create(CreateCoreClientDTO $createCoreClientDTO): Client
     {
          return $this->repository->createCoreClient($createCoreClientDTO->toArray());
     }
@@ -30,7 +30,7 @@ class CoreClientCRUDService
         );
     }
 
-    public function get(UuidInterface $id): CoreClient
+    public function get(UuidInterface $id): Client
     {
         return $this->repository->getCoreClient(
             id: $id,
