@@ -1,0 +1,14 @@
+{
+    "name": "ShopServices",
+    "alias": "shopservices",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Client\\ShopServices\\Providers\\ShopServicesServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Client"
+}

@@ -58,8 +58,8 @@ class ShopHourRepository extends BaseRepository
         array $conditions = [],
         int $page = 1,
         int $perPage = 15,
-        string $orderBy = 'created_at',
-        string $sortBy = 'desc'
+        string $orderBy = 'status',
+        string $sortBy = 'ASC'
     ) {
         if (method_exists($this->model, 'scopeFilter')) {
             $query = $this->model->with('details')->filter(request()->all())->where($conditions);

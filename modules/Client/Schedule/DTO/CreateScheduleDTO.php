@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Modules\Client\Schedule\DTO;
+
+use Ramsey\Uuid\UuidInterface;
+
+class CreateScheduleDTO
+{
+    public function __construct(
+        public string $start_time,
+        public string $end_time,
+        public string $schedule_date,
+        public string $shop_id,
+        public string $client_id,
+        public string $status,
+        public string $note,
+    ) {
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'start_time' => $this->start_time,
+            'end_time' => $this->end_time,
+            'schedule_date' => $this->schedule_date,
+            'shop_id' => $this->shop_id,
+            'client_id' => $this->client_id,
+            'status' => $this->status,
+            'note' => $this->note,
+        ];
+    }
+}

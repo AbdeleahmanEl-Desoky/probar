@@ -1,0 +1,14 @@
+{
+    "name": "Schedule",
+    "alias": "schedule",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Client\\Schedule\\Providers\\ScheduleServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Client"
+}
