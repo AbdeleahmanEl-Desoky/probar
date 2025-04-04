@@ -31,12 +31,24 @@ class ScheduleController extends Controller
     {
         $list = $this->scheduleService->list(
             (int) $request->get('page', 1),
-            (int) $request->get('per_page', 10)
+            (int) $request->get('per_page', 10),
+            Uuid::fromString($request->route('shop_id')),
+            'shop_id'
         );
 
         return Json::items(SchedulePresenter::collection($list['data']), paginationSettings: $list['pagination']);
     }
+    public function clientIndex(GetScheduleListRequest $request): JsonResponse
+    {
+        $list = $this->scheduleService->list(
+            (int) $request->get('page', 1),
+            (int) $request->get('per_page', 10),
+            Uuid::fromString(auth('api_clients')->user()->id),
+            'client_id'
+        );
 
+        return Json::items(SchedulePresenter::collection($list['data']), paginationSettings: $list['pagination']);
+    }
     public function show(GetScheduleRequest $request): JsonResponse
     {
         $item = $this->scheduleService->get(Uuid::fromString($request->route('id')));
@@ -46,9 +58,12 @@ class ScheduleController extends Controller
         return Json::item($presenter->getData());
     }
 
-    public function store(CreateScheduleRequest $request): JsonResponse
+    public function store(CreateScheduleRequest $request)//: JsonResponse
     {
-        $createdItem = $this->scheduleService->create($request->createCreateScheduleDTO());
+        $createScheduleDTO = $request->createCreateScheduleDTO();
+        $createScheduleDTO->client_id =  auth('api_clients')->user()->id;
+
+        $createdItem = $this->scheduleService->create($createScheduleDTO);
 
         $presenter = new SchedulePresenter($createdItem);
 

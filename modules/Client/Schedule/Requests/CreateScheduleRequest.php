@@ -19,9 +19,10 @@ class CreateScheduleRequest extends FormRequest
             'end_time' => 'required',
             'schedule_date' => 'required',
             'shop_id' => 'required',
-            'client_id' => 'required',
-            'status' => 'required',
-            'note' => 'required',
+            'status' => 'required|string|in:pending,approved,canceled',
+            'note' => 'nullable|string',
+            'services' => 'required|array',
+            'services.*' => 'uuid|exists:shop_services,id',
         ];
     }
 
@@ -35,6 +36,7 @@ class CreateScheduleRequest extends FormRequest
             client_id:$this->get('client_id'),
             status:$this->get('status'),
             note:$this->get('note'),
+            services: $this->get('services'),
         );
     }
 }

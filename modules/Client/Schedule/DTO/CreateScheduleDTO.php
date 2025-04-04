@@ -13,9 +13,10 @@ class CreateScheduleDTO
         public string $end_time,
         public string $schedule_date,
         public string $shop_id,
-        public string $client_id,
+        public ?string $client_id,
         public string $status,
-        public string $note,
+        public ?string $note,
+        public array $services,
     ) {
     }
 
@@ -29,6 +30,7 @@ class CreateScheduleDTO
             'client_id' => $this->client_id,
             'status' => $this->status,
             'note' => $this->note,
+            'services' => $this->services,
         ];
     }
 }

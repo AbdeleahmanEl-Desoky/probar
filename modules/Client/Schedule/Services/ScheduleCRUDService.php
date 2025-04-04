@@ -19,12 +19,15 @@ class ScheduleCRUDService
 
     public function create(CreateScheduleDTO $createScheduleDTO): Schedule
     {
-         return $this->repository->createSchedule($createScheduleDTO->toArray());
+        $schedule = $this->repository->createSchedule($createScheduleDTO->toArray());
+
+        return $schedule;
     }
 
-    public function list(int $page = 1, int $perPage = 10): array
+    public function list(int $page = 1, int $perPage = 10,$shopId,$model): array
     {
         return $this->repository->paginated(
+            [$model=>$shopId],
             page: $page,
             perPage: $perPage,
         );

@@ -6,6 +6,7 @@ namespace Modules\Client\Schedule\Repositories;
 
 use BasePackage\Shared\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\Client\Schedule\Models\ScheduleService;
 use Ramsey\Uuid\UuidInterface;
 use Modules\Client\Schedule\Models\Schedule;
 
@@ -35,7 +36,17 @@ class ScheduleRepository extends BaseRepository
 
     public function createSchedule(array $data): Schedule
     {
-        return $this->create($data);
+        $schedule =$this->create($data);
+
+        foreach ($data['services'] as $service){
+            ScheduleService::create([
+                'schedule_id'=>$schedule->id,
+                'shop_service_id' =>$service
+            ]);
+        }
+
+        return $schedule;
+
     }
 
     public function updateSchedule(UuidInterface $id, array $data): bool
