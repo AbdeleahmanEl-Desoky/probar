@@ -16,8 +16,8 @@ return new class extends Migration
             $table->uuid('shop_id')->index();
             $table->tinyInteger('status')->default(1);
             $table->string('day');
-            $table->time('opening_time');
-            $table->time('closing_time');
+            $table->string('opening_time');
+            $table->string('closing_time');
             $table->timestamps();
 
         });
