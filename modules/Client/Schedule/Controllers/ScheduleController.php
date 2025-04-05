@@ -17,6 +17,7 @@ use Modules\Client\Schedule\Requests\GetScheduleRequest;
 use Modules\Client\Schedule\Requests\UpdateScheduleRequest;
 use Modules\Client\Schedule\Services\GetScheduleSlotsService;
 use Modules\Client\Schedule\Services\ScheduleCRUDService;
+use Modules\Client\Schedule\Services\GetScheduleDataService;
 use Ramsey\Uuid\Uuid;
 
 class ScheduleController extends Controller
@@ -26,6 +27,7 @@ class ScheduleController extends Controller
         private UpdateScheduleHandler $updateScheduleHandler,
         private DeleteScheduleHandler $deleteScheduleHandler,
         private GetScheduleSlotsService $getScheduleSlotsService,
+        private GetScheduleDataService $getScheduleDataService
     ) {
     }
 
@@ -49,14 +51,6 @@ class ScheduleController extends Controller
 
         return Json::items(SchedulePresenter::collection($list['data']), paginationSettings: $list['pagination']);
     }
-    public function show(GetScheduleRequest $request): JsonResponse
-    {
-        $item = $this->scheduleService->get(Uuid::fromString($request->route('id')));
-
-        $presenter = new SchedulePresenter($item);
-
-        return Json::item($presenter->getData());
-    }
 
     public function store(CreateScheduleRequest $request)//: JsonResponse
     {
@@ -69,23 +63,15 @@ class ScheduleController extends Controller
 
         return Json::item($presenter->getData());
     }
-
-    public function update(UpdateScheduleRequest $request): JsonResponse
+    public function getData(CreateScheduleRequest $request)//: JsonResponse
     {
-        $command = $request->createUpdateScheduleCommand();
-        $this->updateScheduleHandler->handle($command);
+        $createScheduleDTO = $request->createCreateScheduleDTO();
+        $createScheduleDTO->client_id =  auth('api_clients')->user()->id;
 
-        $item = $this->scheduleService->get($command->getId());
+   return      $createdItem = $this->getScheduleDataService->getBookingDetails($request->createCreateScheduleDTO());
 
-        $presenter = new SchedulePresenter($item);
+      //  $presenter = new SchedulePresenter($createdItem);
 
-        return Json::item( $presenter->getData());
-    }
-
-    public function delete(DeleteScheduleRequest $request): JsonResponse
-    {
-        $this->deleteScheduleHandler->handle(Uuid::fromString($request->route('id')));
-
-        return Json::deleted();
+        //return Json::item($presenter->getData());
     }
 }
