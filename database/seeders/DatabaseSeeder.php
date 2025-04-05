@@ -40,8 +40,8 @@ class DatabaseSeeder extends Seeder
             $closingTime = $customHours[$day][1] ?? $defaultClosingTime;
 
             // Convert to 24-hour format for MySQL
-            $openingTime = date("H:i:s", strtotime($openingTime));
-            $closingTime = date("H:i:s", strtotime($closingTime));
+            $openingTime = date("H:i", strtotime($openingTime));
+            $closingTime = date("H:i", strtotime($closingTime));
 
             // Create ShopHour entry
             $shopHour = ShopHour::create([
@@ -56,8 +56,8 @@ class DatabaseSeeder extends Seeder
             $endTime = strtotime($closingTime);
 
             while ($startTime < $endTime) {
-                $slotStart = date("H:i:s", $startTime);
-                $slotEnd = date("H:i:s", strtotime("+30 minutes", $startTime));
+                $slotStart = date("H:i", $startTime);
+                $slotEnd = date("H:i", strtotime("+30 minutes", $startTime));
 
                 if (strtotime($slotEnd) > $endTime) {
                     break;

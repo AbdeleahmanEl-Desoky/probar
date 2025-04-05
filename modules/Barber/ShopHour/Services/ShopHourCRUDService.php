@@ -32,8 +32,8 @@ class ShopHourCRUDService
             $closingTime = $createShopHourDTO->custom_hours[$day][1] ?? $createShopHourDTO->closing_time;
             $status = $createShopHourDTO->custom_hours[$day][2] ?? 1;
 
-            $openingTime = date("H:i:s", strtotime($openingTime));
-            $closingTime = date("H:i:s", strtotime($closingTime));
+            $openingTime = date("H:i", strtotime($openingTime));
+            $closingTime = date("H:i", strtotime($closingTime));
 
             $shopHour = $this->repository->createShopHour([
                 'shop_id' => $createShopHourDTO->shop_id,
@@ -53,8 +53,8 @@ class ShopHourCRUDService
         $endTime = strtotime($closingTime);
 
         while ($startTime < $endTime) {
-            $slotStart = date("H:i:s", $startTime);
-            $slotEnd = date("H:i:s", strtotime("+30 minutes", $startTime));
+            $slotStart = date("H:i", $startTime);
+            $slotEnd = date("H:i", strtotime("+30 minutes", $startTime));
 
             if (strtotime($slotEnd) > $endTime) {
                 break;

@@ -15,6 +15,7 @@ use Modules\Client\Schedule\Requests\DeleteScheduleRequest;
 use Modules\Client\Schedule\Requests\GetScheduleListRequest;
 use Modules\Client\Schedule\Requests\GetScheduleRequest;
 use Modules\Client\Schedule\Requests\UpdateScheduleRequest;
+use Modules\Client\Schedule\Services\GetScheduleSlotsService;
 use Modules\Client\Schedule\Services\ScheduleCRUDService;
 use Ramsey\Uuid\Uuid;
 
@@ -24,19 +25,18 @@ class ScheduleController extends Controller
         private ScheduleCRUDService $scheduleService,
         private UpdateScheduleHandler $updateScheduleHandler,
         private DeleteScheduleHandler $deleteScheduleHandler,
+        private GetScheduleSlotsService $getScheduleSlotsService,
     ) {
     }
 
-    public function index(GetScheduleListRequest $request): JsonResponse
+    public function index(GetScheduleListRequest $request)//: JsonResponse
     {
-        $list = $this->scheduleService->list(
-            (int) $request->get('page', 1),
-            (int) $request->get('per_page', 10),
+         $schedule = $this->getScheduleSlotsService->get(
             Uuid::fromString($request->route('shop_id')),
-            'shop_id'
+            $request->input('schedule_date'),
         );
 
-        return Json::items(SchedulePresenter::collection($list['data']), paginationSettings: $list['pagination']);
+         return Json::items($schedule);
     }
     public function clientIndex(GetScheduleListRequest $request): JsonResponse
     {
