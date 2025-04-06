@@ -29,9 +29,7 @@ class ScheduleRepository extends BaseRepository
 
     public function getSchedule(UuidInterface $id): Schedule
     {
-        return $this->findOneByOrFail([
-            'id' => $id->toString(),
-        ]);
+        return $this->findOneByWithRelations(['id' => $id->toString()],['shopServices','shop']);
     }
 
     public function createSchedule(array $data): Schedule

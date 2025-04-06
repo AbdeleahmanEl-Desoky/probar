@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Client\Schedule\Database\factories\ScheduleFactory;
 use BasePackage\Shared\Traits\BaseFilterable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Modules\Barber\Shop\Models\Shop;
 use Modules\Barber\ShopService\Models\ShopService;
 
 //use BasePackage\Shared\Traits\HasTranslations;
@@ -49,5 +50,9 @@ class Schedule extends Model
     public function shopServices():BelongsToMany
     {
         return $this->belongsToMany(ShopService::class, ScheduleService::class, 'schedule_id', 'shop_service_id');
+    }
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
     }
 }

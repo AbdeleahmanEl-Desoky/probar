@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Modules\Client\Schedule\Handlers\DeleteScheduleHandler;
 use Modules\Client\Schedule\Handlers\UpdateScheduleHandler;
+use Modules\Client\Schedule\Presenters\ScheduleActivePresenter;
 use Modules\Client\Schedule\Presenters\SchedulePresenter;
 use Modules\Client\Schedule\Requests\CreateScheduleRequest;
 use Modules\Client\Schedule\Requests\DeleteScheduleRequest;
@@ -63,15 +64,24 @@ class ScheduleController extends Controller
 
         return Json::item($presenter->getData());
     }
-    public function getData(CreateScheduleRequest $request)//: JsonResponse
+    public function getData(CreateScheduleRequest $request): JsonResponse
     {
         $createScheduleDTO = $request->createCreateScheduleDTO();
-        $createScheduleDTO->client_id =  auth('api_clients')->user()->id;
+        $createScheduleDTO->client_id = auth('api_clients')->user()->id;
 
-   return      $createdItem = $this->getScheduleDataService->getBookingDetails($request->createCreateScheduleDTO());
+        $createdItem = $this->getScheduleDataService->getBookingDetails($createScheduleDTO);
 
-      //  $presenter = new SchedulePresenter($createdItem);
+        return Json::item($createdItem);
+    }
+    public function show(GetScheduleRequest $request)//: JsonResponse
+    {
 
-        //return Json::item($presenter->getData());
+        $client_id = auth('api_clients')->user()->id;
+
+        $schedule = $this->scheduleService->get(Uuid::fromString($request->route('id')));
+
+        $presenter = new ScheduleActivePresenter($schedule);
+
+         return Json::item($presenter->getData());
     }
 }
