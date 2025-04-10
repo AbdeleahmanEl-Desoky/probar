@@ -1,0 +1,14 @@
+{
+    "name": "Rate",
+    "alias": "rate",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Client\\Rate\\Providers\\RateServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Client"
+}

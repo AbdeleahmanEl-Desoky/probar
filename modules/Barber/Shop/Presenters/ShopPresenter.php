@@ -28,8 +28,9 @@ class ShopPresenter extends AbstractPresenter
             'address_1'=> $this->shop->address_1,
             'address_2'=> $this->shop->address_2,
             'picture_url' => $this->shop->getFirstMediaUrl('shops'),
-            'rate'=>'5',
-            'is_open'=>$this->shop->is_open,
+            'average_rates' => $this->shop->average_rating,
+            'total_rates' => $this->shop->total_rates,
+            'is_open' => $this->shop->is_open,
         ];
     }
 }

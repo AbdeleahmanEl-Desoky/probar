@@ -12,6 +12,8 @@ use BasePackage\Shared\Traits\BaseFilterable;
 use BasePackage\Shared\Traits\HasTranslations;
 use Modules\Barber\ShopHour\Models\ShopHour;
 use Modules\Barber\ShopService\Models\ShopService;
+use Modules\Client\Rate\Models\Rate;
+use Modules\Client\Schedule\Models\Schedule;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 class Shop extends Model implements HasMedia
@@ -49,7 +51,11 @@ class Shop extends Model implements HasMedia
     protected $casts = [
         'id' => 'string',
     ];
-    protected $appends = ['pictures'];
+    protected $appends = [
+        'pictures',
+        'total_rates',
+        'average_rating'
+    ];
 
     protected static function newFactory(): ShopFactory
     {
@@ -72,8 +78,22 @@ class Shop extends Model implements HasMedia
     {
         return $this->hasMany(ShopService::class);
     }
-    public function shop()
+    public function rates()
     {
-        return $this->belongsTo(Shop::class);
+        return $this->hasMany(Rate::class);
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+    public function getTotalRatesAttribute()
+    {
+        return $this->rates()->count();
+    }
+
+    public function getAverageRatingAttribute()
+    {
+        return $this->rates()->avg('rate') ?? 0;
     }
 }
