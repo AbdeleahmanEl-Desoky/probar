@@ -79,7 +79,7 @@ class ScheduleShopController extends Controller
             endDate: $request->get('end_date')
         );
 
-        return Json::items($scheduleShopService);
+        return Json::item($scheduleShopService);
     }
 
     public function show(GetScheduleShopRequest $request): JsonResponse

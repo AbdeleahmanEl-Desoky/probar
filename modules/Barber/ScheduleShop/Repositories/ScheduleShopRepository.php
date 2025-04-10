@@ -116,12 +116,11 @@ class ScheduleShopRepository extends BaseRepository
         if ($endDate) {
             $query->where('created_at', '<=', $endDate);
         }
+        $totalEarnings = $query->sum('total_price');
 
-       return $ratingCounts = $query->sum('rate')
-            ->groupBy('rate')
-            ->selectRaw('rate, COUNT(*) as count')
-            ->get();
-
+        return [
+            'total_earnings' => $totalEarnings,
+        ];
     }
 
 }
