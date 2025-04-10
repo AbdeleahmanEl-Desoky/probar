@@ -1,0 +1,14 @@
+{
+    "name": "ScheduleShop",
+    "alias": "scheduleshop",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Barber\\ScheduleShop\\Providers\\ScheduleShopServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Barber"
+}
