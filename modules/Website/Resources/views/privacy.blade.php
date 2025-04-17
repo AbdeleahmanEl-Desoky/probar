@@ -12,7 +12,11 @@
 
     <header>
         <nav class="container">
-            <div class="logo"><a href="{{ route('home') }}">ProBar</a></div>
+            <div class="logo">
+                <a href="{{ route('home') }}">
+                    <img src="{{asset('assets/LOGO.svg')}}" alt="Logo">
+                </a>
+            </div>
             <ul>
                  <li><a href="{{ route('home') }}#features">Features</a></li>
                  <li><a href="{{ route('home') }}#gallery">Gallery</a></li>
