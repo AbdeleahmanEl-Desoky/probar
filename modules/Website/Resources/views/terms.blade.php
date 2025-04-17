@@ -83,13 +83,13 @@
                 <p>ProBar is not liable for any loss, damage, injury, or dispute arising from interactions between Clients and Barbers. Use of the platform is at your own risk.</p>
 
                 <h2>11. Governing Law</h2>
-                <p>These Terms are governed by the laws of [Your Country/State]. Any disputes shall be resolved in the appropriate courts of that jurisdiction.</p>
+                <p>These Terms are governed by the laws of Palestine/Hebron. Any disputes shall be resolved in the appropriate courts of that jurisdiction.</p>
 
                 <h2>12. Changes to Terms</h2>
                 <p>We may update these Terms from time to time. We will notify users of significant changes, and continued use of the Service after changes take effect constitutes acceptance of the revised Terms.</p>
 
                 <h2>13. Contact Us</h2>
-                <p>If you have any questions about these Terms or the platform, please contact us at: [Your Contact Email]</p>
+                <p>If you have any questions about these Terms or the platform, please contact us at: al-kbeeribrahem_2000@hotmail.com</p>
 
                 <p><strong>Legal Disclaimer:</strong> This document is provided for informational purposes only. You should consult with a qualified legal professional to ensure that your Terms and Conditions comply with applicable laws in your jurisdiction and match your specific business model, especially regarding payment, data use, and liability clauses.</p>
             </div>

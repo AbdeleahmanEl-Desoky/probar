@@ -119,7 +119,7 @@
                 <h2>9. Contact Us</h2>
                 <p>If you have any questions or concerns about this Privacy Policy, please contact us:</p>
                 <ul>
-                    <li>By email: [your support email]</li>
+                    <li>By email: al-kbeeribrahem_2000@hotmail.com</li>
                 </ul>
 
                 <p><strong>Disclaimer:</strong> This policy is provided as a general template. You should consult with a legal professional to ensure compliance with applicable laws and regulations in your region and specific use case.</p>
