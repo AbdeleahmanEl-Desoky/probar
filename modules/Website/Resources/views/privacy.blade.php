@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - ProBar</title>
     <link rel="stylesheet" href="{{asset('style.css')}}">
-    <link rel="icon" href="{{ asset('assets/LOGO.svg') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/pbicon.ico') }}" type="image/x-icon">
 
 </head>
 <body>
