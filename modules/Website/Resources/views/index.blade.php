@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProBar - Connect with Skilled Barbers</title>
     <link rel="stylesheet" href="{{asset('style.css')}}">
+    <link rel="icon" href="{{ asset('assets/LOGO.svg') }}" type="image/x-icon">
     <!-- Optional: Add Font Awesome for icons if you want -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> -->
 </head>
