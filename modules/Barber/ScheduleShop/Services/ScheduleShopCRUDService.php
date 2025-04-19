@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Modules\Barber\ScheduleShop\DTO\CreateScheduleShopDTO;
 use Modules\Barber\ScheduleShop\Models\ScheduleShop;
 use Modules\Barber\ScheduleShop\Repositories\ScheduleShopRepository;
+use Modules\Client\Schedule\Models\Schedule;
 use Ramsey\Uuid\UuidInterface;
 
 class ScheduleShopCRUDService
@@ -47,18 +48,20 @@ class ScheduleShopCRUDService
     }
 
 
-    public function list(int $page = 1, int $perPage = 10): array
+    public function list(string $shopId, int $page = 1, int $perPage = 10)//: array
     {
         return $this->repository->paginated(
-            page: $page,
-            perPage: $perPage,
+            ['shop_id'=>$shopId],
+            page:$page,
+            perPage:$perPage
         );
     }
 
-    public function get(UuidInterface $id): ScheduleShop
+    public function get(UuidInterface $id): Schedule
     {
         return $this->repository->getScheduleShop(
             id: $id,
         );
     }
+
 }

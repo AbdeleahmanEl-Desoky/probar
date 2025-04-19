@@ -32,8 +32,9 @@ class Report extends Model
     protected $fillable = [
         'shop_id',
         'schedule_id',
-        'client_id',
+        'user_id',
         'note',
+        'type'
     ];
 
     protected $casts = [

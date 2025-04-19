@@ -10,12 +10,16 @@ use Illuminate\Http\JsonResponse;
 use Modules\Barber\Shop\Repositories\ShopRepository;
 use Modules\Barber\ScheduleShop\Handlers\DeleteScheduleShopHandler;
 use Modules\Barber\ScheduleShop\Handlers\UpdateScheduleShopHandler;
+use Modules\Barber\ScheduleShop\Handlers\UpdateScheduleShopPaymentHandler;
+use Modules\Barber\ScheduleShop\Handlers\UpdateScheduleShopStatusHandler;
 use Modules\Barber\ScheduleShop\Presenters\ScheduleShopPresenter;
 use Modules\Barber\ScheduleShop\Requests\CreateScheduleShopRequest;
 use Modules\Barber\ScheduleShop\Requests\DeleteScheduleShopRequest;
 use Modules\Barber\ScheduleShop\Requests\GetScheduleShopListRequest;
 use Modules\Barber\ScheduleShop\Requests\GetScheduleShopRequest;
+use Modules\Barber\ScheduleShop\Requests\UpdateScheduleShopPaymentRequest;
 use Modules\Barber\ScheduleShop\Requests\UpdateScheduleShopRequest;
+use Modules\Barber\ScheduleShop\Requests\UpdateScheduleShopStatusRequest;
 use Modules\Barber\ScheduleShop\Services\ScheduleShopCRUDService;
 use Ramsey\Uuid\Uuid;
 
@@ -26,10 +30,12 @@ class ScheduleShopController extends Controller
         private UpdateScheduleShopHandler $updateScheduleShopHandler,
         private DeleteScheduleShopHandler $deleteScheduleShopHandler,
         private ShopRepository $shopRepository,
+        private UpdateScheduleShopStatusHandler $updateScheduleShopStatusHandler,
+        private UpdateScheduleShopPaymentHandler $updateScheduleShopPaymentHandler
     ) {
     }
 
-    public function mostSellingServices(GetScheduleShopListRequest $request)//: JsonResponse
+    public function mostSellingServices(GetScheduleShopListRequest $request): JsonResponse
     {
         $userId = auth()->user()->id;
         $barberId = Uuid::fromString($userId);
@@ -47,7 +53,7 @@ class ScheduleShopController extends Controller
 
         return Json::items($scheduleShopService);
     }
-    public function rate(GetScheduleShopListRequest $request)//: JsonResponse
+    public function rate(GetScheduleShopListRequest $request): JsonResponse
     {
         $userId = auth()->user()->id;
         $barberId = Uuid::fromString($userId);
@@ -60,13 +66,12 @@ class ScheduleShopController extends Controller
             endDate: $request->get('end_date'),
             page: (int) $request->get('page', 1),
             perPage: (int) $request->get('per_page', 10)
-
         );
 
         return Json::items($scheduleShopService);
     }
 
-    public function totalEarning(GetScheduleShopListRequest $request)//: JsonResponse
+    public function totalEarning(GetScheduleShopListRequest $request): JsonResponse
     {
         $userId = auth()->user()->id;
         $barberId = Uuid::fromString($userId);
@@ -82,7 +87,22 @@ class ScheduleShopController extends Controller
         return Json::item($scheduleShopService);
     }
 
-    public function show(GetScheduleShopRequest $request): JsonResponse
+    public function booking(GetScheduleShopRequest $request)//: JsonResponse
+    {
+        $userId = auth()->user()->id;
+        $barberId = Uuid::fromString($userId);
+        $shop = $this->shopRepository->getMyShop($barberId);
+
+        $list = $this->scheduleShopService->list(
+            shopId: $shop->id,
+            page: (int) $request->get('page', 1),
+            perPage: (int) $request->get('per_page', 10)
+        );
+
+        return Json::items(ScheduleShopPresenter::collection($list['data']), paginationSettings: $list['pagination']);
+    }
+
+    public function showBookong(GetScheduleShopRequest $request): JsonResponse
     {
         $item = $this->scheduleShopService->get(Uuid::fromString($request->route('id')));
 
@@ -91,31 +111,27 @@ class ScheduleShopController extends Controller
         return Json::item($presenter->getData());
     }
 
-    public function store(CreateScheduleShopRequest $request): JsonResponse
+    public function statusBooking(UpdateScheduleShopStatusRequest $request): JsonResponse
     {
-        $createdItem = $this->scheduleShopService->create($request->createCreateScheduleShopDTO());
-
-        $presenter = new ScheduleShopPresenter($createdItem);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function update(UpdateScheduleShopRequest $request): JsonResponse
-    {
-        $command = $request->createUpdateScheduleShopCommand();
-        $this->updateScheduleShopHandler->handle($command);
+        $command = $request->updateScheduleShopStatusCommand();
+        $this->updateScheduleShopStatusHandler->handle($command);
 
         $item = $this->scheduleShopService->get($command->getId());
 
         $presenter = new ScheduleShopPresenter($item);
 
-        return Json::item( $presenter->getData());
+        return Json::item($presenter->getData());
     }
-
-    public function delete(DeleteScheduleShopRequest $request): JsonResponse
+    public function paymentsBooking(UpdateScheduleShopPaymentRequest $request): JsonResponse
     {
-        $this->deleteScheduleShopHandler->handle(Uuid::fromString($request->route('id')));
+        $command = $request->updateScheduleShopStatusCommand();
+        $this->updateScheduleShopPaymentHandler->handle($command);
 
-        return Json::deleted();
+        $item = $this->scheduleShopService->get($command->getId());
+
+        $presenter = new ScheduleShopPresenter($item);
+
+        return Json::item($presenter->getData());
     }
+
 }

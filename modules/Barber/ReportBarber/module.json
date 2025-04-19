@@ -1,0 +1,14 @@
+{
+    "name": "ReportBarber",
+    "alias": "reportbarber",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Barber\\ReportBarber\\Providers\\ReportBarberServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Barber"
+}

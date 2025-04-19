@@ -37,6 +37,7 @@ class Schedule extends Model
         'client_id',
         'status',
         'note',
+        'payment'
     ];
 
     protected $casts = [

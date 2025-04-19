@@ -6,21 +6,39 @@ namespace Modules\Barber\ScheduleShop\Presenters;
 
 use Modules\Barber\ScheduleShop\Models\ScheduleShop;
 use BasePackage\Shared\Presenters\AbstractPresenter;
+use Modules\Client\Schedule\Models\Schedule;
 
 class ScheduleShopPresenter extends AbstractPresenter
 {
-    private ScheduleShop $scheduleShop;
+    private Schedule $schedule;
 
-    public function __construct(ScheduleShop $scheduleShop)
+    public function __construct(Schedule $schedule)
     {
-        $this->scheduleShop = $scheduleShop;
+        $this->schedule = $schedule;
     }
 
     protected function present(bool $isListing = false): array
     {
         return [
-            'id' => $this->scheduleShop->id,
-            'name' => $this->scheduleShop->name,
+            'id' => $this->schedule->id,
+            'start_time' => $this->schedule->start_time,
+            'end_time' => $this->schedule->end_time,
+            'schedule_date' => $this->schedule->schedule_date,
+            'shop_id' => $this->schedule->shop_id,
+            'client_id' => $this->schedule->client_id,
+            'status' => $this->schedule->status,
+            'note' => $this->schedule->note,
+            'shop_name' => $this->schedule->shop->name,
+            'shop_rate' => $this->schedule->shop->rate,
+            'payment' =>$this->schedule->payment,
+            'shop_services' => $this->schedule->shop->shopServices->map(function ($service) {
+                return [
+                    'price' => $service->price,
+                    'name' => $service->name,
+                    'description' => $service->description,
+                    'picture_url' => $service->getFirstMediaUrl('shop_service')
+                ];
+            }),
         ];
     }
 }

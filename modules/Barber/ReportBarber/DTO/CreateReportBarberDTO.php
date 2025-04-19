@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Modules\Client\Report\DTO;
+namespace Modules\Barber\ReportBarber\DTO;
 
 use Ramsey\Uuid\UuidInterface;
 
-class CreateReportDTO
+class CreateReportBarberDTO
 {
     public function __construct(
         public string $shop_id,
         public string $schedule_id,
-        public ?string $user_id,
+        public string $user_id,
         public ?string $type,
         public ?string $note,
     ) {

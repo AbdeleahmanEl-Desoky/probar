@@ -49,7 +49,7 @@ class ReportController extends Controller
     public function store(CreateReportRequest $request): JsonResponse
     {
         $createCreateReportDTO = $request->createCreateReportDTO();
-        $createCreateReportDTO->client_id = auth('api_clients')->user()->id;
+        $createCreateReportDTO->user_id = auth('api_clients')->user()->id;
 
         $createdItem = $this->reportService->create($createCreateReportDTO);
 

@@ -7,9 +7,12 @@ Route::group(['middleware' => ['auth:api_barbers']], function () {
     Route::get('/most-selling-services', [ScheduleShopController::class, 'mostSellingServices']);
     Route::get('/rate', [ScheduleShopController::class, 'rate']);
     Route::get('/total-earning', [ScheduleShopController::class, 'totalEarning']);
+    Route::get('/booking', [ScheduleShopController::class, 'booking']);
 
-    Route::post('/', [ScheduleShopController::class, 'store']);
-    Route::get('/{id}', [ScheduleShopController::class, 'show']);
-    Route::put('/{id}', [ScheduleShopController::class, 'update']);
-    Route::delete('/{id}', [ScheduleShopController::class, 'delete']);
+    Route::get('/booking/{id}', [ScheduleShopController::class, 'showBookong']);
+
+
+    Route::put('/booking/{id}/status', [ScheduleShopController::class, 'statusBooking']);
+
+    Route::put('/booking/{id}/payments', [ScheduleShopController::class, 'paymentsBooking']);
 });

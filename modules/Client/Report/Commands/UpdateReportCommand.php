@@ -12,7 +12,7 @@ class UpdateReportCommand
         private UuidInterface $id,
         private string $shop_id,
         private string $schedule_id,
-        private string $client_id,
+        private string $user_id,
         private ? string $note,
     ) {
     }
@@ -27,7 +27,7 @@ class UpdateReportCommand
         return array_filter([
             'shop_id' => $this->shop_id,
             'schedule_id' => $this->schedule_id,
-            'client_id' => $this->client_id,
+            'user_id' => $this->user_id,
             'note' => $this->note,
         ]);
     }
