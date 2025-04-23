@@ -32,6 +32,8 @@ class ShopPresenter extends AbstractPresenter
             'average_rates' => $this->shop->average_rating,
             'total_rates' => $this->shop->total_rates,
             'is_open' => $this->shop->is_open,
+            'longitude'=> $this->shop->longitude,
+            'latitude'=> $this->shop->latitude,
         ];
     }
 }
