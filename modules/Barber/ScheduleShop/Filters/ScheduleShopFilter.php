@@ -10,8 +10,9 @@ class ScheduleShopFilter extends SearchModelFilter
 {
        public $relations = [];
 
-        public function name($name)
+        public function start_time($start_time)
         {
-            return $this->where('name', $name);
+            return $this->where('start_time', $start_time);
         }
+        
 }

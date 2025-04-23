@@ -30,10 +30,15 @@ class ShopCRUDService
             $this->repository->updateShop(Uuid::fromString($shop->id), $data);
         }
 
-        if ($file) {
+        if (is_array($file)) {
             $shop->clearMediaCollection('shops');
-            $shop->addMedia($file)->toMediaCollection('shops');
+            foreach ($file as $singleFile) {
+                if ($singleFile instanceof \Illuminate\Http\UploadedFile) {
+                    $shop->addMedia($singleFile)->toMediaCollection('shops');
+                }
+            }
         }
+
         $this->assignTranslations($shop, $nameTranslations, $descriptionTranslations);
 
         $shop->save();

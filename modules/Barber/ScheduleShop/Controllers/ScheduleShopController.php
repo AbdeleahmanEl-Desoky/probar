@@ -21,6 +21,7 @@ use Modules\Barber\ScheduleShop\Requests\UpdateScheduleShopPaymentRequest;
 use Modules\Barber\ScheduleShop\Requests\UpdateScheduleShopRequest;
 use Modules\Barber\ScheduleShop\Requests\UpdateScheduleShopStatusRequest;
 use Modules\Barber\ScheduleShop\Services\ScheduleShopCRUDService;
+use Modules\Client\Schedule\Services\ScheduleCheckoutService;
 use Ramsey\Uuid\Uuid;
 
 class ScheduleShopController extends Controller
@@ -31,7 +32,8 @@ class ScheduleShopController extends Controller
         private DeleteScheduleShopHandler $deleteScheduleShopHandler,
         private ShopRepository $shopRepository,
         private UpdateScheduleShopStatusHandler $updateScheduleShopStatusHandler,
-        private UpdateScheduleShopPaymentHandler $updateScheduleShopPaymentHandler
+        private UpdateScheduleShopPaymentHandler $updateScheduleShopPaymentHandler,
+        private ScheduleCheckoutService $scheduleCheckoutService
     ) {
     }
 
@@ -110,6 +112,14 @@ class ScheduleShopController extends Controller
 
         return Json::item($presenter->getData());
     }
+    public function checkout(GetScheduleShopRequest $request): JsonResponse
+    {
+        $scheduleId = Uuid::fromString($request->route('id'));
+        $item = $this->scheduleCheckoutService->getBookingDetails($scheduleId);
+
+        return Json::item($item);
+    }
+
 
     public function statusBooking(UpdateScheduleShopStatusRequest $request): JsonResponse
     {

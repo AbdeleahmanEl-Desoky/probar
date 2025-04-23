@@ -22,7 +22,8 @@ class CreateShopRequest extends FormRequest
             'street'=> 'required|string|max:255',
             'address_1'=> 'required|string|max:255',
             'address_2'=> 'nullable|string|max:255',
-            'file' => 'nullable|file|mimes:jpg,jpeg,png|max:2048', // Ensure file is uploaded
+            'file' => 'nullable|array',
+            'file.*' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
             'longitude'=> 'nullable',
             'latitude'=> 'nullable',
         ];
