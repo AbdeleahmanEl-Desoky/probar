@@ -69,7 +69,7 @@ class ShopController extends Controller
 
         $this->updateShopHandler->handle($command);
 
-        $item = $this->shopService->get($command->getId());
+        $item = $this->shopService->get($command->id);
 
         $presenter = new ShopPresenter($item);
 
