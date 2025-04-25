@@ -25,6 +25,7 @@ class ShopHourPresenter extends AbstractPresenter
             'day' => $this->shopHour->day,
             'opening_time' => $this->shopHour->opening_time,
             'closing_time' => $this->shopHour->closing_time,
+            'strto_time' => $this->shopHour->strto_time
             // 'details'   => $this->shopHour->details,
         ];
     }
