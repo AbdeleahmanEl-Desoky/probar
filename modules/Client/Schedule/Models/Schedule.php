@@ -7,6 +7,7 @@ namespace Modules\Client\Schedule\Models;
 use BasePackage\Shared\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Client\CoreClient\Models\Client;
 use Modules\Client\Schedule\Database\factories\ScheduleFactory;
 use BasePackage\Shared\Traits\BaseFilterable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -55,5 +56,10 @@ class Schedule extends Model
     public function shop()
     {
         return $this->belongsTo(Shop::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 }
