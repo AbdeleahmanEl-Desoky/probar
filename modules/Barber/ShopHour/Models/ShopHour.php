@@ -32,7 +32,8 @@ class ShopHour extends Model
         'status',
         'day',
         'opening_time',
-        'closing_time'
+        'closing_time',
+        'strto_time'
     ];
 
     protected $casts = [

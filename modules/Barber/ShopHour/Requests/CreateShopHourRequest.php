@@ -16,6 +16,7 @@ class CreateShopHourRequest extends FormRequest
             'custom_hours' => 'nullable|array',
             'default_hours.opening_time' => 'nullable|date_format:H:i',
             'default_hours.closing_time' => 'nullable|date_format:H:i|after:default_hours.opening_time',
+            'strto_time'=> 'required'
         ];
     }
 
@@ -25,6 +26,7 @@ class CreateShopHourRequest extends FormRequest
             custom_hours: $this->input('custom_hours', []),
             opening_time: $this->input('default_hours.opening_time'),
             closing_time: $this->input('default_hours.closing_time'),
+           strto_time: $this->input('strto_time')
         );
     }
 }

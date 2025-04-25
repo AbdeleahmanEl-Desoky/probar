@@ -13,6 +13,7 @@ class CreateShopHourDTO
         public array  $custom_hours,
         public string $opening_time,
         public string $closing_time,
+        public string $strto_time
     ) {
     }
 
@@ -22,6 +23,7 @@ class CreateShopHourDTO
             'custom_hours' => $this->custom_hours,
             'closing_time' => $this->closing_time,
             'opening_time' => $this->opening_time,
+            'strto_time'   => $this->strto_time
         ];
     }
 

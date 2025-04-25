@@ -31,6 +31,7 @@ class ShopHourCRUDService
             $openingTime = $createShopHourDTO->custom_hours[$day][0] ?? $createShopHourDTO->opening_time;
             $closingTime = $createShopHourDTO->custom_hours[$day][1] ?? $createShopHourDTO->closing_time;
             $status = $createShopHourDTO->custom_hours[$day][2] ?? 1;
+            $strtoTime = $createShopHourDTO->strto_time;
 
             $openingTime = date("H:i", strtotime($openingTime));
             $closingTime = date("H:i", strtotime($closingTime));
@@ -41,20 +42,21 @@ class ShopHourCRUDService
                 'opening_time' => $openingTime,
                 'closing_time' => $closingTime,
                 'status' => $status,
+                'strto_time' => $strtoTime
             ]);
 
-            $this->generateTimeSlots($shopHour->id, $openingTime, $closingTime);
+            $this->generateTimeSlots($shopHour->id, $openingTime, $closingTime,$strtoTime);
         }
     }
 
-    private function generateTimeSlots(string $shopHourId, string $openingTime, string $closingTime): void
+    private function generateTimeSlots(string $shopHourId, string $openingTime, string $closingTime,string $strtoTime): void
     {
         $startTime = strtotime($openingTime);
         $endTime = strtotime($closingTime);
 
         while ($startTime < $endTime) {
             $slotStart = date("H:i", $startTime);
-            $slotEnd = date("H:i", strtotime("+30 minutes", $startTime));
+            $slotEnd = date("H:i", strtotime($strtoTime, $startTime));
 
             if (strtotime($slotEnd) > $endTime) {
                 break;
@@ -66,7 +68,7 @@ class ShopHourCRUDService
                 'end_time' => $slotEnd,
             ]);
 
-            $startTime = strtotime("+30 minutes", $startTime);
+            $startTime = strtotime($strtoTime, $startTime);
         }
     }
 
