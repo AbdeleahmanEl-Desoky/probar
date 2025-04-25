@@ -52,7 +52,7 @@ class GetScheduleSlotsService
                 $timeSlots[] = [
                     'from' => $start->format('H:i'),
                     'to' => $slotEnd->format('H:i'),
-                    'status' => $booking ? 'booked' : 'available',
+                    'status' => $booking ? 'pending' : 'available',
                     'booking' => $booking ?? null,
                 ];
 

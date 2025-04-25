@@ -13,7 +13,7 @@ class UpdateScheduleShopStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required|in:status,booked,waiting,on_process,finished',
+            'status' => 'required|in:status,pending,waiting,on_process,finished',
         ];
     }
 

@@ -22,21 +22,21 @@ class ScheduleFilter extends SearchModelFilter
     {
         return $this->when($upcoming == 'yes',function($q){
             $q->whereDate('schedule_date', '>', now()->toDateString())
-            ->where('status', 'booked');
+            ->where('status', 'pending');
         });
     }
     public function active($active)
     {
         return $this->when($active == 'yes',function($q){
             $q->whereDate('schedule_date', '=', now()->toDateString())
-            ->where('status','booked');
+            ->where('status','pending');
         });
     }
     public function history($history)
     {
         return $this->when($history == 'yes',function($q){
             $q->whereDate('schedule_date', '<=', now()->toDateString())
-            ->whereNot('status','booked');
+            ->whereNot('status','pending');
         });
     }
 
