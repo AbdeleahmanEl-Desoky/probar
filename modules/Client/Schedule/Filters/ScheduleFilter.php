@@ -21,14 +21,14 @@ class ScheduleFilter extends SearchModelFilter
     public function upcoming($upcoming)
     {
         return $this->when($upcoming == 'yes',function($q){
-            $q->whereDate('schedule_date', '>=', now()->toDateString())
-            ->whereNotIn('status', ['booked', 'cancel']);
+            $q->whereDate('schedule_date', '>', now()->toDateString())
+            ->where('status', 'booked');
         });
     }
     public function active($active)
     {
         return $this->when($active == 'yes',function($q){
-            $q->whereDate('schedule_date', '>=', now()->toDateString())
+            $q->whereDate('schedule_date', '=', now()->toDateString())
             ->where('status','booked');
         });
     }
