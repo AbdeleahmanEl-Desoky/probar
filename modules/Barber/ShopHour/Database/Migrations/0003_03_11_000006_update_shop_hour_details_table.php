@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('shop_hour_details', function (Blueprint $table) {
+        Schema::table('shop_hours', function (Blueprint $table) {
             $table->string('strto_time')->default('+30 minutes');
         });
     }
