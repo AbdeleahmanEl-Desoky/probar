@@ -16,6 +16,6 @@ class UpdateShopHandler
 
     public function handle(UpdateShopCommand $updateShopCommand)
     {
-        $this->repository->updateShop($updateShopCommand->getId(), $updateShopCommand->toArray());
+        $this->repository->updateShop($updateShopCommand->id, $updateShopCommand->toArray());
     }
 }
