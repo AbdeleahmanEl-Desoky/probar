@@ -9,21 +9,11 @@ use Ramsey\Uuid\UuidInterface;
 class UpdateShopCommand
 {
     public function __construct(
-        private UuidInterface $id,
         private string $latitude,
         private string $longitude
     ) {
     }
 
-    public function getId(): UuidInterface
-    {
-        return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
 
     public function toArray(): array
     {

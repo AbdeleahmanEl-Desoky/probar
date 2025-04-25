@@ -22,7 +22,6 @@ class UpdateShopRequest extends FormRequest
     public function createUpdateShopCommand(): UpdateShopCommand
     {
         return new UpdateShopCommand(
-            id: Uuid::fromString($this->route('id')),
             latitude: $this->get('latitude'),
             longitude: $this->get('longitude'),
         );
