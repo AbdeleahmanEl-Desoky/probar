@@ -10,13 +10,8 @@ class UpdateShopCommand
 {
     public function __construct(
         private UuidInterface $id,
-        private string $name,
-        private string $description,
-        private int $worker_no,
-        private string $city_id,
-        private string $street,
-        private string $address_1,
-        public ?string $address_2,
+        private string $latitude,
+        private string $longitude
     ) {
     }
 
@@ -33,14 +28,8 @@ class UpdateShopCommand
     public function toArray(): array
     {
         return array_filter([
-            'name' => $this->name,
-            'barber_id'=> $this->barber_id,
-            'description' => $this->description,
-            'worker_no'=> $this->worker_no,
-            'city_id'=> $this->city_id,
-            'street'=> $this->street,
-            'address_1'=> $this->address_1,
-            'address_2'=> $this->address_2,
+            'latitude' => $this->latitude,
+            'longitude'=> $this->longitude,
         ]);
     }
 }
