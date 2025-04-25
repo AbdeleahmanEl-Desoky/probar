@@ -61,14 +61,19 @@ class ShopController extends Controller
 
     public function update(UpdateShopRequest $request): JsonResponse
     {
+        $shop = $this->shopService->getMyShop(Uuid::fromString(auth('api_barbers')->user()->id));
+
         $command = $request->createUpdateShopCommand();
+
+        $command->id = Uuid::fromString($shop->id);
+
         $this->updateShopHandler->handle($command);
 
         $item = $this->shopService->get($command->getId());
 
         $presenter = new ShopPresenter($item);
 
-        return Json::item( $presenter->getData());
+        return Json::item($presenter->getData());
     }
 
     public function updateShopStatus()//: JsonResponse
