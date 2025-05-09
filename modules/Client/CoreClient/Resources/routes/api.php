@@ -11,5 +11,5 @@ Route::post('reset-password', [CoreClientController::class, 'resetPassword']);
 
 Route::group(['middleware' => ['auth:api_clients']], function () {
     Route::get('/', [CoreClientController::class, 'me']);
-    Route::put('/', [CoreClientController::class, 'update']);
+    Route::post('/', [CoreClientController::class, 'update']);
 });
