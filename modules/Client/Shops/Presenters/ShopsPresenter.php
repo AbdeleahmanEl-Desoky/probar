@@ -6,6 +6,7 @@ namespace Modules\Client\Shops\Presenters;
 
 use BasePackage\Shared\Presenters\AbstractPresenter;
 use Modules\Barber\Shop\Models\Shop;
+use Modules\Barber\ShopHour\Presenters\ShopHourPresenter;
 
 class ShopsPresenter extends AbstractPresenter
 {
@@ -33,6 +34,7 @@ class ShopsPresenter extends AbstractPresenter
             'is_favorited' => $this->shop->is_favorited,
             'longitude'=> $this->shop->longitude,
             'latitude'=> $this->shop->latitude,
+            'shop_hours' => $this->shop->shopHours? (new ShopHourPresenter($this->shop->shopHours))->getData() : null,
         ];
     }
 }
