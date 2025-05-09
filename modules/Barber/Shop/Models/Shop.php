@@ -105,7 +105,7 @@ class Shop extends Model implements HasMedia
     }
 public function getIsFavoritedAttribute(): int
 {
-    $clientId = Uuid::fromString(auth('api_clients')->user()->id);
+    $clientId = Uuid::fromString(auth('api_clients')->user()?->id);
 
     // If the client ID is not valid, return 0
     if (!$clientId) {
