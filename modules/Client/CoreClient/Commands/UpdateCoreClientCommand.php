@@ -34,7 +34,8 @@ class UpdateCoreClientCommand
             'name' => $this->name,
             'email' => $this->email,
             'password' => $this->password,
-            'phone' => $this->phone
+            'phone' => $this->phone,
+            'file' => $this->file,
         ]);
     }
 }
