@@ -38,8 +38,28 @@ class CoreClientRepository extends BaseRepository
 
     public function updateCoreClient(UuidInterface $id, array $data): bool
     {
-        return $this->update($id, $data);
+        $client = $this->getCoreClient($id);
+
+        if (!$client) {
+            return false;
+        }
+        if (isset($data['file']) && $data['file'] instanceof \Illuminate\Http\UploadedFile) {
+            $client->clearMediaCollection('profile_pictures');
+            
+            $client->addMedia($data['file'])
+                ->toMediaCollection('profile_pictures');
+        }
+
+        $client->update(array_filter([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'password' => $data['password'] ?? null,
+        ]));
+
+        return true;
     }
+
 
     public function deleteCoreClient(UuidInterface $id): bool
     {

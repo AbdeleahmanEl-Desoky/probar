@@ -13,7 +13,8 @@ class UpdateCoreClientCommand
         private string $name,
         private string $email,
         private string $phone,
-        private ?string $password
+        private ?string $password,
+        private  $file,
     ) {
     }
 

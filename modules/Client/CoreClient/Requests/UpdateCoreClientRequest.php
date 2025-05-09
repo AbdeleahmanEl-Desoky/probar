@@ -26,6 +26,7 @@ class UpdateCoreClientRequest extends FormRequest
             email:$this->get('email'),
             phone: $this->get('phone'),
             password:$this->get('password')?? null,
+            file:$this->file('file')?? null,
         );
     }
 }

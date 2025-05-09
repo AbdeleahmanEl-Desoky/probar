@@ -93,7 +93,7 @@ class CoreClientController extends Controller
         $this->updateCoreClientHandler->handle($command);
 
         $item = $this->coreClientService->get($command->getId());
-
+        
         $presenter = new CoreClientPresenter($item);
 
         return Json::item(item: $presenter->getData());

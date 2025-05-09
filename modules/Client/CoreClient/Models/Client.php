@@ -12,12 +12,14 @@ use BasePackage\Shared\Traits\BaseFilterable;
 //use BasePackage\Shared\Traits\HasTranslations;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-
-class Client extends Authenticatable implements JWTSubject
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+class Client extends Authenticatable implements JWTSubject, HasMedia
 {
     use HasFactory;
     use UuidTrait;
     use BaseFilterable;
+    use InteractsWithMedia;
     //use HasTranslations;
     //use SoftDeletes;
 
