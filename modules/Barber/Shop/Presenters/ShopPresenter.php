@@ -34,6 +34,7 @@ class ShopPresenter extends AbstractPresenter
             'is_open' => $this->shop->is_open,
             'longitude'=> $this->shop->longitude,
             'latitude'=> $this->shop->latitude,
+            'is_favorited' => $this->shop->is_favorited
         ];
     }
 }

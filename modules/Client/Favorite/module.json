@@ -1,0 +1,14 @@
+{
+    "name": "Favorite",
+    "alias": "favorite",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Client\\Favorite\\Providers\\FavoriteServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Client"
+}

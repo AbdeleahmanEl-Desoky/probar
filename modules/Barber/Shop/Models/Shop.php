@@ -12,10 +12,12 @@ use BasePackage\Shared\Traits\BaseFilterable;
 use BasePackage\Shared\Traits\HasTranslations;
 use Modules\Barber\ShopHour\Models\ShopHour;
 use Modules\Barber\ShopService\Models\ShopService;
+use Modules\Client\Favorite\Models\Favorite;
 use Modules\Client\Rate\Models\Rate;
 use Modules\Client\Schedule\Models\Schedule;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Ramsey\Uuid\Uuid;
 class Shop extends Model implements HasMedia
 {
     use HasFactory;
@@ -54,7 +56,7 @@ class Shop extends Model implements HasMedia
     protected $appends = [
         'pictures',
         'total_rates',
-        'average_rating'
+        'average_rating',
     ];
 
     protected static function newFactory(): ShopFactory
@@ -96,4 +98,23 @@ class Shop extends Model implements HasMedia
     {
         return $this->rates()->avg('rate') ?? 0;
     }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+public function getIsFavoritedAttribute(): int
+{
+    $clientId = Uuid::fromString(auth('api_clients')->user()->id);
+
+    // If the client ID is not valid, return 0
+    if (!$clientId) {
+        return 0;
+    }
+
+    // Check if the favorite record exists and return 1 or 0
+    return (int) $this->favorites()
+        ->where('client_id', $clientId)
+        ->exists();
+}
 }

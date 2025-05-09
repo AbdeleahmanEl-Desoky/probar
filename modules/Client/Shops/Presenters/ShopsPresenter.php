@@ -30,6 +30,7 @@ class ShopsPresenter extends AbstractPresenter
             'picture_url' => $this->shop->getFirstMediaUrl('shops'),
             'rate'=>'5',
             'is_open'=>$this->shop->is_open,
+            'is_favorited' => $this->shop->is_favorited
         ];
     }
 }
