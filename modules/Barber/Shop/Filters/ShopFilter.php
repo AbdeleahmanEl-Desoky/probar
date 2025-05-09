@@ -16,4 +16,12 @@ class ShopFilter extends SearchModelFilter
             $q->where('content','like','%'.$name.'%');
         });
     }
+    public function search($search)
+    {
+        return $this->whereHas('translations',function($q) use ($search){
+            $q->where('content','like','%'.$search.'%');
+        });
+    }
+
+
 }
