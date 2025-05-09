@@ -20,21 +20,21 @@ class ShopsPresenter extends AbstractPresenter
     protected function present(bool $isListing = false): array
     {
         return [
-            'id' => $this->shop->id,
-            'name' => $this->shop->name,
-            'description' => $this->shop->description,
-            'worker_no'=> $this->shop->worker_no,
-            'city_id'=> $this->shop->city_id,
-            'street'=> $this->shop->street,
-            'address_1'=> $this->shop->address_1,
-            'address_2'=> $this->shop->address_2,
-            'picture_url' => $this->shop->getFirstMediaUrl('shops'),
-            'rate'=>'5',
-            'is_open'=>$this->shop->is_open,
-            'is_favorited' => $this->shop->is_favorited,
-            'longitude'=> $this->shop->longitude,
-            'latitude'=> $this->shop->latitude,
-            'shop_hours' => $this->shop->shopHours? (new ShopHourPresenter($this->shop->shopHours))->getData() : null,
-        ];
+                'id' => $this->shop->id,
+                'name' => $this->shop->name,
+                'description' => $this->shop->description,
+                'worker_no'=> $this->shop->worker_no,
+                'city_id'=> $this->shop->city_id,
+                'street'=> $this->shop->street,
+                'address_1'=> $this->shop->address_1,
+                'address_2'=> $this->shop->address_2,
+                'picture_url' => $this->shop->getFirstMediaUrl('shops'),
+                'rate'=>'5',
+                'is_open'=>$this->shop->is_open,
+                'is_favorited' => $this->shop->is_favorited,
+                'longitude'=> $this->shop->longitude,
+                'latitude'=> $this->shop->latitude,
+                'shop_hours' => $this->shop->shopHours ? $this->shop->shopHours->map(fn($hour) => (new ShopHourPresenter($hour))->getData())->toArray() : [],
+            ];
     }
 }
