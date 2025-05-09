@@ -84,4 +84,15 @@ class ScheduleController extends Controller
 
          return Json::item($presenter->getData());
     }
+
+        public function update(UpdateScheduleRequest $request): JsonResponse
+        {
+            $updateScheduleCommand = $request->createUpdateScheduleCommand();
+            $this->updateScheduleHandler->handle($updateScheduleCommand);
+
+            $schedule = $this->scheduleService->get($updateScheduleCommand->getId());
+            $presenter = new ScheduleActivePresenter($schedule);
+
+            return Json::item($presenter->getData());
+        }
 }

@@ -9,5 +9,5 @@ Route::group(['middleware' => ['auth:api_clients']], function () {
     Route::post('/', [ScheduleController::class, 'store']);
     Route::post('/details', [ScheduleController::class, 'getData']);
     Route::get('/{id}', [ScheduleController::class, 'show']);
-
+    Route::put('/{id}', [ScheduleController::class, 'update']);
 });
