@@ -47,6 +47,7 @@ class GetScheduleSlotsService
                     ->whereDate('schedule_date', $date)
                     ->whereTime('start_time', $start->format('H:i'))
                     ->select('id','start_time','end_time','schedule_date','shop_id','client_id','status','note')
+                    // ->filter(request()->all())
                     ->first();
 
                 $timeSlots[] = [

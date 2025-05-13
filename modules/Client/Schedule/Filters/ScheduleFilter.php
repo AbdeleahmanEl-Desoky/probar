@@ -28,8 +28,7 @@ class ScheduleFilter extends SearchModelFilter
     public function active($active)
     {
         return $this->when($active == 'yes',function($q){
-            $q->whereDate('schedule_date', '=', now()->toDateString())
-            ->where('status','pending');
+            $q->where('status','pending');
         });
     }
     public function history($history)
