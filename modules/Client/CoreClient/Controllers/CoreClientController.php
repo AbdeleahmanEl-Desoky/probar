@@ -15,6 +15,7 @@ use Modules\Client\CoreClient\Requests\ChangePasswordRequest;
 use Modules\Client\CoreClient\Requests\CreateCoreClientRequest;
 use Modules\Client\CoreClient\Requests\ForgotPasswordRequest;
 use Modules\Client\CoreClient\Requests\LoginCoreClientRequest;
+use Modules\Client\CoreClient\Requests\ResetPasswordRequest;
 use Modules\Client\CoreClient\Requests\UpdateCoreClientRequest;
 use Modules\Client\CoreClient\Services\CoreClientCRUDService;
 use Modules\Client\CoreClient\Services\ForgotPasswordService;
@@ -112,7 +113,7 @@ class CoreClientController extends Controller
         }
     }
 
-    public function resetPassword(RequestsResetPasswordRequest $request): JsonResponse
+    public function resetPassword(ResetPasswordRequest $request): JsonResponse
     {
         try {
             // Call the service to handle the reset
