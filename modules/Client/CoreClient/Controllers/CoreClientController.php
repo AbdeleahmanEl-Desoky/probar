@@ -7,7 +7,6 @@ namespace Modules\Client\CoreClient\Controllers;
 use App\Presenters\Json;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Modules\Barber\CoreClient\Requests\ForgotPasswordRequest;
 use Modules\Barber\CoreClient\Requests\ResetPasswordRequest;
 use Modules\Barber\CoreBarber\Services\ForgotPasswordService;
 use Modules\Barber\CoreBarber\Services\ResetPasswordService;
@@ -17,7 +16,7 @@ use Modules\Client\CoreClient\Handlers\UpdateCoreClientHandler;
 use Modules\Client\CoreClient\Presenters\CoreClientPresenter;
 use Modules\Client\CoreClient\Requests\ChangePasswordRequest;
 use Modules\Client\CoreClient\Requests\CreateCoreClientRequest;
-use Modules\Client\CoreClient\Requests\ForgotPasswordRequest as RequestsForgotPasswordRequest;
+use Modules\Client\CoreClient\Requests\ForgotPasswordRequest;
 use Modules\Client\CoreClient\Requests\LoginCoreClientRequest;
 use Modules\Client\CoreClient\Requests\ResetPasswordRequest as RequestsResetPasswordRequest;
 use Modules\Client\CoreClient\Requests\UpdateCoreClientRequest;
@@ -102,7 +101,7 @@ class CoreClientController extends Controller
         return Json::item(item: $presenter->getData());
     }
 
-    public function forgotPassword(RequestsForgotPasswordRequest $request): JsonResponse
+    public function forgotPassword(ForgotPasswordRequest $request): JsonResponse
     {
         try {
             $this->forgotPasswordService->generateAndSendOtp($request->email);
