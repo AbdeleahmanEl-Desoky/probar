@@ -7,9 +7,6 @@ namespace Modules\Client\CoreClient\Controllers;
 use App\Presenters\Json;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Modules\Barber\CoreClient\Requests\ResetPasswordRequest;
-use Modules\Barber\CoreClient\Services\ForgotPasswordService;
-use Modules\Barber\CoreClient\Services\ResetPasswordService;
 use Modules\Client\CoreClient\Commands\LoginCoreClientCommand;
 use Modules\Client\CoreClient\Handlers\DeleteCoreClientHandler;
 use Modules\Client\CoreClient\Handlers\UpdateCoreClientHandler;
@@ -20,7 +17,9 @@ use Modules\Client\CoreClient\Requests\ForgotPasswordRequest;
 use Modules\Client\CoreClient\Requests\LoginCoreClientRequest;
 use Modules\Client\CoreClient\Requests\UpdateCoreClientRequest;
 use Modules\Client\CoreClient\Services\CoreClientCRUDService;
+use Modules\Client\CoreClient\Services\ForgotPasswordService;
 use Modules\Client\CoreClient\Services\LoginCoreClientService;
+use Modules\Client\CoreClient\Services\ResetPasswordService;
 use Ramsey\Uuid\Uuid;
 
 class CoreClientController extends Controller
