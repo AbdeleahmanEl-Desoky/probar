@@ -16,7 +16,11 @@ class GetScheduleDataService
     {
         $shopId = $request->shop_id;
         $scheduleDate = $request->schedule_date;
+        $startTime = $request->start_time;
+        $endTime = $request->end_time;
+
         $serviceIds = $request->services;
+
 
         $services = ShopService::whereIn('id', $serviceIds)->get();
 
@@ -36,6 +40,9 @@ class GetScheduleDataService
         $total = $subtotal - $discount;
 
         return [
+            'schedule_date' => $scheduleDate,
+            'start_time' => $startTime,
+            'end_time' => $endTime,
             'services' => $servicesDetails,
             'subtotal' => $subtotal,
             'discount' => $discount,

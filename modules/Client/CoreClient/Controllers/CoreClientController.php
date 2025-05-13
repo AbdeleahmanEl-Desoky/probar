@@ -7,16 +7,19 @@ namespace Modules\Client\CoreClient\Controllers;
 use App\Presenters\Json;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Modules\Barber\CoreBarber\Requests\ForgotPasswordRequest;
-use Modules\Barber\CoreBarber\Requests\ResetPasswordRequest;
+use Modules\Barber\CoreClient\Requests\ForgotPasswordRequest;
+use Modules\Barber\CoreClient\Requests\ResetPasswordRequest;
 use Modules\Barber\CoreBarber\Services\ForgotPasswordService;
 use Modules\Barber\CoreBarber\Services\ResetPasswordService;
 use Modules\Client\CoreClient\Commands\LoginCoreClientCommand;
 use Modules\Client\CoreClient\Handlers\DeleteCoreClientHandler;
 use Modules\Client\CoreClient\Handlers\UpdateCoreClientHandler;
 use Modules\Client\CoreClient\Presenters\CoreClientPresenter;
+use Modules\Client\CoreClient\Requests\ChangePasswordRequest;
 use Modules\Client\CoreClient\Requests\CreateCoreClientRequest;
+use Modules\Client\CoreClient\Requests\ForgotPasswordRequest as RequestsForgotPasswordRequest;
 use Modules\Client\CoreClient\Requests\LoginCoreClientRequest;
+use Modules\Client\CoreClient\Requests\ResetPasswordRequest as RequestsResetPasswordRequest;
 use Modules\Client\CoreClient\Requests\UpdateCoreClientRequest;
 use Modules\Client\CoreClient\Services\CoreClientCRUDService;
 use Modules\Client\CoreClient\Services\LoginCoreClientService;
@@ -93,13 +96,13 @@ class CoreClientController extends Controller
         $this->updateCoreClientHandler->handle($command);
 
         $item = $this->coreClientService->get($command->getId());
-        
+
         $presenter = new CoreClientPresenter($item);
 
         return Json::item(item: $presenter->getData());
     }
 
-    public function forgotPassword(ForgotPasswordRequest $request): JsonResponse
+    public function forgotPassword(RequestsForgotPasswordRequest $request): JsonResponse
     {
         try {
             $this->forgotPasswordService->generateAndSendOtp($request->email);
@@ -112,7 +115,7 @@ class CoreClientController extends Controller
         }
     }
 
-    public function resetPassword(ResetPasswordRequest $request): JsonResponse
+    public function resetPassword(RequestsResetPasswordRequest $request): JsonResponse
     {
         try {
             // Call the service to handle the reset
@@ -125,5 +128,8 @@ class CoreClientController extends Controller
             return Json::error($e->getMessage(), $e->getCode() ?: 500);
         }
     }
-
+    public function changePassword(ChangePasswordRequest $request): JsonResponse
+    {
+        return $this->coreClientService->changePassword($request);
+    }
 }

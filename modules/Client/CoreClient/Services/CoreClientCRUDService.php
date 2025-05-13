@@ -8,8 +8,9 @@ use Illuminate\Support\Collection;
 use Modules\Client\CoreClient\DTO\CreateCoreClientDTO;
 use Modules\Client\CoreClient\Models\Client;
 use Modules\Client\CoreClient\Repositories\CoreClientRepository;
+use Modules\Client\CoreClient\Requests\ChangePasswordRequest;
 use Ramsey\Uuid\UuidInterface;
-
+use Illuminate\Support\Facades\Hash;
 class CoreClientCRUDService
 {
     public function __construct(
@@ -37,4 +38,20 @@ class CoreClientCRUDService
         );
     }
 
+
+
+
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $client = auth('api_clients')->user();
+
+        if (!Hash::check($request->old_password, $client->password)) {
+            return response()->json(['message' => 'Old password is incorrect.'], 422);
+        }
+
+        $client->password = bcrypt($request->new_password);
+        $client->save();
+
+        return response()->json(['message' => 'Password updated successfully.']);
+    }
 }
