@@ -110,7 +110,7 @@ class CoreClientController extends Controller
             return Json::done("OTP sent to your email.",200);
         } catch (\Exception $e) {
             // Correctly pass the error message and HTTP status code.
-            return Json::error($e->getMessage(), $e->getCode());
+            return Json::error($e->getMessage(), 500);
         }
     }
 
