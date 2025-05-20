@@ -35,7 +35,8 @@ class Client extends Authenticatable implements JWTSubject, HasMedia
         'email',
         'password',
         'phone',
-        'gender'
+        'gender',
+        'cfm_token'
     ];
 
     protected $casts = [
