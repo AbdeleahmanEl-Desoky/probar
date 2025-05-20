@@ -70,7 +70,7 @@ class CoreClientRepository extends BaseRepository
 
 
         $client->update(array_filter([
-            'cfm_token' => $data['cfm_token'],
+            'fcm_token' => $data['fcm_token'],
         ]));
 
         return true;
