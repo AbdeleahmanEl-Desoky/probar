@@ -23,7 +23,7 @@ class CfmTokenRequest extends FormRequest
     {
         return new UpdateCoreClientCfmTokenCommand(
             id: Uuid::fromString(auth('api_clients')->user()->id),
-            cfmToken: $this->get('fcm_token'),
+            fcm_token: $this->get('fcm_token'),
         );
     }
 }
