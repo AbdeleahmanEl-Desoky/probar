@@ -7,6 +7,7 @@ namespace Modules\Client\Shops\Controllers;
 use App\Presenters\Json;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Modules\Barber\Shop\Presenters\ShopDetailsPresenter;
 use Modules\Client\Shops\Presenters\ShopsPresenter;
 use Modules\Client\Shops\Requests\GetShopsListRequest;
 use Modules\Client\Shops\Requests\GetShopsRequest;
@@ -34,7 +35,7 @@ class ShopsController extends Controller
     {
         $item = $this->shopsService->get(Uuid::fromString($request->route('id')));
 
-        $presenter = new ShopsPresenter($item);
+        $presenter = new ShopDetailsPresenter($item);
 
         return Json::item($presenter->getData());
     }
