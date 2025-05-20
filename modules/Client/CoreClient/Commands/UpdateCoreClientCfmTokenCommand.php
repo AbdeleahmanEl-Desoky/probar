@@ -6,7 +6,7 @@ namespace Modules\Client\CoreClient\Commands;
 
 use Ramsey\Uuid\UuidInterface;
 
-class UpdateCoreClientCfmToken
+class UpdateCoreClientCfmTokenCommand
 {
     public function __construct(
         private UuidInterface $id,

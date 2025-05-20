@@ -6,6 +6,7 @@ namespace Modules\Client\CoreClient\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Modules\Client\CoreClient\Commands\UpdateCoreClientCfmToken;
+use Modules\Client\CoreClient\Commands\UpdateCoreClientCfmTokenCommand;
 use Ramsey\Uuid\Uuid;
 use Modules\Client\CoreClient\Commands\UpdateCoreClientCommand;
 use Modules\Client\CoreClient\Handlers\UpdateCoreClientHandler;
@@ -18,9 +19,9 @@ class CfmTokenRequest extends FormRequest
             'cfm_token' => 'required',
         ];
     }
-    public function updateCoreClientCfmTokenCommand(): UpdateCoreClientCfmToken
+    public function updateCoreClientCfmTokenCommand(): UpdateCoreClientCfmTokenCommand
     {
-        return new UpdateCoreClientCfmToken(
+        return new UpdateCoreClientCfmTokenCommand(
             id: Uuid::fromString(auth('api_clients')->user()->id),
             cfmToken: $this->get('cfm_token'),
         );
