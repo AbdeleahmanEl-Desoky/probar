@@ -20,10 +20,13 @@ class ShopFilter extends SearchModelFilter
     {
         return $this->whereHas('translations',function($q) use ($search){
             $q->where('content','like','%'.$search.'%');
-        })->orWhereHas('barber',function($q) use ($search){
+        })
+        ->orWhereHas('barber',function($q) use ($search){
             $q->where('name','like','%'.$search.'%');
         })->orWhereHas('shopServices',function($q) use ($search){
-            $q->where('name','like','%'.$search.'%');
+            $q->whereHas('translations',function($q) use ($search){
+                $q->where('content','like','%'.$search.'%');
+            });
         })
         // ->orWhereHas('city',function($q) use ($search){
         //     $q->where('name','like','%'.$search.'%');
@@ -31,6 +34,8 @@ class ShopFilter extends SearchModelFilter
         ->orWhere('address','like','%'.$search.'%');
 
     }
+
+
 
     public function rate($rate)
     {
