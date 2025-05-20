@@ -13,4 +13,5 @@ Route::group(['middleware' => ['auth:api_clients']], function () {
     Route::get('/', [CoreClientController::class, 'me']);
     Route::post('/', [CoreClientController::class, 'update']);
     Route::post('/change-password', [CoreClientController::class, 'changePassword']);
+    Route::post('/cfm-token', [CoreClientController::class, 'updateCfmToken']);
 });

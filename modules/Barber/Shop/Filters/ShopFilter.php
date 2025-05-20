@@ -20,8 +20,47 @@ class ShopFilter extends SearchModelFilter
     {
         return $this->whereHas('translations',function($q) use ($search){
             $q->where('content','like','%'.$search.'%');
+        })->orWhereHas('barber',function($q) use ($search){
+            $q->where('name','like','%'.$search.'%');
+        })->orWhereHas('services',function($q) use ($search){
+            $q->where('name','like','%'.$search.'%');
+        })
+        ->orWhereHas('city',function($q) use ($search){
+            $q->where('name','like','%'.$search.'%');
+        })->orWhere('address','like','%'.$search.'%');
+
+    }
+
+    public function rate($rate)
+    {
+        return $this->whereHas('rates',function($q) use ($rate){
+            $q->where('rate',$rate);
+        });
+    }
+    public function barber($barber)
+    {
+        return $this->where('barber_id', $barber);
+    }
+    public function service($service)
+    {
+        return $this->whereHas('services',function($q) use ($service){
+            $q->where('id',$service);
+        });
+    }
+    public function city($city)
+    {
+        return $this->whereHas('translations',function($q) use ($city){
+            $q->where('content','like','%'.$city.'%');
         });
     }
 
+    public function is_open($is_open)
+    {
+        return $this->where('is_open', $is_open);
+    }
+    public function featured($featured)
+    {
+        return $this->where('featured', $featured);
+    }
 
 }

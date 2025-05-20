@@ -16,7 +16,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Modules\Shared\Notification\Models\Notification;
 
 class Barber extends Authenticatable implements JWTSubject//, Auditable
 {
@@ -68,5 +68,8 @@ class Barber extends Authenticatable implements JWTSubject//, Auditable
         return [];
     }
 
-
+   public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
+    }
 }

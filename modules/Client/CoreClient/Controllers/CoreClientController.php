@@ -9,8 +9,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Modules\Client\CoreClient\Commands\LoginCoreClientCommand;
 use Modules\Client\CoreClient\Handlers\DeleteCoreClientHandler;
+use Modules\Client\CoreClient\Handlers\UpdateCoreClientCfmTokenHandler;
 use Modules\Client\CoreClient\Handlers\UpdateCoreClientHandler;
 use Modules\Client\CoreClient\Presenters\CoreClientPresenter;
+use Modules\Client\CoreClient\Requests\CfmTokenRequest;
 use Modules\Client\CoreClient\Requests\ChangePasswordRequest;
 use Modules\Client\CoreClient\Requests\CreateCoreClientRequest;
 use Modules\Client\CoreClient\Requests\ForgotPasswordRequest;
@@ -28,6 +30,7 @@ class CoreClientController extends Controller
     public function __construct(
         private CoreClientCRUDService $coreClientService,
         private UpdateCoreClientHandler $updateCoreClientHandler,
+        private UpdateCoreClientCfmTokenHandler $updateCoreClientCfmTokenHandler,
         private DeleteCoreClientHandler $deleteCoreClientHandler,
         private LoginCoreClientService $loginCoreClientService,
         private ForgotPasswordService $forgotPasswordService,
@@ -130,4 +133,16 @@ class CoreClientController extends Controller
     {
         return $this->coreClientService->changePassword($request);
     }
+    public function updateCfmToken(CfmTokenRequest $request): JsonResponse
+    {
+        $command = $request->updateCoreClientCfmTokenCommand();
+        $this->updateCoreClientCfmTokenHandler->handle($command);
+
+        $item = $this->coreClientService->get($command->getId());
+
+        $presenter = new CoreClientPresenter($item);
+
+        return Json::item(item: $presenter->getData());
+    }
+
 }

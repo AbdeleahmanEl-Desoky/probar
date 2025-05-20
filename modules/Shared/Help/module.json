@@ -1,0 +1,14 @@
+{
+    "name": "Help",
+    "alias": "help",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Shared\\Help\\Providers\\HelpServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Shared"
+}

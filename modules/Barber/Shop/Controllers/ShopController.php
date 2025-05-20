@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Modules\Barber\Shop\Handlers\DeleteShopHandler;
 use Modules\Barber\Shop\Handlers\UpdateShopHandler;
+use Modules\Barber\Shop\Presenters\ShopDetailsPresenter;
 use Modules\Barber\Shop\Presenters\ShopPresenter;
 use Modules\Barber\Shop\Requests\CreateShopRequest;
 use Modules\Barber\Shop\Requests\DeleteShopRequest;
@@ -39,7 +40,7 @@ class ShopController extends Controller
                 'payload' =>null,
             ]);
         }
-       $presenter = new ShopPresenter($item);
+       $presenter = new ShopDetailsPresenter($item);
 
         return Json::item($presenter->getData());
     }

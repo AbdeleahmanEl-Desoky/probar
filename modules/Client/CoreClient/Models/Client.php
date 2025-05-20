@@ -11,6 +11,7 @@ use Modules\Client\CoreClient\Database\factories\CoreClientFactory;
 use BasePackage\Shared\Traits\BaseFilterable;
 //use BasePackage\Shared\Traits\HasTranslations;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Modules\Shared\Notification\Models\Notification;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -62,5 +63,9 @@ class Client extends Authenticatable implements JWTSubject, HasMedia
     public function getJWTCustomClaims()
     {
         return [];
+    }
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
     }
 }
