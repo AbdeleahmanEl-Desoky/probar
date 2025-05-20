@@ -27,7 +27,7 @@ class ShopServicesCRUDService
         );
     }
 
-        public function listAll(): array
+        public function listAll()
     {
         return $this->repository->all();
     }
