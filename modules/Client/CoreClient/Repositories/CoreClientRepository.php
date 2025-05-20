@@ -45,7 +45,7 @@ class CoreClientRepository extends BaseRepository
         }
         if (isset($data['file']) && $data['file'] instanceof \Illuminate\Http\UploadedFile) {
             $client->clearMediaCollection('profile_pictures');
-            
+
             $client->addMedia($data['file'])
                 ->toMediaCollection('profile_pictures');
         }
@@ -55,6 +55,22 @@ class CoreClientRepository extends BaseRepository
             'email' => $data['email'],
             'phone' => $data['phone'],
             'password' => $data['password'] ?? null,
+        ]));
+
+        return true;
+    }
+
+        public function updateCfmTokenCoreClient(UuidInterface $id, array $data): bool
+    {
+        $client = $this->getCoreClient($id);
+
+        if (!$client) {
+            return false;
+        }
+
+
+        $client->update(array_filter([
+            'cfm_token' => $data['cfm_token'],
         ]));
 
         return true;

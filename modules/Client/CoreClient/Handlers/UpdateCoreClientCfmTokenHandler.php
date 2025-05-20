@@ -18,6 +18,6 @@ class UpdateCoreClientCfmTokenHandler
 
     public function handle(UpdateCoreClientCfmTokenCommand $UpdateCoreClientCfmToken)
     {
-        $this->repository->updateCoreClient($UpdateCoreClientCfmToken->getId(), $UpdateCoreClientCfmToken->toArray());
+        $this->repository->updateCfmTokenCoreClient($UpdateCoreClientCfmToken->getId(), $UpdateCoreClientCfmToken->toArray());
     }
 }
