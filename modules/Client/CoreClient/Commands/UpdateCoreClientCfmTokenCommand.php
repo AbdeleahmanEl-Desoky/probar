@@ -10,7 +10,7 @@ class UpdateCoreClientCfmTokenCommand
 {
     public function __construct(
         private UuidInterface $id,
-        private string $cfmToken,
+        private string $fcm_token,
     ) {
     }
 
@@ -23,7 +23,7 @@ class UpdateCoreClientCfmTokenCommand
     public function toArray(): array
     {
         return array_filter([
-            'cfm_token' => $this->cfmToken,
+            'fcm_token' => $this->fcm_token,
         ]);
     }
 }
