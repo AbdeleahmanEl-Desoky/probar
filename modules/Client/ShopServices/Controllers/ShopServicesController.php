@@ -30,6 +30,12 @@ class ShopServicesController extends Controller
 
         return Json::items(ShopServicesPresenter::collection($list['data']), paginationSettings: $list['pagination']);
     }
+    public function indexAll(GetShopServicesListRequest $request): JsonResponse
+    {
+        $list = $this->shopServicesService->listAll();
+
+        return Json::items(ShopServicesPresenter::collection($list));
+    }
 
 
 }

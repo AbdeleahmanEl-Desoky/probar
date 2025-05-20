@@ -27,4 +27,9 @@ class ShopServicesCRUDService
         );
     }
 
+        public function listAll(): array
+    {
+        return $this->repository->all();
+    }
+
 }
