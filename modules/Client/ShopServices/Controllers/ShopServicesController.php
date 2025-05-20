@@ -7,6 +7,7 @@ namespace Modules\Client\ShopServices\Controllers;
 use App\Presenters\Json;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Modules\Client\ShopServices\Presenters\ShopServicesfilterPresenter;
 use Modules\Client\ShopServices\Presenters\ShopServicesPresenter;
 use Modules\Client\ShopServices\Requests\GetShopServicesListRequest;
 use Modules\Client\ShopServices\Services\ShopServicesCRUDService;
@@ -34,7 +35,7 @@ class ShopServicesController extends Controller
     {
         $list = $this->shopServicesService->listAll();
 
-        return Json::items(ShopServicesPresenter::collection($list));
+        return Json::items(ShopServicesfilterPresenter::collection($list));
     }
 
 
