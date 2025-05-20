@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Barber\Shop\Database\factories\ShopFactory;
 use BasePackage\Shared\Traits\BaseFilterable;
 use BasePackage\Shared\Traits\HasTranslations;
+use Modules\Barber\CoreBarber\Models\Barber;
 use Modules\Barber\ShopHour\Models\ShopHour;
 use Modules\Barber\ShopService\Models\ShopService;
 use Modules\Client\Favorite\Models\Favorite;
@@ -85,6 +86,10 @@ class Shop extends Model implements HasMedia
         return $this->hasMany(Rate::class);
     }
 
+    public function barber()
+    {
+        return $this->belongsTo(Barber::class);
+    }
     public function schedules()
     {
         return $this->hasMany(Schedule::class);
