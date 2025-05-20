@@ -81,6 +81,11 @@ class Shop extends Model implements HasMedia
     {
         return $this->hasMany(ShopService::class);
     }
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+    
     public function rates()
     {
         return $this->hasMany(Rate::class);

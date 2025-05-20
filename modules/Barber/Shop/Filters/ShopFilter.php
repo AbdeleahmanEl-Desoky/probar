@@ -25,9 +25,10 @@ class ShopFilter extends SearchModelFilter
         })->orWhereHas('shopServices',function($q) use ($search){
             $q->where('name','like','%'.$search.'%');
         })
-        ->orWhereHas('city',function($q) use ($search){
-            $q->where('name','like','%'.$search.'%');
-        })->orWhere('address','like','%'.$search.'%');
+        // ->orWhereHas('city',function($q) use ($search){
+        //     $q->where('name','like','%'.$search.'%');
+        // })
+        ->orWhere('address','like','%'.$search.'%');
 
     }
 
