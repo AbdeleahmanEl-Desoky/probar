@@ -16,7 +16,7 @@ class CfmTokenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cfm_token' => 'required',
+            'fcm_token' => 'required',
         ];
     }
     public function updateCoreClientCfmTokenCommand(): UpdateCoreClientCfmTokenCommand
