@@ -22,7 +22,7 @@ class ShopFilter extends SearchModelFilter
             $q->where('content','like','%'.$search.'%');
         })->orWhereHas('barber',function($q) use ($search){
             $q->where('name','like','%'.$search.'%');
-        })->orWhereHas('services',function($q) use ($search){
+        })->orWhereHas('shopServices',function($q) use ($search){
             $q->where('name','like','%'.$search.'%');
         })
         ->orWhereHas('city',function($q) use ($search){
@@ -43,7 +43,7 @@ class ShopFilter extends SearchModelFilter
     }
     public function service($service)
     {
-        return $this->whereHas('services',function($q) use ($service){
+        return $this->whereHas('shopServices',function($q) use ($service){
             $q->where('id',$service);
         });
     }
