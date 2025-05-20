@@ -34,7 +34,8 @@ class Client extends Authenticatable implements JWTSubject, HasMedia
         'name',
         'email',
         'password',
-        'phone'
+        'phone',
+        'gender'
     ];
 
     protected $casts = [
