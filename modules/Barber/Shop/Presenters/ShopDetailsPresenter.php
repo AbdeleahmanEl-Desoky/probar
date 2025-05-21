@@ -37,6 +37,7 @@ class ShopDetailsPresenter extends AbstractPresenter
             'latitude'=> $this->shop->latitude,
             'is_favorited' => $this->shop->is_favorited,
             'rates' => $this->shop->rates? RatePresenter::collection($this->shop->rates): [],
+            'shop_hours' => $this->shop->shopHours ? $this->shop->shopHours->map(fn($hour) => (new ShopHourPresenter($hour))->getData())->toArray() : [],
         ];
     }
 }
