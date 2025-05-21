@@ -6,6 +6,7 @@ namespace Modules\Barber\Shop\Presenters;
 
 use Modules\Barber\Shop\Models\Shop;
 use BasePackage\Shared\Presenters\AbstractPresenter;
+use Modules\Barber\ShopHour\Presenters\ShopHourPresenter;
 use Modules\Client\Rate\Presenters\RatePresenter;
 use Modules\Shared\Media\Presenters\MediaPresenter;
 
