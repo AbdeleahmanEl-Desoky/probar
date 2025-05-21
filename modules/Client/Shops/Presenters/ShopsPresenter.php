@@ -7,6 +7,7 @@ namespace Modules\Client\Shops\Presenters;
 use BasePackage\Shared\Presenters\AbstractPresenter;
 use Modules\Barber\Shop\Models\Shop;
 use Modules\Barber\ShopHour\Presenters\ShopHourPresenter;
+use Modules\Client\Shops\Services\ShopsFormatDistanceService;
 
 class ShopsPresenter extends AbstractPresenter
 {
@@ -34,6 +35,15 @@ class ShopsPresenter extends AbstractPresenter
                 'is_favorited' => $this->shop->is_favorited,
                 'longitude'=> $this->shop->longitude,
                 'latitude'=> $this->shop->latitude,
+                'distance' => ShopsFormatDistanceService::formatDistance(
+                    ShopsFormatDistanceService::calculateDistance(
+                        auth('api_clients')->user()->latitude,
+                        auth('api_clients')->user()->longitude,
+                        $this->shop->latitude,
+                        $this->shop->longitude
+                    )
+                ),
+
             ];
     }
 }

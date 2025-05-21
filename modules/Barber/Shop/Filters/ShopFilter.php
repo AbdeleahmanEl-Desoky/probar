@@ -69,5 +69,30 @@ class ShopFilter extends SearchModelFilter
     {
         return $this->where('featured', $featured);
     }
+    public function nearest($value)
+    {
+        if ($value !== 'yes') {
+            return $this;
+        }
 
+        $client = auth('api_clients')->user();
+
+        if (!$client || !$client->latitude || !$client->longitude) {
+            return $this; // Skip if location is missing
+        }
+
+        $latitude = $client->latitude;
+        $longitude = $client->longitude;
+
+        // Haversine distance calculation
+        return $this->selectRaw("
+                *,
+                (6371000 * acos(
+                    cos(radians(?)) * cos(radians(latitude)) *
+                    cos(radians(longitude) - radians(?)) +
+                    sin(radians(?)) * sin(radians(latitude))
+                )) AS distance
+            ", [$latitude, $longitude, $latitude])
+            ->orderBy('distance');
+    }
 }
