@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Modules\Client\CoreClient\Commands\LoginCoreClientCommand;
 use Modules\Client\CoreClient\Handlers\DeleteCoreClientHandler;
+use Modules\Client\CoreClient\Handlers\UpdateClientLatLongHandler;
 use Modules\Client\CoreClient\Handlers\UpdateCoreClientCfmTokenHandler;
 use Modules\Client\CoreClient\Handlers\UpdateCoreClientHandler;
 use Modules\Client\CoreClient\Presenters\CoreClientPresenter;
@@ -16,6 +17,7 @@ use Modules\Client\CoreClient\Requests\CfmTokenRequest;
 use Modules\Client\CoreClient\Requests\ChangePasswordRequest;
 use Modules\Client\CoreClient\Requests\CreateCoreClientRequest;
 use Modules\Client\CoreClient\Requests\ForgotPasswordRequest;
+use Modules\Client\CoreClient\Requests\LatLongUpdateRequest;
 use Modules\Client\CoreClient\Requests\LoginCoreClientRequest;
 use Modules\Client\CoreClient\Requests\ResetPasswordRequest;
 use Modules\Client\CoreClient\Requests\UpdateCoreClientRequest;
@@ -35,6 +37,7 @@ class CoreClientController extends Controller
         private LoginCoreClientService $loginCoreClientService,
         private ForgotPasswordService $forgotPasswordService,
         private ResetPasswordService $resetPasswordService,
+        private UpdateClientLatLongHandler $updateClientLatLongHandler,
     ) {
     }
 
@@ -144,5 +147,16 @@ class CoreClientController extends Controller
 
         return Json::item(item: $presenter->getData());
     }
+
+public function updateLatLong(LatLongUpdateRequest $request): JsonResponse
+{
+    $command = $request->toCommand();
+    $this->updateClientLatLongHandler->handle($command);
+
+    $client = $this->coreClientService->get($command->getId());
+    $presenter = new CoreClientPresenter($client);
+
+    return Json::item(item: $presenter->getData());
+}
 
 }

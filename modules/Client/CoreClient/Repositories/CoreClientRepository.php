@@ -75,7 +75,19 @@ class CoreClientRepository extends BaseRepository
 
         return true;
     }
+    public function updateLatLong(UuidInterface $id, array $data): bool
+    {
+        $client = $this->getCoreClient($id);
 
+        if (!$client) {
+            return false;
+        }
+
+        return $client->update([
+            'latitude' => $data['latitude'],
+            'longitude' => $data['longitude'],
+        ]);
+    }
 
     public function deleteCoreClient(UuidInterface $id): bool
     {
