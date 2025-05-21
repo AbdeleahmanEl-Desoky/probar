@@ -148,7 +148,7 @@ class CoreClientController extends Controller
         return Json::item(item: $presenter->getData());
     }
 
-public function updateLatLong(LatLongUpdateRequest $request): JsonResponse
+public function updateMapLocation(LatLongUpdateRequest $request): JsonResponse
 {
     $command = $request->toCommand();
     $this->updateClientLatLongHandler->handle($command);
