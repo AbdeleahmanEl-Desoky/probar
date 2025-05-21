@@ -31,12 +31,18 @@ class ScheduleFilter extends SearchModelFilter
             $q->where('status','pending');
         });
     }
-    public function history($history)
-    {
-        return $this->when($history == 'yes',function($q){
-            $q->whereDate('schedule_date', '<=', now()->toDateString())
-            ->whereNot('status','pending');
+public function history($history)
+{
+    return $this->when($history == 'yes', function ($q) {
+        $q->where(function ($query) {
+            $query->where(function ($subQuery) {
+                $subQuery->whereDate('schedule_date', '>', now()->toDateString())
+                         ->where('status', 'pending');
+            })->orWhere(function ($subQuery) {
+                $subQuery->where('status', '!=', 'pending');
+            });
         });
-    }
+    });
+}
 
 }

@@ -15,8 +15,10 @@ class CreateHelpRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email'=> 'required|email',
+                
             'message'=> 'required|string',
             'type' => 'required|string',
+
         ];
     }
 
