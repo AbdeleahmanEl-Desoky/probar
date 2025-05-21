@@ -37,10 +37,10 @@ class ShopsPresenter extends AbstractPresenter
                 'latitude'=> $this->shop->latitude,
                 'distance' => ShopsFormatDistanceService::formatDistance(
                     ShopsFormatDistanceService::calculateDistance(
-                        auth('api_clients')->user()->latitude,
-                        auth('api_clients')->user()->longitude,
-                        $this->shop->latitude,
-                        $this->shop->longitude
+                        (float) auth('api_clients')->user()->latitude,
+                        (float) auth('api_clients')->user()->longitude,
+                        (float) $this->shop->latitude,
+                        (float) $this->shop->longitude
                     )
                 ),
 
