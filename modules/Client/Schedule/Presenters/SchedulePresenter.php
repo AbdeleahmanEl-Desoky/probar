@@ -28,7 +28,10 @@ class SchedulePresenter extends AbstractPresenter
             'status' => $this->schedule->status ,
             'note' => $this->schedule->note ,
             'name' => $this->schedule->shop->name,
-            'shop_rate' => $this->schedule->shop->rate,
+            'city'=> $this->schedule->shop?->city?->name??null,
+            'address_1' => $this->schedule->shop?->address_1,
+            'address_2' => $this->schedule->shop?->address_2,
+            'shop_rate' => $this->schedule->shop?->rate,
             'payment' =>$this->schedule->payment,
             'picture_url' => $this->schedule->shop->getFirstMediaUrl('shops'),
         ];
