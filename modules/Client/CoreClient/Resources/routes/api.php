@@ -15,4 +15,5 @@ Route::group(['middleware' => ['auth:api_clients']], function () {
     Route::post('/change-password', [CoreClientController::class, 'changePassword']);
     Route::post('/fcm-token', [CoreClientController::class, 'updateCfmToken']);
     Route::post('/update-map-location', [CoreClientController::class, 'updateMapLocation']);
+    Route::delete('/', [CoreClientController::class, 'delete']);
 });

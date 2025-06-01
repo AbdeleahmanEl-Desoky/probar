@@ -16,6 +16,7 @@ use Modules\Client\CoreClient\Presenters\CoreClientPresenter;
 use Modules\Client\CoreClient\Requests\CfmTokenRequest;
 use Modules\Client\CoreClient\Requests\ChangePasswordRequest;
 use Modules\Client\CoreClient\Requests\CreateCoreClientRequest;
+use Modules\Client\CoreClient\Requests\DeleteCoreClientRequest;
 use Modules\Client\CoreClient\Requests\ForgotPasswordRequest;
 use Modules\Client\CoreClient\Requests\LatLongUpdateRequest;
 use Modules\Client\CoreClient\Requests\LoginCoreClientRequest;
@@ -148,15 +149,20 @@ class CoreClientController extends Controller
         return Json::item(item: $presenter->getData());
     }
 
-public function updateMapLocation(LatLongUpdateRequest $request): JsonResponse
-{
-    $command = $request->toCommand();
-    $this->updateClientLatLongHandler->handle($command);
+    public function updateMapLocation(LatLongUpdateRequest $request): JsonResponse
+    {
+        $command = $request->toCommand();
+        $this->updateClientLatLongHandler->handle($command);
 
-    $client = $this->coreClientService->get($command->getId());
-    $presenter = new CoreClientPresenter($client);
+        $client = $this->coreClientService->get($command->getId());
+        $presenter = new CoreClientPresenter($client);
 
-    return Json::item(item: $presenter->getData());
-}
+        return Json::item(item: $presenter->getData());
+    }
+    public function delete(DeleteCoreClientRequest $request): JsonResponse
+    {
+        $this->deleteCoreClientHandler->handle(Uuid::fromString(auth('api_clients')->user()->id));
 
+        return Json::deleted();
+    }
 }

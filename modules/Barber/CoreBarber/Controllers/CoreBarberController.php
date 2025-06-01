@@ -134,7 +134,7 @@ class CoreBarberController extends Controller
 
     public function delete(DeleteCoreBarberRequest $request): JsonResponse
     {
-        $this->deleteCoreBarberHandler->handle(Uuid::fromString($request->route('id')));
+        $this->deleteCoreBarberHandler->handle(Uuid::fromString(auth('api_barbers')->user()->id));
 
         return Json::deleted();
     }

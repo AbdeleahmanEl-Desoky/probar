@@ -11,5 +11,5 @@ Route::post('reset-password', [CoreBarberController::class, 'resetPassword']);
 Route::group(['middleware' => ['auth:api_barbers']], function () {
     Route::get('/', [CoreBarberController::class, 'me']);
     Route::put('/', [CoreBarberController::class, 'update']);
-    Route::delete('/{id}', [CoreBarberController::class, 'delete']);
+    Route::delete('/', [CoreBarberController::class, 'delete']);
 });
