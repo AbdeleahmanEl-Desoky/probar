@@ -12,6 +12,7 @@ use Modules\Barber\CoreBarber\Handlers\DeleteCoreBarberHandler;
 use Modules\Barber\CoreBarber\Handlers\UpdateCoreBarberHandler;
 use Modules\Barber\CoreBarber\Presenters\CoreBarberPresenter;
 use Modules\Barber\CoreBarber\Requests\CreateCoreBarberRequest;
+use Modules\Barber\CoreBarber\Requests\DeleteCoreBarberRequest;
 use Modules\Barber\CoreBarber\Requests\LoginCoreBarberRequest;
 use Modules\Barber\CoreBarber\Requests\UpdateCoreBarberRequest;
 use Modules\Barber\CoreBarber\Services\CoreBarberCRUDService;
@@ -131,5 +132,10 @@ class CoreBarberController extends Controller
         }
     }
 
+    public function delete(DeleteCoreBarberRequest $request): JsonResponse
+    {
+        $this->deleteCoreBarberHandler->handle(Uuid::fromString($request->route('id')));
 
+        return Json::deleted();
+    }
 }
