@@ -190,16 +190,25 @@ class CoreClientController extends Controller
             $message = CloudMessage::fromArray([
                 'token' => $FcmToken,
                 'notification' => [
-                    'title' => 'test',
-                    'body' => 'test',
-                    'sound' => 'default', // 🔊 Sound enabled
+                    'title' => 'Test',
+                    'body' => 'Test with icon',
+                    'sound' => 'default',
+                    'icon' => 'ic_notification', // Must match the drawable name
                 ],
-                'data' => [
-                    'model' => 'test',
-                    'event_id' => 'test',
+                'android' => [
+                    'notification' => [
+                        'icon' => 'ic_notification',
+                        'sound' => 'default',
+                    ],
+                ],
+                'apns' => [
+                    'payload' => [
+                        'aps' => [
+                            'sound' => 'default',
+                        ],
+                    ],
                 ],
             ]);
             $messaging->send($message);
-
     }
 }
