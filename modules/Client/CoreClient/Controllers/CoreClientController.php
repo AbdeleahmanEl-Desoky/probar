@@ -32,7 +32,7 @@ use Kreait\Laravel\Firebase\Facades\Firebase;
 use Kreait\Firebase\Messaging\CloudMessage;
 class CoreClientController extends Controller
 {
-        protected $notification;
+        // protected $notification;
 
     public function __construct(
         private CoreClientCRUDService $coreClientService,
@@ -46,7 +46,7 @@ class CoreClientController extends Controller
         private FirebaseNotificationService $firebaseNotificationService,
 
     ) {
-        $this->notification = Firebase::messaging();
+        // $this->notification = Firebase::messaging();
     }
 
     public function login(LoginCoreClientRequest $request): JsonResponse
@@ -182,23 +182,22 @@ class CoreClientController extends Controller
         if (!$FcmToken) {
             return response()->json(['success' => false, 'message' => 'FCM Token not found for the user.'], 400);
         }
-
-        $title = 'This is the title';
-        $body = 'This is the body';
-
-        // Create the CloudMessage
-        try {
-            $message = CloudMessage::withTarget('token', $FcmToken)
-                ->withNotification([
-                    'title' => $title,
-                    'body' => $body,
-                ]);
-
-            // Send the message
-            $this->notification->send($message);
-            return response()->json(['success' => true, 'message' => 'Notification sent successfully']);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
-        }
+            $dir = public_path('/json/taggz-firebase.json');
+            $firebase = (new Factory)
+                ->withServiceAccount($dir);
+            $messaging = $firebase->createMessaging();
+            $message = CloudMessage::fromArray([
+                'token' => $fcm_token,
+                'notification' => [
+                    'title' => 'test',
+                    'body' => 'test',
+                ],
+                'data' => [
+                    'model' => 'test',
+                    'event_id' => 'test',
+                ],
+            ]);
+            $messaging->send($message);
+        
     }
 }
