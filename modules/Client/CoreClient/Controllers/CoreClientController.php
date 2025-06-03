@@ -192,6 +192,7 @@ class CoreClientController extends Controller
                 'notification' => [
                     'title' => 'test',
                     'body' => 'test',
+                    'sound' => 'default', // 🔊 Sound enabled
                 ],
                 'data' => [
                     'model' => 'test',
