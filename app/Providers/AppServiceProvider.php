@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Register the Kreait Firebase Messaging client as a singleton
         $this->app->singleton(Messaging::class, function ($app) {
-            $credentialsPath = config('services.firebase.credentials.file');
+            $credentialsPath = config('services.firebase.credentials');
             if (!$credentialsPath || !file_exists($credentialsPath)) {
                 // Log an error or throw an exception if credentials are not set/found
                 \Log::error('Firebase credentials file not found or path not configured.', ['path' => $credentialsPath]);
