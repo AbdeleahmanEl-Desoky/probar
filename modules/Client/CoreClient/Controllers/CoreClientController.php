@@ -28,9 +28,12 @@ use Modules\Client\CoreClient\Services\LoginCoreClientService;
 use Modules\Client\CoreClient\Services\ResetPasswordService;
 use Modules\Shared\Notification\Services\FirebaseNotificationService;
 use Ramsey\Uuid\Uuid;
-
+use Kreait\Laravel\Firebase\Facades\Firebase;
+use Kreait\Firebase\Messaging\CloudMessage;
 class CoreClientController extends Controller
 {
+        protected $notification;
+
     public function __construct(
         private CoreClientCRUDService $coreClientService,
         private UpdateCoreClientHandler $updateCoreClientHandler,
@@ -40,7 +43,7 @@ class CoreClientController extends Controller
         private ForgotPasswordService $forgotPasswordService,
         private ResetPasswordService $resetPasswordService,
         private UpdateClientLatLongHandler $updateClientLatLongHandler,
-        private FirebaseNotificationService $firebaseNotificationService
+        private FirebaseNotificationService $firebaseNotificationService,
     ) {
     }
 
@@ -168,15 +171,32 @@ class CoreClientController extends Controller
         return Json::deleted();
     }
 
-    public function test()//: JsonResponse
+    public function notification()
     {
-      return  $this->firebaseNotificationService->send(
-            'ddr0aKwFQ9a44m8IKB-LPI:APA91bEuHUlKOAaUqqqr2xQqERm4DxKJBW3h6HHevZuPhP7nbogvPANjsitu8rzTwVln_cGhgZEgHpnF0xMdJoTbcs2StjVPpvELQNAjPPyOgmSTIlNjQ8M',
-            'Test Notification',
-            'This is a test notification from the CoreClientController.',
-            ['key' => 'value']
-        );
+        // Get the FCM token of the authenticated user
+        $FcmToken = auth()->user('api_clients')->fcm_token;
 
-        return Json::done('test done', 200);
+        // Check if FCM token is present
+        if (!$FcmToken) {
+            return response()->json(['success' => false, 'message' => 'FCM Token not found for the user.'], 400);
+        }
+
+        $title = 'This is the title';
+        $body = 'This is the body';
+
+        // Create the CloudMessage
+        try {
+            $message = CloudMessage::withTarget('token', $FcmToken)
+                ->withNotification([
+                    'title' => $title,
+                    'body' => $body,
+                ]);
+
+            // Send the message
+            $this->notification->send($message);
+            return response()->json(['success' => true, 'message' => 'Notification sent successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 }
