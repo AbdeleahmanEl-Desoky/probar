@@ -18,7 +18,7 @@ class FirebaseNotificationService
 
     public static function send(string $fcmToken, string $title, string $body, array $data = []): bool
     {
-        // $notification = Notification::create($title, $body);
+        $notification = Notification::create($title, $body);
 
         $message = CloudMessage::withTarget('token', $fcmToken)
             ->withNotification($notification)
