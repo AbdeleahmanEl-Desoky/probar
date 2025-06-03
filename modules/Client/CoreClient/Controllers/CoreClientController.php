@@ -171,7 +171,7 @@ class CoreClientController extends Controller
         return Json::deleted();
     }
 
-    public function notification()
+    public function test()
     {
         // Get the FCM token of the authenticated user
         $FcmToken = auth()->user('api_clients')->fcm_token;
