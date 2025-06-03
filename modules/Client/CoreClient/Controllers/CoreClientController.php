@@ -30,6 +30,7 @@ use Modules\Shared\Notification\Services\FirebaseNotificationService;
 use Ramsey\Uuid\Uuid;
 use Kreait\Laravel\Firebase\Facades\Firebase;
 use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Factory;
 class CoreClientController extends Controller
 {
         // protected $notification;
@@ -198,6 +199,6 @@ class CoreClientController extends Controller
                 ],
             ]);
             $messaging->send($message);
-        
+
     }
 }
