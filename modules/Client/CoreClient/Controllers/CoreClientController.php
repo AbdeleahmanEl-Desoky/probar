@@ -26,6 +26,7 @@ use Modules\Client\CoreClient\Services\CoreClientCRUDService;
 use Modules\Client\CoreClient\Services\ForgotPasswordService;
 use Modules\Client\CoreClient\Services\LoginCoreClientService;
 use Modules\Client\CoreClient\Services\ResetPasswordService;
+use Modules\Shared\Notification\Services\FirebaseNotificationService;
 use Ramsey\Uuid\Uuid;
 
 class CoreClientController extends Controller
@@ -39,6 +40,7 @@ class CoreClientController extends Controller
         private ForgotPasswordService $forgotPasswordService,
         private ResetPasswordService $resetPasswordService,
         private UpdateClientLatLongHandler $updateClientLatLongHandler,
+        private FirebaseNotificationService $firebaseNotificationService
     ) {
     }
 
@@ -164,5 +166,17 @@ class CoreClientController extends Controller
         $this->deleteCoreClientHandler->handle(Uuid::fromString(auth('api_clients')->user()->id));
 
         return Json::deleted();
+    }
+
+    public function test(DeleteCoreClientRequest $request): JsonResponse
+    {
+        $this->firebaseNotificationService->send(
+            'fcm_token_example',
+            'Test Notification',
+            'This is a test notification from the CoreClientController.',
+            ['key' => 'value']
+        );
+
+        return Json::done('test done', 200);
     }
 }
