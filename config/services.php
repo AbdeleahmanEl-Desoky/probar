@@ -34,7 +34,7 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-    'fcm' => [
-        'server_key' => env('FCM_SERVER_KEY'),
+    'firebase' => [
+        'credentials' => storage_path('app/firebase/firebase_credentials.json'),
     ],
 ];
