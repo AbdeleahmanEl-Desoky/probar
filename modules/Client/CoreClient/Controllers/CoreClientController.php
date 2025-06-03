@@ -168,10 +168,10 @@ class CoreClientController extends Controller
         return Json::deleted();
     }
 
-    public function test(): JsonResponse
+    public function test()//: JsonResponse
     {
-        $this->firebaseNotificationService->send(
-            'cpv1rLe3R6uK-EX1GPJ_9X:APA91bG2a0LhYQVlB0tLohffCiqBwnjZ1nT8x1vCsSVRCc1LcJiSC_jc5P9y0g8KxIPAjnuum18INWubGf2M34LCLKNvoMFikrAu5lGNd-OqMg0b-Hsi7i4',
+      return  $this->firebaseNotificationService->send(
+            'ddr0aKwFQ9a44m8IKB-LPI:APA91bEuHUlKOAaUqqqr2xQqERm4DxKJBW3h6HHevZuPhP7nbogvPANjsitu8rzTwVln_cGhgZEgHpnF0xMdJoTbcs2StjVPpvELQNAjPPyOgmSTIlNjQ8M',
             'Test Notification',
             'This is a test notification from the CoreClientController.',
             ['key' => 'value']
