@@ -44,7 +44,9 @@ class CoreClientController extends Controller
         private ResetPasswordService $resetPasswordService,
         private UpdateClientLatLongHandler $updateClientLatLongHandler,
         private FirebaseNotificationService $firebaseNotificationService,
+
     ) {
+        $this->notification = Firebase::messaging();
     }
 
     public function login(LoginCoreClientRequest $request): JsonResponse
