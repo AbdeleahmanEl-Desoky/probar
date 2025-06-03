@@ -183,12 +183,12 @@ class CoreClientController extends Controller
         if (!$FcmToken) {
             return response()->json(['success' => false, 'message' => 'FCM Token not found for the user.'], 400);
         }
-            $dir = public_path('/json/taggz-firebase.json');
+            $dir = config('services.firebase.credentials');
             $firebase = (new Factory)
                 ->withServiceAccount($dir);
             $messaging = $firebase->createMessaging();
             $message = CloudMessage::fromArray([
-                'token' => $fcm_token,
+                'token' => $FcmToken,
                 'notification' => [
                     'title' => 'test',
                     'body' => 'test',
