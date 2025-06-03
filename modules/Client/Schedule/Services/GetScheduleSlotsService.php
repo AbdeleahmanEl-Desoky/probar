@@ -17,7 +17,7 @@ class GetScheduleSlotsService
     ) {
     }
 
-    public function get($shopId,$date=null)
+    public function get($shopId, $date = null)
     {
         $date = $date ? Carbon::parse($date) : Carbon::today();
         $dayOfWeek = $date->format('l');
@@ -33,26 +33,30 @@ class GetScheduleSlotsService
             return ['message' => 'Shop is closed today'];
         }
 
+        $strtoTime = $shopHour->strto_time ?? '+30 minutes'; // default fallback
         $timeSlots = [];
 
         foreach ($shopHour->details as $detail) {
-            $start = Carbon::createFromFormat('H:i', $detail->start_time);
-            $end = Carbon::createFromFormat('H:i', $detail->end_time);
+            $start = strtotime($detail->start_time);
+            $end = strtotime($detail->end_time);
 
             while ($start < $end) {
-                $slotEnd = (clone $start)->addMinutes(30);
+                $slotEnd = strtotime($strtoTime, $start);
+
                 if ($slotEnd > $end) break;
+
+                $slotStartFormatted = date('H:i', $start);
+                $slotEndFormatted = date('H:i', $slotEnd);
 
                 $booking = Schedule::where('shop_id', $shopId)
                     ->whereDate('schedule_date', $date)
-                    ->whereTime('start_time', $start->format('H:i'))
-                    ->select('id','start_time','end_time','schedule_date','shop_id','client_id','status','note')
-                    // ->filter(request()->all())
+                    ->whereTime('start_time', $slotStartFormatted)
+                    ->select('id', 'start_time', 'end_time', 'schedule_date', 'shop_id', 'client_id', 'status', 'note')
                     ->first();
 
                 $timeSlots[] = [
-                    'from' => $start->format('H:i'),
-                    'to' => $slotEnd->format('H:i'),
+                    'from' => $slotStartFormatted,
+                    'to' => $slotEndFormatted,
                     'status' => $booking ? 'pending' : 'available',
                     'booking' => $booking ?? null,
                 ];
@@ -63,5 +67,6 @@ class GetScheduleSlotsService
 
         return $timeSlots;
     }
+
 
 }
