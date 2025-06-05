@@ -27,7 +27,6 @@ class ScheduleFilter extends SearchModelFilter
     }
     public function active($active)
     {
-        \Log::info('toDateString: ' . now()->toDateString());
         if(auth('api_barbers')->check()){
             return $this->when($active == 'yes',function($q){
                 $q->where('status','pending')->whereDate('schedule_date',now()->toDateString());
