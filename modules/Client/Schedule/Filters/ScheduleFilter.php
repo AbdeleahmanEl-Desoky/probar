@@ -44,7 +44,7 @@ class ScheduleFilter extends SearchModelFilter
         return $this->when($history == 'yes', function ($q) {
             $q->where(function ($query) {
                 $query->where(function ($subQuery) {
-                    $subQuery->whereDate('schedule_date', '>', now()->toDateString())
+                    $subQuery->whereDate('schedule_date', '<', now()->toDateString())
                             ->where('status', 'pending');
                 })->orWhere(function ($subQuery) {
                     $subQuery->where('status', '!=', 'pending');
