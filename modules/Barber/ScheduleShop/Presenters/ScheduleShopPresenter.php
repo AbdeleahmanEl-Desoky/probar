@@ -28,7 +28,7 @@ class ScheduleShopPresenter extends AbstractPresenter
             'client_id' => $this->schedule->client_id,
             'status' => $this->schedule->status,
             'note' => $this->schedule->note,
-            'name' => $this->schedule->client->name,
+            'name' => $this->schedule?->client?->name,
             'shop_rate' => $this->schedule->shop->rate,
             'payment' => $this->schedule->payment,
             'picture_url' => $this->schedule->shop->getFirstMediaUrl('shops'),
