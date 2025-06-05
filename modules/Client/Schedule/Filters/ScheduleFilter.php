@@ -29,11 +29,11 @@ class ScheduleFilter extends SearchModelFilter
     {
         if(auth('api_barbers')->check()){
             return $this->when($active == 'yes',function($q){
-                $q->where('status','pending')->whereDate('schedule_date',now()->toDateString());
+                $q->where('status','!=','finished')->whereDate('schedule_date',now()->toDateString());
             });
         }else{
             return $this->when($active == 'yes',function($q){
-                            $q->where('status','pending');
+                            $q->where('status','!=','finished');
                     });
         }
 
