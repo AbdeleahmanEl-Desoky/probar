@@ -21,21 +21,23 @@ class ScheduleFilter extends SearchModelFilter
     public function upcoming($upcoming)
     {
         return $this->when($upcoming == 'yes',function($q){
-            $q->whereDate('schedule_date', '>', now()->toDateString())
+            $q->whereDate('schedule_date', '>',now()->toDateString())
             ->where('status', 'pending');
         });
     }
     public function active($active)
     {
+        \Log::info('toDateString: ' . now()->toDateString());
         if(auth('api_barbers')->check()){
             return $this->when($active == 'yes',function($q){
-                $q->where('status','pending')->whereDate('schedule_date', now()->toDateString());
+                $q->where('status','pending')->whereDate('schedule_date',now()->toDateString());
             });
         }else{
             return $this->when($active == 'yes',function($q){
                             $q->where('status','pending');
                     });
         }
+
     }
 
     public function history($history)

@@ -73,7 +73,7 @@
                 <div class="join-text">
                     <h2>Are You a Skilled Barber?</h2>
                     <p>Join the ProBar platform to showcase your talent, manage bookings efficiently, and connect with new clients. Grow your business with us!</p>
-                    <a href="https://wa.me/YOUR_PHONE_NUMBER?text=Hi%20ProBar%2C%20I'm%20interested%20in%20joining%20as%20a%20barber." target="_blank" rel="noopener noreferrer" class="whatsapp-button">
+                    <a href="https://wa.me/qr/TOWKUMQNFTY7C1" target="_blank" rel="noopener noreferrer" class="whatsapp-button">
                         Join via WhatsApp
                     </a>
                      <p class="small-text">Use our dedicated barber app to manage your profile and appointments.</p>
