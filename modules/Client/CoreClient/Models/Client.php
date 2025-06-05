@@ -11,6 +11,9 @@ use Modules\Client\CoreClient\Database\factories\CoreClientFactory;
 use BasePackage\Shared\Traits\BaseFilterable;
 //use BasePackage\Shared\Traits\HasTranslations;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Modules\Client\Favorite\Models\Favorite;
+use Modules\Client\Rate\Models\Rate;
+use Modules\Client\Schedule\Models\Schedule;
 use Modules\Shared\Notification\Models\Notification;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Spatie\MediaLibrary\HasMedia;
@@ -71,5 +74,28 @@ class Client extends Authenticatable implements JWTSubject, HasMedia
     public function notifications()
     {
         return $this->morphMany(Notification::class, 'notifiable');
+    }
+    public function rates()
+    {
+        return $this->hasMany(Rate::class);
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+    protected static function booted(): void
+    {
+        static::deleting(function (Client $client) {
+            $client->rates()->delete();
+            $client->schedules()->delete();
+            $client->favorites()->delete();
+            $client->notifications()->delete();
+        });
     }
 }

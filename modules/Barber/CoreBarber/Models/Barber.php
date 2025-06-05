@@ -16,6 +16,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Modules\Barber\Shop\Models\Shop;
 use Modules\Shared\Notification\Models\Notification;
 
 class Barber extends Authenticatable implements JWTSubject//, Auditable
@@ -71,5 +72,21 @@ class Barber extends Authenticatable implements JWTSubject//, Auditable
    public function notifications()
     {
         return $this->morphMany(Notification::class, 'notifiable');
+    }
+    public function shops()
+    {
+        return $this->hasMany(Shop::class);
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($barber) {
+            foreach ($barber->shops as $shop) {
+                $shop->delete(); // this will trigger shop-related deletions
+            }
+
+            // Optional: delete notifications if needed
+            $barber->notifications()->delete();
+        });
     }
 }

@@ -113,6 +113,7 @@ class Shop extends Model implements HasMedia
     {
         return $this->hasMany(Favorite::class);
     }
+
    public function getIsFavoritedAttribute(): int
     {
         // Get the authenticated user's ID string
@@ -159,6 +160,20 @@ class Shop extends Model implements HasMedia
             ->where('client_id', $userIdString)
             ->exists();
         */
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($shop) {
+            $shop->shopHours()->delete();
+            $shop->shopServices()->delete();
+            $shop->favorites()->delete();
+            $shop->rates()->delete();
+            $shop->schedules()->delete();
+
+            // Optionally delete media
+            $shop->clearMediaCollection('shops');
+        });
     }
 
 }
