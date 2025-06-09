@@ -53,4 +53,18 @@ class ScheduleFilter extends SearchModelFilter
         });
     }
 
+    public function fromDate($from_date)
+    {
+        return $this->whereDate('schedule_date', '>=', $from_date);
+    }
+
+    public function toDate($to_date)
+    {
+        return $this->whereDate('schedule_date', '<=', $to_date);
+    }
+
+    public function payment($payment)
+    {
+        return $this->where('payment',$payment);
+    }
 }
