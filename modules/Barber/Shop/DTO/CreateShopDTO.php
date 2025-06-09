@@ -20,7 +20,10 @@ class CreateShopDTO
         private string $address_1,
         public ?string $address_2,
         public ?float $latitude,
-        public ?float $longitude
+        public ?float $longitude,
+        public ?string $whatsapp = null,
+        public ?string $facebook = null,
+        public ?string $instagram = null,
         ) {
     }
 
@@ -35,7 +38,10 @@ class CreateShopDTO
             'address_1'=> $this->address_1,
             'address_2'=> $this->address_2,
             'latitude' => $this->latitude,
-            'longitude'=> $this->longitude
+            'longitude'=> $this->longitude,
+            'whatsapp' => $this->whatsapp,
+            'facebook' => $this->facebook,
+            'instagram' => $this->instagram,
         ];
     }
 }

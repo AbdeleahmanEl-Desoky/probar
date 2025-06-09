@@ -26,6 +26,9 @@ class CreateShopRequest extends FormRequest
             'file.*' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
             'longitude'=> 'nullable',
             'latitude'=> 'nullable',
+            'whatsapp'=> 'nullable',
+            'facebook'=> 'nullable',
+            'instagram'=> 'nullable',
         ];
     }
 
@@ -40,7 +43,10 @@ class CreateShopRequest extends FormRequest
             address_1: $this->get('address_1'),
             address_2: $this->get('address_2') ?? null,
             latitude: $this->input('latitude') !== null ? (float) $this->input('latitude') : null,
-            longitude: $this->input('longitude') !== null ? (float) $this->input('longitude') : null
+            longitude: $this->input('longitude') !== null ? (float) $this->input('longitude') : null,
+            whatsapp: $this->get('whatsapp') ?? null,
+            facebook: $this->get('facebook') ?? null,
+            instagram: $this->get('instagram') ?? null,
         );
     }
 }
