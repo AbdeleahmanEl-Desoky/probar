@@ -47,7 +47,32 @@ class ScheduleShopCRUDService
         );
     }
 
+    public function totalCashPayed(string $shopId, ?string $startDate = null, ?string $endDate = null)//: array
+    {
+        return $this->repository->totalCashPayed(
+            shopId: $shopId,
+            startDate: $startDate,
+            endDate:$endDate,
+        );
+    }
 
+    public function totalCityLedger(string $shopId, ?string $startDate = null, ?string $endDate = null)//: array
+    {
+        return $this->repository->totalCityLedger(
+            shopId: $shopId,
+            startDate: $startDate,
+            endDate:$endDate,
+        );
+    }
+
+    public function getTotalSummary(string $shopId, ?string $startDate = null, ?string $endDate = null): array
+    {
+        return [
+            'total_earning'   => $this->totalEarning($shopId, $startDate, $endDate),
+            'total_cash_paid' => $this->totalCashPayed($shopId, $startDate, $endDate),
+            'total_city_ledger' => $this->totalCityLedger($shopId, $startDate, $endDate),
+        ];
+    }
     public function list(string $shopId, int $page = 1, int $perPage = 10)//: array
     {
         return $this->repository->paginated(

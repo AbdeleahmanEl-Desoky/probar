@@ -80,13 +80,14 @@ class ScheduleShopController extends Controller
 
         $shop = $this->shopRepository->getMyShop($barberId);
 
-        $scheduleShopService = $this->scheduleShopService->totalEarning(
+        $summary = $this->scheduleShopService->getTotalSummary(
             shopId: $shop->id,
             startDate: $request->get('start_date'),
             endDate: $request->get('end_date')
         );
 
-        return Json::item($scheduleShopService);
+
+        return Json::item($summary);
     }
 
     public function booking(GetScheduleShopRequest $request)//: JsonResponse

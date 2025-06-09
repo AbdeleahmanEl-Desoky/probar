@@ -123,4 +123,42 @@ class ScheduleShopRepository extends BaseRepository
         ];
     }
 
+    public function totalCashPayed(string $shopId, ?string $startDate = null, ?string $endDate = null, int $page = 1, int $perPage = 10)//: array
+    {
+        $query = $this->model->where('shop_id', $shopId)->where('payment','cash_payed');
+
+        if ($startDate) {
+            $query->where('created_at', '>=', $startDate);
+        }
+
+        if ($endDate) {
+            $query->where('created_at', '<=', $endDate);
+        }
+        $totalCashPayed = $query->sum('total_price');
+
+        return [
+            'total_cash_payed' => $totalCashPayed,
+        ];
+    }
+
+    public function totalCityLedger(string $shopId, ?string $startDate = null, ?string $endDate = null, int $page = 1, int $perPage = 10)//: array
+    {
+        $query = $this->model->where('shop_id', $shopId)->where('payment','city_ledger');
+
+        if ($startDate) {
+            $query->where('created_at', '>=', $startDate);
+        }
+
+        if ($endDate) {
+            $query->where('created_at', '<=', $endDate);
+        }
+        $totalCityLedger = $query->sum('total_price');
+
+        return [
+            'total_city_ledger' => $totalCityLedger,
+        ];
+    }
+
+
+
 }
