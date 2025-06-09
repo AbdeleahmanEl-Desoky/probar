@@ -118,9 +118,7 @@ class ScheduleShopRepository extends BaseRepository
         }
         $totalEarnings = $query->sum('total_price');
 
-        return [
-            'total_earnings' => $totalEarnings,
-        ];
+        return $totalEarnings;
     }
 
     public function totalCashPayed(string $shopId, ?string $startDate = null, ?string $endDate = null, int $page = 1, int $perPage = 10)//: array
@@ -136,9 +134,7 @@ class ScheduleShopRepository extends BaseRepository
         }
         $totalCashPayed = $query->sum('total_price');
 
-        return [
-            'total_cash_payed' => $totalCashPayed,
-        ];
+        return $totalCashPayed;
     }
 
     public function totalCityLedger(string $shopId, ?string $startDate = null, ?string $endDate = null, int $page = 1, int $perPage = 10)//: array
@@ -154,9 +150,7 @@ class ScheduleShopRepository extends BaseRepository
         }
         $totalCityLedger = $query->sum('total_price');
 
-        return [
-            'total_city_ledger' => $totalCityLedger,
-        ];
+        return $totalCityLedger;
     }
 
 
