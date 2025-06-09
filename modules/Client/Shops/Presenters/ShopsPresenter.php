@@ -56,6 +56,9 @@ class ShopsPresenter extends AbstractPresenter
             'longitude' => $this->shop->longitude,
             'latitude' => $this->shop->latitude,
             'distance' => $distance,
+            'whatsapp' => $this->shop->whatsapp,
+            'facebook' => $this->shop->facebook,
+            'instagram' => $this->shop->instagram,
         ];
     }
 }
