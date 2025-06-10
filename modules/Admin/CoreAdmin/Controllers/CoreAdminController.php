@@ -6,6 +6,7 @@ namespace Modules\Admin\CoreAdmin\Controllers;
 
 use App\Presenters\Json;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Modules\Admin\CoreAdmin\Handlers\DeleteCoreAdminHandler;
 use Modules\Admin\CoreAdmin\Handlers\UpdateCoreAdminHandler;
@@ -27,14 +28,12 @@ class CoreAdminController extends Controller
     ) {
     }
 
-    public function index(GetCoreAdminListRequest $request): JsonResponse
+    public function index(GetCoreAdminListRequest $request): View
     {
-        $list = $this->coreAdminService->list(
-            (int) $request->get('page', 1),
-            (int) $request->get('per_page', 10)
-        );
-
-        return Json::buildItems(null,['core_admins' => CoreAdminPresenter::collection($list['data']),'pagination' => $list['pagination']]);
+        return view('admin::dashboard.welcome', [
+            'title' => 'Core Admins',
+            'description' => 'Manage core administrators of the system.',
+        ]);
     }
 
     public function show(GetCoreAdminRequest $request): JsonResponse

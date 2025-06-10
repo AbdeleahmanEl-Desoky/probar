@@ -16,6 +16,7 @@ class CoreAdminServiceProvider extends ModuleServiceProvider
 
     public function boot(): void
     {
+        $this->loadViewsFrom($this->getModulePath() . '/Resources/views', 'admin');
         $this->registerTranslations();
         //$this->registerConfig();
         $this->registerMigrations();
@@ -28,9 +29,8 @@ class CoreAdminServiceProvider extends ModuleServiceProvider
 
     public function mapRoutes(): void
     {
-        Route::prefix('api/v1/core_admins')
-            ->middleware('api')
-            ->group($this->getModulePath() . '/Resources/routes/api.php');
+        Route::middleware('web')
+            ->group($this->getModulePath() . '/Resources/routes/web.php');
 
     }
 }

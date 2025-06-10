@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.10.1",
         "m-tech-stack/base-package": "^1.0",
         "owen-it/laravel-auditing": "^14.0",
+        "ranium/laravel-seedonce": "^1.7",
         "sebastian/type": "5.1.2",
         "spatie/laravel-medialibrary": "^11.12",
         "tymon/jwt-auth": "^2.2"

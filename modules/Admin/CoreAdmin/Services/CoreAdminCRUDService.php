@@ -6,7 +6,7 @@ namespace Modules\Admin\CoreAdmin\Services;
 
 use Illuminate\Support\Collection;
 use Modules\Admin\CoreAdmin\DTO\CreateCoreAdminDTO;
-use Modules\Admin\CoreAdmin\Models\CoreAdmin;
+use Modules\Admin\CoreAdmin\Models\User;
 use Modules\Admin\CoreAdmin\Repositories\CoreAdminRepository;
 use Ramsey\Uuid\UuidInterface;
 
@@ -17,7 +17,7 @@ class CoreAdminCRUDService
     ) {
     }
 
-    public function create(CreateCoreAdminDTO $createCoreAdminDTO): CoreAdmin
+    public function create(CreateCoreAdminDTO $createCoreAdminDTO): User
     {
          return $this->repository->createCoreAdmin($createCoreAdminDTO->toArray());
     }
@@ -30,7 +30,7 @@ class CoreAdminCRUDService
         );
     }
 
-    public function get(UuidInterface $id): CoreAdmin
+    public function get(UuidInterface $id): User
     {
         return $this->repository->getCoreAdmin(
             id: $id,

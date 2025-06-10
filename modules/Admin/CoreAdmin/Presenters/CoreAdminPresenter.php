@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Admin\CoreAdmin\Presenters;
 
-use Modules\Admin\CoreAdmin\Models\CoreAdmin;
 use BasePackage\Shared\Presenters\AbstractPresenter;
+use Modules\Admin\CoreAdmin\Models\User;
 
 class CoreAdminPresenter extends AbstractPresenter
 {
-    private CoreAdmin $coreAdmin;
+    private User $coreAdmin;
 
-    public function __construct(CoreAdmin $coreAdmin)
+    public function __construct(User $coreAdmin)
     {
         $this->coreAdmin = $coreAdmin;
     }

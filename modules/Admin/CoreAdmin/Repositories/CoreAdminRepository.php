@@ -7,16 +7,16 @@ namespace Modules\Admin\CoreAdmin\Repositories;
 use BasePackage\Shared\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Ramsey\Uuid\UuidInterface;
-use Modules\Admin\CoreAdmin\Models\CoreAdmin;
+use Modules\Admin\CoreAdmin\Models\User;
 
 /**
- * @property CoreAdmin $model
+ * @property User $model
  * @method CoreAdmin findOneOrFail($id)
  * @method CoreAdmin findOneByOrFail(array $data)
  */
 class CoreAdminRepository extends BaseRepository
 {
-    public function __construct(CoreAdmin $model)
+    public function __construct(User $model)
     {
         parent::__construct($model);
     }
@@ -26,14 +26,14 @@ class CoreAdminRepository extends BaseRepository
         return $this->paginatedList([], $page, $perPage);
     }
 
-    public function getCoreAdmin(UuidInterface $id): CoreAdmin
+    public function getCoreAdmin(UuidInterface $id): User
     {
         return $this->findOneByOrFail([
             'id' => $id->toString(),
         ]);
     }
 
-    public function createCoreAdmin(array $data): CoreAdmin
+    public function createCoreAdmin(array $data): User
     {
         return $this->create($data);
     }
