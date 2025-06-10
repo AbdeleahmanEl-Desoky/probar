@@ -18,13 +18,16 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Modules\Barber\Shop\Models\Shop;
 use Modules\Shared\Notification\Models\Notification;
-
-class Barber extends Authenticatable implements JWTSubject//, Auditable
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+class Barber extends Authenticatable implements JWTSubject , HasMedia//, Auditable
 {
     use HasFactory;
     use UuidTrait;
     use BaseFilterable;
     use Notifiable;
+    use InteractsWithMedia;
+
     // use HasTranslations;
     // use HasRoles;
     // use \OwenIt\Auditing\Auditable;
