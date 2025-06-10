@@ -38,6 +38,18 @@ class CoreBarberRepository extends BaseRepository
 
     public function updateCoreBarber(UuidInterface $id, array $data): bool
     {
+        $barber = $this->getCoreBarber($id);
+
+        if (!$barber) {
+            return false;
+        }
+                if (isset($data['file']) && $data['file'] instanceof \Illuminate\Http\UploadedFile) {
+            $barber->clearMediaCollection('profile_pictures');
+
+            $barber->addMedia($data['file'])
+                ->toMediaCollection('profile_pictures');
+        }
+
         return $this->update($id, $data);
     }
 

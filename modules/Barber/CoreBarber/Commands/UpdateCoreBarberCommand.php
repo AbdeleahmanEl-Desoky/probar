@@ -13,7 +13,8 @@ class UpdateCoreBarberCommand
         private string $name,
         private string $email,
         private string $phone,
-        private ?string $password
+        private ?string $password,
+        private  $file,
     ) {
     }
 
@@ -33,7 +34,8 @@ class UpdateCoreBarberCommand
             'name' => $this->name,
             'email' => $this->email,
             'password' => $this->password,
-            'phone' => $this->phone
+            'phone' => $this->phone,
+            'file' => $this->file,
         ]);
     }
 }
