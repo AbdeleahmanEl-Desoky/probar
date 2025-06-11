@@ -10,10 +10,10 @@ use Modules\Shared\Notification\Services\FirebaseNotificationService;
 use Illuminate\Support\Facades\App;
 use Modules\Client\CoreClient\Models\Client;
 use Modules\Client\Schedule\Models\Schedule;
-
+use Illuminate\Foundation\Bus\Dispatchable;
 class SendScheduleReminderJob implements ShouldQueue
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable,InteractsWithQueue, Queueable, SerializesModels;
 
     protected $schedule;
 
