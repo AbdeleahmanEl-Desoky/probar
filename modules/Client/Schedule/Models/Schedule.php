@@ -41,6 +41,7 @@ class Schedule extends Model
         'payment',
         'guest_name',
         'guest_phone',
+        'total_price'
     ];
 
     protected $casts = [

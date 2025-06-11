@@ -31,7 +31,7 @@ class ShopServiceController extends Controller
 
     public function index(GetShopServiceListRequest $request): JsonResponse
     {
-        $userId = auth()->user()->id;
+        $userId = auth('api_barbers')->user()->id;
         $barberId = Uuid::fromString($userId);
         $shop = $this->shopRepository->getMyShop($barberId);
         if (!$shop) {

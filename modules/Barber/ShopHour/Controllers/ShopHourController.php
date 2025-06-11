@@ -33,7 +33,7 @@ class ShopHourController extends Controller
 
     public function index(GetShopHourListRequest $request)//: JsonResponse
     {
-        $userId = auth()->user()->id;
+        $userId = auth('api_barbers')->user()->id;
         $barberId = Uuid::fromString($userId);
 
        $shop = $this->shopRepository->getMyShop($barberId);

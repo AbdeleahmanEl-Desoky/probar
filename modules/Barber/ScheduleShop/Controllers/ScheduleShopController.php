@@ -71,7 +71,7 @@ class ScheduleShopController extends Controller
     }
     public function mostSellingServices(GetScheduleShopListRequest $request): JsonResponse
     {
-        $userId = auth()->user()->id;
+        $userId = auth('api_barbers')->user()->id;
         $barberId = Uuid::fromString($userId);
 
         $shop = $this->shopRepository->getMyShop($barberId);
@@ -89,7 +89,7 @@ class ScheduleShopController extends Controller
     }
     public function rate(GetScheduleShopListRequest $request): JsonResponse
     {
-        $userId = auth()->user()->id;
+        $userId = auth('api_barbers')->user()->id;
         $barberId = Uuid::fromString($userId);
 
         $shop = $this->shopRepository->getMyShop($barberId);
@@ -107,7 +107,7 @@ class ScheduleShopController extends Controller
 
     public function totalEarning(GetScheduleShopListRequest $request): JsonResponse
     {
-        $userId = auth()->user()->id;
+        $userId = auth('api_barbers')->user()->id;
         $barberId = Uuid::fromString($userId);
 
         $shop = $this->shopRepository->getMyShop($barberId);
@@ -124,7 +124,7 @@ class ScheduleShopController extends Controller
 
     public function booking(GetScheduleShopRequest $request)//: JsonResponse
     {
-        $userId = auth()->user()->id;
+        $userId = auth('api_barbers')->user()->id;
         $barberId = Uuid::fromString($userId);
         $shop = $this->shopRepository->getMyShop($barberId);
 
