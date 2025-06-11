@@ -9,8 +9,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Modules\Barber\CoreBarber\Commands\LoginCoreBarberCommand;
 use Modules\Barber\CoreBarber\Handlers\DeleteCoreBarberHandler;
+use Modules\Barber\CoreBarber\Handlers\UpdateCfmTokenHandler;
 use Modules\Barber\CoreBarber\Handlers\UpdateCoreBarberHandler;
 use Modules\Barber\CoreBarber\Presenters\CoreBarberPresenter;
+use Modules\Barber\CoreBarber\Requests\CfmTokenRequest;
 use Modules\Barber\CoreBarber\Requests\CreateCoreBarberRequest;
 use Modules\Barber\CoreBarber\Requests\DeleteCoreBarberRequest;
 use Modules\Barber\CoreBarber\Requests\LoginCoreBarberRequest;
@@ -35,7 +37,8 @@ class CoreBarberController extends Controller
         private ForgotPasswordService $forgotPasswordService,
         private ResetPasswordService $resetPasswordService,
         private ShopRepository $shopRepository,
-        private DataCompleteService $dataCompleteService
+        private DataCompleteService $dataCompleteService,
+        private UpdateCfmTokenHandler $updateCfmTokenHandler,
     ) {
     }
 
@@ -104,7 +107,17 @@ class CoreBarberController extends Controller
 
         return Json::item(item: $presenter->getData());
     }
+    public function updateCfmToken(CfmTokenRequest $request): JsonResponse
+    {
+        $command = $request->updateCfmTokenCommand();
+        $this->updateCfmTokenHandler->handle($command);
 
+        $item = $this->coreBarberService->get($command->getId());
+
+        $presenter = new CoreBarberPresenter($item);
+
+        return Json::item(item: $presenter->getData());
+    }
     public function forgotPassword(ForgotPasswordRequest $request): JsonResponse
     {
         try {

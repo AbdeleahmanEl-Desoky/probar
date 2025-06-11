@@ -62,4 +62,20 @@ class CoreBarberRepository extends BaseRepository
     {
         return $this->model->where('email', $email)->firstOrFail();
     }
+
+    public function updateCfmToken(UuidInterface $id, array $data): bool
+    {
+        $barber = $this->getCoreBarber($id);
+
+        if (!$barber) {
+            return false;
+        }
+
+
+        $barber->update(array_filter([
+            'fcm_token' => $data['fcm_token'],
+        ]));
+
+        return true;
+    }
 }
