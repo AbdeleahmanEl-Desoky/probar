@@ -17,27 +17,29 @@ class SendScheduleReminderJob implements ShouldQueue
 
     protected $schedule;
 
-    public function __construct()
+    public function __construct(        private FirebaseNotificationService $firebaseNotificationService,
+)
     {
 
     }
 
     public function handle(): void
     {
-    $FcmToken = Client::whereNotNull('fcm_token')->get();
-        \Log::info('✅ SendScheduleReminderJob executed successfully!');
+        $FcmToken = Client::whereNotNull('fcm_token')->get();
 
-foreach ($FcmToken as $token) {
-    if (empty($token->fcm_token) || strlen($token->fcm_token) < 100) {
-        \Log::warning("⚠️ Skipping invalid FCM token: " . $token->fcm_token);
-        continue;
-    }
+        foreach ($FcmToken as $token) {
+            // Send a test notification
+            $this->firebaseNotificationService->send(
+                $token->fcm_token,
+                __('notifications.new_schedule_title'),
+                __('notifications.new_schedule_title'),
+                [
+                    'type' => 'test_notification',
+                    'message' => 'This is a test notification.',
+                ]
+            );
+        }
 
-    FirebaseNotificationService::send($token->fcm_token,
-        'Reminder',
-        'This is a reminder for your upcoming schedule.',
-    );
-}
         // $client = $this->schedule->client;
 
         // // تأكد من اللغة
