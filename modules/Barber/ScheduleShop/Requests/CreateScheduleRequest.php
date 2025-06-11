@@ -18,7 +18,6 @@ class CreateScheduleRequest extends FormRequest
             'start_time' => 'required',
             'end_time' => 'required',
             'schedule_date' => 'required',
-            'shop_id' => 'required',
             'status' => 'required|string|in:pending,approved,canceled',
             'note' => 'nullable|string',
             'services' => 'required|array',
