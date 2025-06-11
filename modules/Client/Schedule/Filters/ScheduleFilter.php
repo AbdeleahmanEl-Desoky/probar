@@ -22,7 +22,7 @@ class ScheduleFilter extends SearchModelFilter
     {
         return $this->when($upcoming == 'yes',function($q){
             $q->whereDate('schedule_date', '>',now()->toDateString())
-            ->where('status', 'pending');
+            ->whereNotIn('status', ['finished', 'cancel']);
         });
     }
     public function active($active)
