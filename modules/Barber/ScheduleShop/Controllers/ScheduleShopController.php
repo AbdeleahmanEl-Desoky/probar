@@ -126,7 +126,7 @@ class ScheduleShopController extends Controller
     {
         $userId = auth('api_barbers')->user()->id;
         $barberId = Uuid::fromString($userId);
-        $shop = $this->shopRepository->getMyShop($barberId);
+     return   $shop = $this->shopRepository->getMyShop($barberId);
 
         $list = $this->scheduleShopService->list(
             shopId: $shop->id,
