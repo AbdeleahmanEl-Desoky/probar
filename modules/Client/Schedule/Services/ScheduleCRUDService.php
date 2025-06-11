@@ -71,7 +71,7 @@ class ScheduleCRUDService
         $client = auth('api_clients')->user();
 
         $this->firebaseNotificationService->send(
-             $barber->fcm_token,
+             $client->fcm_token,
        __('notifications.new_schedule_title'),
         __('notifications.new_schedule_body', [
             'client_name' => $client->name,
