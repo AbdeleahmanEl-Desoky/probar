@@ -60,8 +60,6 @@ class ScheduleCRUDService
             [
                 'type' => 'schedule_new',
                 'schedule_id' => $schedule->id->toString(),
-                'schedule_date' => $schedule->schedule_date->toString(),
-                'schedule_time' => $schedule->start_time->toString(),
             ]
         );
     }
@@ -82,8 +80,6 @@ class ScheduleCRUDService
             [
                 'type' => 'schedule_new',
                 'schedule_id' => $schedule->id->toString(),
-                'schedule_date' => $schedule->schedule_date->toString(),
-                'schedule_time' => $schedule->start_time->toString(),
             ]
         );
     }
@@ -106,8 +102,6 @@ class ScheduleCRUDService
             [
                 'type' => 'schedule_cancel',
                 'schedule_id' => $schedule->id->toString(),
-                'schedule_date' => $schedule->schedule_date->toString(),
-                'schedule_time' => $schedule->start_time->toString(),
             ]
         );
     }
