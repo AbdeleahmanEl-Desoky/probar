@@ -21,10 +21,10 @@ class ScheduleCheckoutService
         $servicesDetails = [];
 
         foreach ($services as $service) {
-            $subtotal += $service->price;
+            $subtotal += $service->shopService->price;
             $servicesDetails[] = [
                 'service_name' => $service->shopService->name,
-                'price' => $service->price,
+                'price' => $service->shopService->price,
             ];
         }
 
