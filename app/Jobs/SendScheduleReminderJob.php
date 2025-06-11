@@ -9,39 +9,36 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Modules\Shared\Notification\Services\FirebaseNotificationService;
 use Illuminate\Support\Facades\Log;
+use Modules\Client\Schedule\Models\Schedule;
 
 class SendScheduleReminderJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private array $fcmTokens;
+    protected $schedule;
 
-    public function __construct(array $fcmTokens)
+    public function __construct(Schedule $schedule)
     {
-        $this->fcmTokens = $fcmTokens;
+        $this->schedule = $schedule;
     }
 
-    public function handle(): void
+ public function handle(): void
     {
-        $firebaseNotificationService = app(FirebaseNotificationService::class);
+        $client = $this->schedule->client;
 
-        foreach ($this->fcmTokens as $token) {
-            try {
-                $firebaseNotificationService->send(
-                    $token,
-                    __('notifications.new_schedule_title'),
-                    __('notifications.new_schedule_title'),
-                    [
-                        'type' => 'test_notification',
-                        'message' => 'This is a test notification.',
-                    ]
-                );
-            } catch (\Exception $e) {
-                Log::error("FCM Error: " . $e->getMessage());
-                Log::error("Invalid Token: " . $token);
-            }
-        }
+        $title = __('notifications.reminder_title');
+        $body = __('notifications.reminder_body');
 
-        Log::info('✅ SendScheduleReminderJob executed successfully!');
+        FirebaseNotificationService::send(
+            $client->fcm_token,
+            $title,
+            $body,
+            [
+                'type' => 'schedule_reminder',
+                'schedule_id' => $this->schedule->id->toString(),
+                'schedule_date' => $this->schedule->schedule_date,
+                'schedule_time' => $this->schedule->start_time,
+            ]
+        );
     }
 }

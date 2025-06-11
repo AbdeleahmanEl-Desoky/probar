@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Client\Schedule\Services;
 
+use App\Jobs\SendScheduleReminderJob;
 use Illuminate\Support\Collection;
 use Modules\Barber\CoreBarber\Repositories\CoreBarberRepository;
 use Modules\Client\Schedule\DTO\CreateScheduleDTO;
@@ -31,6 +32,8 @@ class ScheduleCRUDService
         $schedule = $this->repository->createSchedule($createScheduleDTO->toArray());
         self::sendNotificationBooking($schedule);
 
+        SendScheduleReminderJob::dispatch($schedule);
+        
         return $schedule;
     }
 
