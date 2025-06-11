@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Client\Schedule\Services;
 
 use Carbon\Carbon;
+use Modules\Barber\Shop\Models\Shop;
 use Modules\Barber\ShopHour\Models\ShopHour;
 use Modules\Client\Schedule\Models\Schedule;
 use Modules\Client\Schedule\Repositories\ScheduleRepository;
@@ -27,7 +28,12 @@ class GetScheduleSlotsService
             }])
             ->where('shop_id', $shopId)
             ->where('day', $dayOfWeek)
+            ->where('status',1)
             ->first();
+        $shop = Shop::find($shopId);
+        if($shop->is_open!=1){
+            return ['message' => 'Shop is closed today'];
+        }
 
         if (!$shopHour) {
             return ['message' => 'Shop is closed today'];
@@ -48,6 +54,11 @@ class GetScheduleSlotsService
                 $slotStartFormatted = date('H:i', $start);
                 $slotEndFormatted = date('H:i', $slotEnd);
 
+                if ($date->isToday() && $slotStartFormatted <= now()->format('H:i')) {
+                    $start = $slotEnd;
+                    continue;
+                }
+
                 $booking = Schedule::where('shop_id', $shopId)
                     ->whereDate('schedule_date', $date)
                     ->whereTime('start_time', $slotStartFormatted)
@@ -64,6 +75,7 @@ class GetScheduleSlotsService
                 $start = $slotEnd;
             }
         }
+
 
         return $timeSlots;
     }
