@@ -182,7 +182,7 @@ class CoreClientController extends Controller
     {
         // Get the FCM token of the authenticated user
         $FcmToken = Client::whereNotNull('fcm_token')->get();
-        SendScheduleReminderJob::dispatch()->delay(Carbon::now()->addSeconds(60));
+        SendScheduleReminderJob::dispatch();
 
         // foreach ($FcmToken as $token) {
         //     // Send a test notification
