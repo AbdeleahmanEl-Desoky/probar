@@ -27,14 +27,18 @@ class SendScheduleReminderJob implements ShouldQueue
     $FcmToken = Client::whereNotNull('fcm_token')->get();
         \Log::info('✅ SendScheduleReminderJob executed successfully!');
 
-        foreach ($FcmToken as $token) {
-            // Send a test notification
-            FirebaseNotificationService::send(
-                $token->fcm_token,
-                'Reminder',
-                'This is a reminder for your upcoming schedule.',
-            );
-        }
+foreach ($FcmToken as $token) {
+    if (empty($token->fcm_token) || strlen($token->fcm_token) < 100) {
+        \Log::warning("⚠️ Skipping invalid FCM token: " . $token->fcm_token);
+        continue;
+    }
+
+    FirebaseNotificationService::send(
+        $token->fcm_token,
+        'Reminder',
+        'This is a reminder for your upcoming schedule.',
+    );
+}
         // $client = $this->schedule->client;
 
         // // تأكد من اللغة
