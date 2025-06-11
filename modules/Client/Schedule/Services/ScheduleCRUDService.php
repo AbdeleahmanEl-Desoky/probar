@@ -60,7 +60,7 @@ class ScheduleCRUDService
         ]),
             [
                 'type' => 'schedule_new',
-                'schedule_id' => $schedule->id->toString(),
+                'schedule_id' => $schedule->id,
             ]
         );
     }
@@ -81,7 +81,7 @@ class ScheduleCRUDService
         ]),
             [
                 'type' => 'schedule_new',
-                'schedule_id' => $schedule->id->toString(),
+                'schedule_id' => $schedule->id,
             ]
         );
     }
