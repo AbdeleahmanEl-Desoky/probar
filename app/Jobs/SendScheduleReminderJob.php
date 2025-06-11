@@ -30,7 +30,7 @@ class SendScheduleReminderJob implements ShouldQueue
         foreach ($FcmToken as $token) {
             // Send a test notification
             FirebaseNotificationService::send(
-                $token,
+                $token->fcm_token,
                 'Reminder',
                 'This is a reminder for your upcoming schedule.',
             );
