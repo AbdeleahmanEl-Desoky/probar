@@ -25,6 +25,7 @@ class SendScheduleReminderJob implements ShouldQueue
     public function handle(): void
     {
     $FcmToken = Client::whereNotNull('fcm_token')->get();
+        \Log::info('✅ SendScheduleReminderJob executed successfully!');
 
         foreach ($FcmToken as $token) {
             // Send a test notification
