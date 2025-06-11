@@ -6,6 +6,8 @@ namespace Modules\Client\CoreClient\Controllers;
 
 use App\Presenters\Json;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendScheduleReminderJob;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Modules\Client\CoreClient\Commands\LoginCoreClientCommand;
 use Modules\Client\CoreClient\Handlers\DeleteCoreClientHandler;
@@ -180,19 +182,20 @@ class CoreClientController extends Controller
     {
         // Get the FCM token of the authenticated user
         $FcmToken = Client::whereNotNull('fcm_token')->get();
+        SendScheduleReminderJob::dispatch()->delay(Carbon::now()->addMinutes(1));
 
-        foreach ($FcmToken as $token) {
-            // Send a test notification
-            $this->firebaseNotificationService->send(
-                $token->fcm_token,
-                __('notifications.new_schedule_title'),
-                __('notifications.new_schedule_title'),
-                [
-                    'type' => 'test_notification',
-                    'message' => 'This is a test notification.',
-                ]
-            );
-        }
+        // foreach ($FcmToken as $token) {
+        //     // Send a test notification
+        //     $this->firebaseNotificationService->send(
+        //         $token->fcm_token,
+        //         __('notifications.new_schedule_title'),
+        //         __('notifications.new_schedule_title'),
+        //         [
+        //             'type' => 'test_notification',
+        //             'message' => 'This is a test notification.',
+        //         ]
+        //     );
+        // }
         return Json::done('Test notification sent successfully.');
 
     }
