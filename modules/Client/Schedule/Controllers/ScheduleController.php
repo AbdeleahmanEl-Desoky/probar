@@ -94,6 +94,7 @@ class ScheduleController extends Controller
             $schedule = $this->scheduleService->get($updateScheduleCommand->getId());
 
             $this->scheduleService->sendNotificationCancelBooking($schedule);
+            $this->scheduleService->sendNotificationCancelBookingToClient($schedule);
             $presenter = new ScheduleActivePresenter($schedule);
 
             return Json::item($presenter->getData());

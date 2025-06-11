@@ -107,6 +107,26 @@ class ScheduleCRUDService
             ]
         );
     }
+        public function sendNotificationCancelBookingToClient(Schedule $schedule): void
+    {
+        $shop = $this->shopsRepository->getShops(Uuid::fromString($schedule->shop_id));
+
+        $client = auth('api_clients')->user();
+
+        $this->firebaseNotificationService->send(
+             $client->fcm_token??"@",
+       __('notifications.cancel_schedule_title_client'),
+        __('notifications.cancel_schedule_body_client', [
+            'shop_name' => $shop->name,
+            'time' => Carbon::parse($schedule->start_time)->format('H:i'),
+            'date' => Carbon::parse($schedule->schedule_date)->format('d/m'),
+        ]),
+            [
+                'type' => 'schedule_cancel',
+                'schedule_id' => $schedule->id,
+            ]
+        );
+    }
     public function list(int $page = 1, int $perPage = 10,$shopId,$model): array
     {
         return $this->repository->paginated(

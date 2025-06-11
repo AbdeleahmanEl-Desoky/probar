@@ -10,6 +10,9 @@ return [
     'cancel_schedule_title' => 'Schedule Cancellation',
     'cancel_schedule_body' => ':client_name has canceled the booking at :time on :date.',
 
+    'cancel_schedule_title_client'=> 'Booking Cancellation',
+    'cancel_schedule_body_client' => 'Your booking at :shop_name has been canceled at :time on :date.',
+
     'new_schedule_title_client' => 'Appointment Booked',
     'new_schedule_body_client' => 'You have booked an appointment at :shop_name at :time on :date',
 
