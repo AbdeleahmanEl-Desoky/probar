@@ -6,53 +6,42 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Modules\Shared\Notification\Services\FirebaseNotificationService;
-use Illuminate\Support\Facades\App;
-use Modules\Client\CoreClient\Models\Client;
-use Modules\Client\Schedule\Models\Schedule;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Modules\Shared\Notification\Services\FirebaseNotificationService;
+use Illuminate\Support\Facades\Log;
+
 class SendScheduleReminderJob implements ShouldQueue
 {
-    use Dispatchable,InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $schedule;
+    private array $fcmTokens;
 
-    public function __construct(        private FirebaseNotificationService $firebaseNotificationService,
-)
+    public function __construct(array $fcmTokens)
     {
-
+        $this->fcmTokens = $fcmTokens;
     }
 
     public function handle(): void
     {
-        $FcmToken = Client::whereNotNull('fcm_token')->get();
+        $firebaseNotificationService = app(FirebaseNotificationService::class);
 
-        foreach ($FcmToken as $token) {
-            // Send a test notification
-            $this->firebaseNotificationService->send(
-                $token->fcm_token,
-                __('notifications.new_schedule_title'),
-                __('notifications.new_schedule_title'),
-                [
-                    'type' => 'test_notification',
-                    'message' => 'This is a test notification.',
-                ]
-            );
+        foreach ($this->fcmTokens as $token) {
+            try {
+                $firebaseNotificationService->send(
+                    $token,
+                    __('notifications.new_schedule_title'),
+                    __('notifications.new_schedule_title'),
+                    [
+                        'type' => 'test_notification',
+                        'message' => 'This is a test notification.',
+                    ]
+                );
+            } catch (\Exception $e) {
+                Log::error("FCM Error: " . $e->getMessage());
+                Log::error("Invalid Token: " . $token);
+            }
         }
 
-        // $client = $this->schedule->client;
-
-        // // تأكد من اللغة
-        // App::setLocale($client->locale ?? 'ar');
-
-        // $title = __('messages.reminder_title');
-        // $body = __('messages.reminder_body');
-
-        // // أرسل الإشعار
-        // FirebaseNotificationService::send(
-        //     $client->fcm_token,
-        //     $title,
-        //     $body
-        // );
+        Log::info('✅ SendScheduleReminderJob executed successfully!');
     }
 }

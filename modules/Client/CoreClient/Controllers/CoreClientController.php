@@ -178,25 +178,35 @@ class CoreClientController extends Controller
         return Json::deleted();
     }
 
+    // public function test()
+    // {
+    //     // Get the FCM token of the authenticated user
+    //     // $FcmToken = Client::whereNotNull('fcm_token')->get();
+    // SendScheduleReminderJob::dispatch(app(FirebaseNotificationService::class));
+
+    //     // foreach ($FcmToken as $token) {
+    //     //     // Send a test notification
+    //     //     $this->firebaseNotificationService->send(
+    //     //         $token->fcm_token,
+    //     //         __('notifications.new_schedule_title'),
+    //     //         __('notifications.new_schedule_title'),
+    //     //         [
+    //     //             'type' => 'test_notification',
+    //     //             'message' => 'This is a test notification.',
+    //     //         ]
+    //     //     );
+    //     // }
+    //     return Json::done('Test notification sent successfully.');
+
+    // }
+
     public function test()
     {
-        // Get the FCM token of the authenticated user
-        // $FcmToken = Client::whereNotNull('fcm_token')->get();
-    SendScheduleReminderJob::dispatch(app(FirebaseNotificationService::class));
+        $fcmTokens = Client::whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
 
-        // foreach ($FcmToken as $token) {
-        //     // Send a test notification
-        //     $this->firebaseNotificationService->send(
-        //         $token->fcm_token,
-        //         __('notifications.new_schedule_title'),
-        //         __('notifications.new_schedule_title'),
-        //         [
-        //             'type' => 'test_notification',
-        //             'message' => 'This is a test notification.',
-        //         ]
-        //     );
-        // }
-        return Json::done('Test notification sent successfully.');
+        // Dispatch job with current tokens
+        SendScheduleReminderJob::dispatch($fcmTokens);
 
+        return Json::done('Test notification dispatched successfully.');
     }
 }
