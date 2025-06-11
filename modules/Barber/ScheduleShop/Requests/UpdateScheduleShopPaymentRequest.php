@@ -15,6 +15,8 @@ class UpdateScheduleShopPaymentRequest extends FormRequest
     {
         return [
             'payment' => 'required|in:payment,cash_payed,city_ledger',
+            'addition' => 'sometimes|numeric|min:0',
+            'discount' => 'sometimes|numeric|min:0',
         ];
     }
 
@@ -23,6 +25,8 @@ class UpdateScheduleShopPaymentRequest extends FormRequest
         return new UpdateScheduleShopPaymentCommand(
             id: Uuid::fromString($this->route('id')),
             payment: $this->get('payment'),
+            addition: $this->get('addition', 0),
+            discount: $this->get('discount', 0),
         );
     }
 }

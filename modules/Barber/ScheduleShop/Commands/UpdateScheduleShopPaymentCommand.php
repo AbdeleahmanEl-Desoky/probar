@@ -11,6 +11,8 @@ class UpdateScheduleShopPaymentCommand
     public function __construct(
         private UuidInterface $id,
         private string $payment,
+        private ?float $addition = null,
+        private ?float $discount = null,
     ) {
     }
 
@@ -23,6 +25,8 @@ class UpdateScheduleShopPaymentCommand
     {
         return array_filter([
             'payment' => $this->payment,
+            'addition' => $this->addition,
+            'discount' => $this->discount,
         ]);
     }
 }
