@@ -31,7 +31,7 @@ class GetScheduleSlotsService
             ->where('status',1)
             ->first();
         $shop = Shop::find($shopId);
-        if($shop->is_open!=1){
+        if (!$shop || $shop->is_open != 1) {
             return ['message' => 'Shop is closed today'];
         }
 
