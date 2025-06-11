@@ -36,7 +36,7 @@ class ScheduleCRUDService
 
     public function sendNotification(Schedule $schedule): void
     {
-        $shop = $this->shopsRepository->getShops(Uuid::fromString($createScheduleDTO->shop_id));
+        $shop = $this->shopsRepository->getShops(Uuid::fromString($schedule->shop_id));
 
         $barber = $this->coreBarberRepository->getCoreBarber(Uuid::fromString($shop->barber_id));
         $client = auth('api_clients')->user();
