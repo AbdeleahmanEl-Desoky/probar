@@ -25,7 +25,10 @@ class ScheduleService extends Model
 
     public $incrementing = false;
     protected $keyType = 'string';
-    protected $fillable = ['schedule_id', 'shop_service_id'];
+    protected $fillable = [
+        'schedule_id', 'shop_service_id'
+        , 'price', 'time'
+    ];
     protected $casts = ['id' => 'string'];
 
     protected static function newFactory()
