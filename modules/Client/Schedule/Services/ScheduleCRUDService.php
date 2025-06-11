@@ -70,15 +70,15 @@ class ScheduleCRUDService
         $shop = $this->shopsRepository->getShops(Uuid::fromString($schedule->shop_id));
         $client = auth('api_clients')->user();
 
-        $this->firebaseNotificationService->send(
-             $client->fcm_token,
-       __('notifications.new_schedule_title'),
-        __('notifications.new_schedule_body', [
-            'client_name' => $client->name,
-            'time' => Carbon::parse($schedule->start_time)->format('H:i'), // format it as you need
-            'date' => Carbon::parse($schedule->schedule_date)->format('Y-m-d'), // format it as you need
 
-        ]),
+        $this->firebaseNotificationService->send(
+            $client->fcm_token,
+            __('notifications.new_schedule_title_client'),
+            __('notifications.new_schedule_body_client', [
+                'shop_name' => $shop->name,
+                'time' => Carbon::parse($schedule->start_time)->format('H:i'),
+                'date' => Carbon::parse($schedule->schedule_date)->format('d/m'),
+            ]),
             [
                 'type' => 'schedule_new',
                 'schedule_id' => $schedule->id,

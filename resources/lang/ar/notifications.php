@@ -8,5 +8,7 @@ return [
 
     'cancel_schedule_title' => 'إلغاء حجز',
     'cancel_schedule_body' => 'تم إلغاء حجزك بواسطة :client_name الساعة :time بتاريخ :date.',
-    
+
+    'new_schedule_title_client' => 'تم حجز الموعد',
+    'new_schedule_body_client' => 'لقد قمت بحجز موعد لدى :shop_name الساعة :time بتاريخ :date',
 ];
