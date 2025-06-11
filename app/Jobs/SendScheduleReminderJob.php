@@ -33,8 +33,7 @@ foreach ($FcmToken as $token) {
         continue;
     }
 
-    FirebaseNotificationService::send(
-        $token->fcm_token,
+    FirebaseNotificationService::send($token->fcm_token,
         'Reminder',
         'This is a reminder for your upcoming schedule.',
     );
