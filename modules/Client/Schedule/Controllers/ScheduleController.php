@@ -62,6 +62,7 @@ class ScheduleController extends Controller
 
         $presenter = new SchedulePresenter($createdItem);
 
+        
         return Json::item($presenter->getData());
     }
     public function getData(CreateScheduleRequest $request): JsonResponse

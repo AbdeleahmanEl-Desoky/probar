@@ -31,6 +31,8 @@ use Ramsey\Uuid\Uuid;
 use Kreait\Laravel\Firebase\Facades\Firebase;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Factory;
+use Modules\Client\CoreClient\Models\Client;
+
 class CoreClientController extends Controller
 {
         // protected $notification;
@@ -177,38 +179,17 @@ class CoreClientController extends Controller
     public function test()
     {
         // Get the FCM token of the authenticated user
-        $FcmToken = auth()->user('api_clients')->fcm_token;
+        $FcmToken = Client::whereNotNull('fcm_token')->get();
 
-        // Check if FCM token is present
-        if (!$FcmToken) {
-            return response()->json(['success' => false, 'message' => 'FCM Token not found for the user.'], 400);
+        foreach ($FcmToken as $token) {
+            // Send a test notification
+            $this->firebaseNotificationService->send(
+                $token->fcm_token,
+                'Test Notification',
+                'This is a test notification from the CoreClientController.'
+            );
         }
-            $dir = config('services.firebase.credentials');
-            $firebase = (new Factory)
-                ->withServiceAccount($dir);
-            $messaging = $firebase->createMessaging();
-            $message = CloudMessage::fromArray([
-                'token' => $FcmToken,
-                'notification' => [
-                    'title' => 'Test',
-                    'body' => 'Test with icon',
-                    'sound' => 'default',
-                    'icon' => 'ic_notification', // Must match the drawable name
-                ],
-                'android' => [
-                    'notification' => [
-                        'icon' => 'ic_notification',
-                        'sound' => 'default',
-                    ],
-                ],
-                'apns' => [
-                    'payload' => [
-                        'aps' => [
-                            'sound' => 'default',
-                        ],
-                    ],
-                ],
-            ]);
-            $messaging->send($message);
+        return Json::done('Test notification sent successfully.');
+
     }
 }

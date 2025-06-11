@@ -10,22 +10,43 @@ use Kreait\Firebase\Messaging\Notification;
 
 class FirebaseNotificationService
 {
-    protected static function messaging()
-    {
-        $factory = (new Factory)->withServiceAccount(config('services.firebase.credentials'));
-        return $factory->createMessaging();
-    }
-
     public static function send(string $fcmToken, string $title, string $body, array $data = []): bool
     {
-        $notification = Notification::create($title, $body);
+        // Check if FCM token is present
+        if (!$fcmToken) {
+            return false;
+        }
+            $dir = config('services.firebase.credentials');
+            $firebase = (new Factory)
+                ->withServiceAccount($dir);
+            $messaging = $firebase->createMessaging();
 
-        $message = CloudMessage::withTarget('token', $fcmToken)
-            ->withNotification($notification)
-            ->withData($data);
+            $message = CloudMessage::fromArray([
+                'token' => $fcmToken,
+                'notification' => [
+                    'title' => $title,
+                    'body' => $body,
+                    'sound' => 'default',
+                    'icon' => 'ic_notification',
+                ],
+                'android' => [
+                    'notification' => [
+                        'icon' => 'ic_notification',
+                        'sound' => 'default',
+                    ],
+                ],
+                'apns' => [
+                    'payload' => [
+                        'aps' => [
+                            'sound' => 'default',
+                        ],
+                    ],
+                ],
+                'data' => $data,
+            ]);
 
         try {
-            self::messaging()->send($message);
+            $messaging->send($message);
             return true;
         } catch (\Throwable $e) {
             \Log::error('FCM Error: ' . $e->getMessage());
