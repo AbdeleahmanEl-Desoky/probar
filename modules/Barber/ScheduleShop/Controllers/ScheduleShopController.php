@@ -122,11 +122,11 @@ class ScheduleShopController extends Controller
         return Json::item($summary);
     }
 
-    public function booking(GetScheduleShopRequest $request)//: JsonResponse
+    public function booking(GetScheduleShopRequest $request): JsonResponse
     {
         $userId = auth('api_barbers')->user()->id;
         $barberId = Uuid::fromString($userId);
-       return $shop = $this->shopRepository->getMyShop($barberId);
+        $shop = $this->shopRepository->getMyShop($barberId);
 
         $list = $this->scheduleShopService->list(
             shopId: $shop->id,
