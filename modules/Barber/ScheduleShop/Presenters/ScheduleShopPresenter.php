@@ -26,6 +26,8 @@ class ScheduleShopPresenter extends AbstractPresenter
             'schedule_date' => $this->schedule->schedule_date,
             'shop_id' => $this->schedule->shop_id,
             'client_id' => $this->schedule->client_id,
+            'guest_name' => $this->schedule->guest_name,
+            'guest_phone' => $this->schedule->guest_phone,
             'status' => $this->schedule->status,
             'note' => $this->schedule->note,
             'name' => $this->schedule?->client?->name,

@@ -13,6 +13,7 @@ use Modules\Barber\ScheduleShop\Handlers\UpdateScheduleShopHandler;
 use Modules\Barber\ScheduleShop\Handlers\UpdateScheduleShopPaymentHandler;
 use Modules\Barber\ScheduleShop\Handlers\UpdateScheduleShopStatusHandler;
 use Modules\Barber\ScheduleShop\Presenters\ScheduleShopPresenter;
+use Modules\Barber\ScheduleShop\Requests\CreateScheduleRequest;
 use Modules\Barber\ScheduleShop\Requests\CreateScheduleShopRequest;
 use Modules\Barber\ScheduleShop\Requests\DeleteScheduleShopRequest;
 use Modules\Barber\ScheduleShop\Requests\GetScheduleShopListRequest;
@@ -21,6 +22,8 @@ use Modules\Barber\ScheduleShop\Requests\UpdateScheduleShopPaymentRequest;
 use Modules\Barber\ScheduleShop\Requests\UpdateScheduleShopRequest;
 use Modules\Barber\ScheduleShop\Requests\UpdateScheduleShopStatusRequest;
 use Modules\Barber\ScheduleShop\Services\ScheduleShopCRUDService;
+use Modules\Client\Schedule\Presenters\SchedulePresenter;
+use Modules\Client\Schedule\Services\GetScheduleSlotsService;
 use Modules\Client\Schedule\Services\ScheduleCheckoutService;
 use Ramsey\Uuid\Uuid;
 
@@ -33,10 +36,39 @@ class ScheduleShopController extends Controller
         private ShopRepository $shopRepository,
         private UpdateScheduleShopStatusHandler $updateScheduleShopStatusHandler,
         private UpdateScheduleShopPaymentHandler $updateScheduleShopPaymentHandler,
-        private ScheduleCheckoutService $scheduleCheckoutService
+        private ScheduleCheckoutService $scheduleCheckoutService,
+         private GetScheduleSlotsService $getScheduleSlotsService,
     ) {
     }
 
+    public function index(GetScheduleShopRequest $request)//: JsonResponse
+    {
+
+        $userId = auth('api_barbers')->user()->id;
+        $barberId = Uuid::fromString($userId);
+        $shop = $this->shopRepository->getMyShop($barberId);
+
+         $schedule = $this->getScheduleSlotsService->get(
+            Uuid::fromString($shop->id),
+            $request->input('schedule_date'),
+        );
+
+         return Json::items($schedule);
+    }
+    public function store(CreateScheduleRequest $request)//: JsonResponse
+    {
+        $createScheduleDTO = $request->createCreateScheduleDTO();
+
+        $userId = auth('api_barbers')->user()->id;
+        $barberId = Uuid::fromString($userId);
+        $shop = $this->shopRepository->getMyShop($barberId);
+        $createScheduleDTO->shop_id = $shop->id;
+        $createdItem = $this->scheduleShopService->create($createScheduleDTO);
+
+        $presenter = new ScheduleShopPresenter($createdItem);
+
+        return Json::item($presenter->getData());
+    }
     public function mostSellingServices(GetScheduleShopListRequest $request): JsonResponse
     {
         $userId = auth()->user()->id;
@@ -120,7 +152,6 @@ class ScheduleShopController extends Controller
 
         return Json::item($item);
     }
-
 
     public function statusBooking(UpdateScheduleShopStatusRequest $request): JsonResponse
     {

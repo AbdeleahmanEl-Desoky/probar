@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Modules\Client\Rate\Models\Rate;
 use Ramsey\Uuid\UuidInterface;
 use Modules\Client\Schedule\Models\Schedule;
+use Modules\Client\Schedule\Models\ScheduleService;
 
 /**
  * @property Schedule $model
@@ -32,6 +33,20 @@ class ScheduleShopRepository extends BaseRepository
         return $this->findOneByOrFail([
             'id' => $id->toString(),
         ]);
+    }
+    public function createSchedule(array $data): Schedule
+    {
+        $schedule =$this->create($data);
+
+        foreach ($data['services'] as $service){
+            ScheduleService::create([
+                'schedule_id'=>$schedule->id,
+                'shop_service_id' =>$service
+            ]);
+        }
+
+        return $schedule;
+
     }
 
     public function createScheduleShop(array $data): Schedule

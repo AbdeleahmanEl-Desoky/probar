@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Barber\ScheduleShop\Services;
 
 use Illuminate\Support\Collection;
+use Modules\Barber\ScheduleShop\DTO\CreateScheduleDTO;
 use Modules\Barber\ScheduleShop\DTO\CreateScheduleShopDTO;
 use Modules\Barber\ScheduleShop\Models\ScheduleShop;
 use Modules\Barber\ScheduleShop\Repositories\ScheduleShopRepository;
@@ -87,6 +88,12 @@ class ScheduleShopCRUDService
         return $this->repository->getScheduleShop(
             id: $id,
         );
+    }
+    public function create(CreateScheduleDTO $createScheduleDTO): Schedule
+    {
+        $schedule = $this->repository->createSchedule($createScheduleDTO->toArray());
+
+        return $schedule;
     }
 
 }
