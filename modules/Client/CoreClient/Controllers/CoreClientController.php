@@ -182,20 +182,20 @@ class CoreClientController extends Controller
     {
         // Get the FCM token of the authenticated user
         $FcmToken = Client::whereNotNull('fcm_token')->get();
-        SendScheduleReminderJob::dispatch();
+        // SendScheduleReminderJob::dispatch();
 
-        // foreach ($FcmToken as $token) {
-        //     // Send a test notification
-        //     $this->firebaseNotificationService->send(
-        //         $token->fcm_token,
-        //         __('notifications.new_schedule_title'),
-        //         __('notifications.new_schedule_title'),
-        //         [
-        //             'type' => 'test_notification',
-        //             'message' => 'This is a test notification.',
-        //         ]
-        //     );
-        // }
+        foreach ($FcmToken as $token) {
+            // Send a test notification
+            $this->firebaseNotificationService->send(
+                $token->fcm_token,
+                __('notifications.new_schedule_title'),
+                __('notifications.new_schedule_title'),
+                [
+                    'type' => 'test_notification',
+                    'message' => 'This is a test notification.',
+                ]
+            );
+        }
         return Json::done('Test notification sent successfully.');
 
     }
