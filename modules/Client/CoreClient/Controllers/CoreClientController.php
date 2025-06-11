@@ -185,8 +185,12 @@ class CoreClientController extends Controller
             // Send a test notification
             $this->firebaseNotificationService->send(
                 $token->fcm_token,
-                'Test Notification',
-                'This is a test notification from the CoreClientController.'
+                __('messages.new_schedule_title'),
+                __('messages.new_schedule_title'),
+                [
+                    'type' => 'test_notification',
+                    'message' => 'This is a test notification.',
+                ]
             );
         }
         return Json::done('Test notification sent successfully.');
