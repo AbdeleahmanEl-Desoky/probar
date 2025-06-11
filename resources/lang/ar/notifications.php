@@ -2,7 +2,7 @@
 return [
     'reminder_title' => 'تنبيه',
     'reminder_body' => 'الوقت المتبقي لدخول موعد الحجز هو 10 دقائق فقط، الرجاء التواجد في المكان.',
-    
+
     'new_schedule_title' => 'حجز جديد',
-    'new_schedule_body' => 'قام :client_name بحجز جديد الساعة :time بتاريخ :date.',
+    'new_schedule_body' => 'تم حجز موعد بواسطة :client_name الساعة :time بتاريخ :date.',
 ];

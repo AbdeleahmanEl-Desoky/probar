@@ -43,8 +43,8 @@ class ScheduleCRUDService
 
         $this->firebaseNotificationService->send(
              $barber->fcm_token,
-       __('messages.new_schedule_title'),
-        __('messages.new_schedule_body', [
+       __('notifications.new_schedule_title'),
+        __('notifications.new_schedule_body', [
             'client_name' => $client->name,
             'time' => $schedule->start_time,
             'date' => $schedule->schedule_date,
