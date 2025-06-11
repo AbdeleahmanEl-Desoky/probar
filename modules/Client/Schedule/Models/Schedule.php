@@ -46,7 +46,11 @@ class Schedule extends Model
 
     protected $casts = [
         'id' => 'string',
+        'schedule_date' => 'date',       // Casts to a Carbon object, formats as Y-m-d
+        'start_time' => 'datetime',    // Casts to a Carbon object
+        'end_time' => 'datetime',      // Good practice to cast this too if it exists
     ];
+
 
     protected static function newFactory(): ScheduleFactory
     {

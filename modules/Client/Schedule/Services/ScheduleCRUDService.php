@@ -60,8 +60,8 @@ class ScheduleCRUDService
             [
                 'type' => 'schedule_new',
                 'schedule_id' => $schedule->id->toString(),
-                'schedule_date' => $schedule->schedule_date->toString(),
-                'schedule_time' => $schedule->start_time->toString(),
+                'schedule_date' => $schedule->schedule_date,
+                'schedule_time' => $schedule->start_time,
             ]
         );
     }
