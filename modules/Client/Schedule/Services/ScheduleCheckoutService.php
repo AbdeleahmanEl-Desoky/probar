@@ -15,7 +15,7 @@ class ScheduleCheckoutService
 {
     public function getBookingDetails( $scheduleId)//: array
     {
-        $services = ScheduleService::where('schedule_id', $scheduleId)->get();
+        $services = ScheduleService::with('shopService')->where('schedule_id', $scheduleId)->get();
 
         $subtotal = 0;
         $servicesDetails = [];
@@ -23,7 +23,7 @@ class ScheduleCheckoutService
         foreach ($services as $service) {
             $subtotal += $service->price;
             $servicesDetails[] = [
-                'service_name' => $service->name,
+                'service_name' => $service->shopService->name,
                 'price' => $service->price,
             ];
         }
