@@ -54,8 +54,9 @@ class ScheduleCRUDService
        __('notifications.new_schedule_title'),
         __('notifications.new_schedule_body', [
             'client_name' => $client->name,
-            'time' => $schedule->start_time->toString(),
-            'date' => $schedule->schedule_date->toString(),
+            'time' => Carbon::parse($schedule->start_time)->format('H:i'), // format it as you need
+            'date' => Carbon::parse($schedule->schedule_date)->format('Y-m-d'), // format it as you need
+
         ]),
             [
                 'type' => 'schedule_new',
@@ -74,8 +75,9 @@ class ScheduleCRUDService
        __('notifications.new_schedule_title'),
         __('notifications.new_schedule_body', [
             'client_name' => $client->name,
-            'time' => $schedule->start_time->toString(),
-            'date' => $schedule->schedule_date->toString(),
+            'time' => Carbon::parse($schedule->start_time)->format('H:i'), // format it as you need
+            'date' => Carbon::parse($schedule->schedule_date)->format('Y-m-d'), // format it as you need
+
         ]),
             [
                 'type' => 'schedule_new',
