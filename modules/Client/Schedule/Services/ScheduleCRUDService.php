@@ -60,8 +60,8 @@ class ScheduleCRUDService
             [
                 'type' => 'schedule_new',
                 'schedule_id' => $schedule->id->toString(),
-                'schedule_date' => $schedule->schedule_date,
-                'schedule_time' => $schedule->start_time,
+                'schedule_date' => $schedule->schedule_date->toString(),
+                'schedule_time' => $schedule->start_time->toString(),
             ]
         );
     }
@@ -76,14 +76,14 @@ class ScheduleCRUDService
        __('notifications.new_schedule_title'),
         __('notifications.new_schedule_body', [
             'client_name' => $client->name,
-            'time' => $schedule->start_time,
-            'date' => $schedule->schedule_date,
+            'time' => $schedule->start_time->toString(),
+            'date' => $schedule->schedule_date->toString(),
         ]),
             [
                 'type' => 'schedule_new',
                 'schedule_id' => $schedule->id->toString(),
-                'schedule_date' => $schedule->schedule_date,
-                'schedule_time' => $schedule->start_time,
+                'schedule_date' => $schedule->schedule_date->toString(),
+                'schedule_time' => $schedule->start_time->toString(),
             ]
         );
     }
@@ -100,14 +100,14 @@ class ScheduleCRUDService
        __('notifications.cancel_schedule_title'),
         __('notifications.cancel_schedule_body', [
             'client_name' => $client->name,
-            'time' => $schedule->start_time,
-            'date' => $schedule->schedule_date,
+            'time' => $schedule->start_time->toString(),
+            'date' => $schedule->schedule_date->toString(),
         ]),
             [
                 'type' => 'schedule_cancel',
                 'schedule_id' => $schedule->id->toString(),
-                'schedule_date' => $schedule->schedule_date,
-                'schedule_time' => $schedule->start_time,
+                'schedule_date' => $schedule->schedule_date->toString(),
+                'schedule_time' => $schedule->start_time->toString(),
             ]
         );
     }
