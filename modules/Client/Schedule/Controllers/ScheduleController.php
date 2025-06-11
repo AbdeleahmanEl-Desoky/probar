@@ -62,7 +62,7 @@ class ScheduleController extends Controller
 
         $presenter = new SchedulePresenter($createdItem);
 
-        
+
         return Json::item($presenter->getData());
     }
     public function getData(CreateScheduleRequest $request): JsonResponse
@@ -92,6 +92,8 @@ class ScheduleController extends Controller
             $this->updateScheduleHandler->handle($updateScheduleCommand);
 
             $schedule = $this->scheduleService->get($updateScheduleCommand->getId());
+
+            $this->scheduleService->sendNotificationCancelBooking($schedule);
             $presenter = new ScheduleActivePresenter($schedule);
 
             return Json::item($presenter->getData());

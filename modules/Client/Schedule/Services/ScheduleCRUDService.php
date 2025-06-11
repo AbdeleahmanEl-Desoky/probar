@@ -29,12 +29,12 @@ class ScheduleCRUDService
     public function create(CreateScheduleDTO $createScheduleDTO): Schedule
     {
         $schedule = $this->repository->createSchedule($createScheduleDTO->toArray());
-        self::sendNotification($schedule);
+        self::sendNotificationBooking($schedule);
 
         return $schedule;
     }
 
-    public function sendNotification(Schedule $schedule): void
+    public function sendNotificationBooking(Schedule $schedule): void
     {
         $shop = $this->shopsRepository->getShops(Uuid::fromString($schedule->shop_id));
 
@@ -58,7 +58,29 @@ class ScheduleCRUDService
         );
 
     }
+    public function sendNotificationCancelBooking(Schedule $schedule): void
+    {
+        $shop = $this->shopsRepository->getShops(Uuid::fromString($schedule->shop_id));
 
+        $barber = $this->coreBarberRepository->getCoreBarber(Uuid::fromString($shop->barber_id));
+        $client = auth('api_clients')->user();
+
+        $this->firebaseNotificationService->send(
+             $barber->fcm_token,
+       __('notifications.cancel_schedule_title'),
+        __('notifications.cancel_schedule_body', [
+            'client_name' => $client->name,
+            'time' => $schedule->start_time,
+            'date' => $schedule->schedule_date,
+        ]),
+            [
+                'type' => 'schedule_cancel',
+                'schedule_id' => $schedule->id->toString(),
+                'schedule_date' => $schedule->schedule_date,
+                'schedule_time' => $schedule->start_time,
+            ]
+        );
+    }
     public function list(int $page = 1, int $perPage = 10,$shopId,$model): array
     {
         return $this->repository->paginated(
