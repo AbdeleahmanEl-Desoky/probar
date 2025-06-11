@@ -107,7 +107,7 @@ class CoreBarberController extends Controller
 
         return Json::item(item: $presenter->getData());
     }
-    public function updateCfmToken(CfmTokenRequest $request): JsonResponse
+    public function updateFcmToken(CfmTokenRequest $request): JsonResponse
     {
         $command = $request->updateCfmTokenCommand();
         $this->updateCfmTokenHandler->handle($command);
