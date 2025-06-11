@@ -98,12 +98,12 @@ class ScheduleCRUDService
        __('notifications.cancel_schedule_title'),
         __('notifications.cancel_schedule_body', [
             'client_name' => $client->name,
-            'time' => $schedule->start_time->toString(),
-            'date' => $schedule->schedule_date->toString(),
+            'time' => Carbon::parse($schedule->start_time)->format('H:i'),
+            'date' => Carbon::parse($schedule->schedule_date)->format('d/m'),
         ]),
             [
                 'type' => 'schedule_cancel',
-                'schedule_id' => $schedule->id->toString(),
+                'schedule_id' => $schedule->id,
             ]
         );
     }
