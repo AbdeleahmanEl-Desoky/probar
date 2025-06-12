@@ -148,7 +148,7 @@
                 <p>Download the ProBar Customer app today!</p>
                 <div class="download-buttons">
                     <a href="#" class="store-button">App Store</a>
-                    <a href="#" class="store-button">Google Play</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.negen.probarbarber&pli=1" class="store-button">Google Play</a>
                 </div>
                  <p class="small-text">Barbers: Download the dedicated ProBar Barber app from the stores.</p>
             </div>
