@@ -25,8 +25,10 @@ class UpdateScheduleShopPaymentRequest extends FormRequest
         return new UpdateScheduleShopPaymentCommand(
             id: Uuid::fromString($this->route('id')),
             payment: $this->get('payment'),
-            addition: $this->get('addition', 0),
-            discount: $this->get('discount', 0),
+            addition: $this->filled('addition') ? (float) $this->input('addition') : null,
+            discount: $this->filled('discount') ? (float) $this->input('discount') : null,
         );
     }
 }
+
+
