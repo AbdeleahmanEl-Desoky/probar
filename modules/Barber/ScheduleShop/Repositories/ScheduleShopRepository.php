@@ -203,7 +203,7 @@ class ScheduleShopRepository extends BaseRepository
         $newHold = $hold + 10;
 
         // Step 1: Get all affected schedules (on same shop & date and after or at the current start time)
-        $affectedSchedules = $this->model
+        $affectedSchedules = $this->model->with('shop')
             ->where('shop_id', $shopId)
             ->whereDate('schedule_date', $scheduleDate)
             ->where('start_time', '>=', $startTime)
