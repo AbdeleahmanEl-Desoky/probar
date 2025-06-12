@@ -7,6 +7,7 @@ namespace Modules\Barber\ScheduleShop\Repositories;
 use BasePackage\Shared\Repositories\BaseRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\Barber\Shop\Models\Shop;
 use Modules\Client\Rate\Models\Rate;
 use Ramsey\Uuid\UuidInterface;
 use Modules\Client\Schedule\Models\Schedule;
@@ -197,6 +198,8 @@ class ScheduleShopRepository extends BaseRepository
         }
 
         $shopId = $schedule->shop_id;
+        $shop = Shop::find($shopId);
+
         $scheduleDate = Carbon::parse($schedule->schedule_date)->toDateString();
         $startTime = $schedule->start_time;
         $hold = $schedule->hold ?? 0;
@@ -223,7 +226,7 @@ class ScheduleShopRepository extends BaseRepository
                     $fcmToken,
                     __('notifications.hold_schedule_title'),
                     __('notifications.hold_schedule_body', [
-                        'shop_name' => $affectedSchedule->shop->name ?? '',
+                        'shop_name' => $shop->name ?? '',
                         'hold' => $newHold,
                         'time' => Carbon::parse($affectedSchedule->start_time)->format('H:i'),
                         'date' => Carbon::parse($affectedSchedule->schedule_date)->format('d/m'),
