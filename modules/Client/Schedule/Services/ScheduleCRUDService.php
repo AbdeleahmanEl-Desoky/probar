@@ -65,7 +65,7 @@ class ScheduleCRUDService
         );
     }
 
-        public function sendNotificationBookingToClient(Schedule $schedule): void
+    public function sendNotificationBookingToClient(Schedule $schedule): void
     {
         $shop = $this->shopsRepository->getShops(Uuid::fromString($schedule->shop_id));
         $client = auth('api_clients')->user();
@@ -107,7 +107,7 @@ class ScheduleCRUDService
             ]
         );
     }
-        public function sendNotificationCancelBookingToClient(Schedule $schedule): void
+    public function sendNotificationCancelBookingToClient(Schedule $schedule): void
     {
         $shop = $this->shopsRepository->getShops(Uuid::fromString($schedule->shop_id));
 

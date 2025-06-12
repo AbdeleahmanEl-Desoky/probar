@@ -18,7 +18,10 @@ class ShopStatusService
     ) {
     }
 
-
+    public function updateHold(UuidInterface $id): Shop
+    {
+        return $this->repository->updateShopHold($id);
+    }
 
     public function updateStatus( $id)//: Shop
     {

@@ -52,7 +52,17 @@ class ShopRepository extends BaseRepository
         $shop->update([
             'is_open' =>$shop->is_open ^1,
         ]);
-        
+
+        return $shop->refresh();
+    }
+    public function updateShopHold(UuidInterface $id): Shop
+    {
+        $shop = $this->model->whereId($id)->first();
+
+        $shop->update([
+            'hold' => $shop->hold  +10,
+        ]);
+
         return $shop->refresh();
     }
     public function updateShop(UuidInterface $id, array $data): bool

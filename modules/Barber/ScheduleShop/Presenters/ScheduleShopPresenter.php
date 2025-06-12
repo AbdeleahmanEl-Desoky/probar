@@ -6,6 +6,7 @@ namespace Modules\Barber\ScheduleShop\Presenters;
 
 use Modules\Barber\ScheduleShop\Models\ScheduleShop;
 use BasePackage\Shared\Presenters\AbstractPresenter;
+use Carbon\Carbon;
 use Modules\Client\Schedule\Models\Schedule;
 
 class ScheduleShopPresenter extends AbstractPresenter
@@ -21,8 +22,12 @@ class ScheduleShopPresenter extends AbstractPresenter
     {
         return [
             'id' => $this->schedule->id,
-            'start_time' => $this->schedule->start_time,
-            'end_time' => $this->schedule->end_time,
+            'start_time' => Carbon::parse($this->schedule->start_time)
+                ->addMinutes($this->schedule->shop?->hold ?? 0)
+                ->format('H:i'),
+            'end_time' => Carbon::parse($this->schedule->end_time)
+                ->addMinutes($this->schedule->shop?->hold ?? 0)
+                ->format('H:i'),
             'schedule_date' => $this->schedule->schedule_date,
             'shop_id' => $this->schedule->shop_id,
             'client_id' => $this->schedule->client_id,

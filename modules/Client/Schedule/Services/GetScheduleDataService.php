@@ -41,8 +41,8 @@ class GetScheduleDataService
 
         return [
             'schedule_date' => $scheduleDate,
-            'start_time' => $startTime,
-            'end_time' => $endTime,
+            'start_time' => $this->formatTime($startTime, $shopId),
+            'end_time' =>  $this->formatTime($endTime, $shopId),
             'services' => $servicesDetails,
             'subtotal' => $subtotal,
             'discount' => $discount,
@@ -50,6 +50,13 @@ class GetScheduleDataService
         ];
     }
 
+    private function formatTime(string $time, int $shopId): string
+    {
+        $hold = \Modules\Barber\Shop\Models\Shop::find($shopId)?->hold ?? 0;
 
+        return Carbon::parse($time)
+            ->addMinutes($hold)
+            ->format('H:i');
+    }
 
 }
