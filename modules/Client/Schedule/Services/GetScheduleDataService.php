@@ -9,6 +9,7 @@ use Modules\Barber\ShopHour\Models\ShopHour;
 use Modules\Barber\ShopService\Models\ShopService;
 use Modules\Client\Schedule\Models\Schedule;
 use Modules\Client\Schedule\Repositories\ScheduleRepository;
+use Ramsey\Uuid\Uuid;
 
 class GetScheduleDataService
 {
@@ -41,8 +42,8 @@ class GetScheduleDataService
 
         return [
             'schedule_date' => $scheduleDate,
-            'start_time' => $this->formatTime($startTime, $shopId),
-            'end_time' =>  $this->formatTime($endTime, $shopId),
+            'start_time' => $this->formatTime($startTime,Uuid::fromString($shopId)),
+            'end_time' =>  $this->formatTime($endTime,Uuid::fromString($shopId)),
             'services' => $servicesDetails,
             'subtotal' => $subtotal,
             'discount' => $discount,
@@ -50,7 +51,7 @@ class GetScheduleDataService
         ];
     }
 
-    private function formatTime(string $time, int $shopId): string
+    private function formatTime(string $time, $shopId): string
     {
         $hold = \Modules\Barber\Shop\Models\Shop::find($shopId)?->hold ?? 0;
 
