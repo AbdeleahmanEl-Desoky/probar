@@ -38,8 +38,6 @@ class ShopPresenter extends AbstractPresenter
             'whatsapp' => $this->shop->whatsapp,
             'facebook' => $this->shop->facebook,
             'instagram' => $this->shop->instagram,
-            'hold' => $this->shop->hold,
-
         ];
     }
 }

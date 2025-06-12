@@ -22,10 +22,10 @@ class SchedulePresenter extends AbstractPresenter
         return [
             'id' => $this->schedule->id,
             'start_time' => Carbon::parse($this->schedule->start_time)
-                ->addMinutes($this->schedule->shop?->hold ?? 0)
+                ->addMinutes($this->schedule->hold ?? 0)
                 ->format('H:i'),
             'end_time' => Carbon::parse($this->schedule->end_time)
-                ->addMinutes($this->schedule->shop?->hold ?? 0)
+                ->addMinutes($this->schedule->hold ?? 0)
                 ->format('H:i'),
             'schedule_date' => $this->schedule->schedule_date ,
             'shop_id' => $this->schedule->shop_id ,

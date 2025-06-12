@@ -55,16 +55,7 @@ class ShopRepository extends BaseRepository
 
         return $shop->refresh();
     }
-    public function updateShopHold(UuidInterface $id): Shop
-    {
-        $shop = $this->model->whereId($id)->first();
 
-        $shop->update([
-            'hold' => $shop->hold  +10,
-        ]);
-
-        return $shop->refresh();
-    }
     public function updateShop(UuidInterface $id, array $data): bool
     {
         return $this->update($id, $data);

@@ -10,9 +10,16 @@ use Modules\Barber\ShopService\Models\ShopService;
 use Modules\Client\Schedule\Models\Schedule;
 use Modules\Client\Schedule\Repositories\ScheduleRepository;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 class GetScheduleDataService
 {
+    private ScheduleRepository $scheduleRepository;
+
+    public function __construct(ScheduleRepository $scheduleRepository)
+    {
+        $this->scheduleRepository = $scheduleRepository;
+    }
     public function getBookingDetails($request): array
     {
         $shopId = $request->shop_id;
@@ -51,9 +58,10 @@ class GetScheduleDataService
         ];
     }
 
-    private function formatTime(string $time, $shopId): string
+
+    private function formatTime(string $time, UuidInterface $shopId): string
     {
-        $hold = \Modules\Barber\Shop\Models\Shop::find($shopId)?->hold ?? 0;
+        $hold = $this->scheduleRepository->getHoldByShopId($shopId);
 
         return Carbon::parse($time)
             ->addMinutes($hold)
