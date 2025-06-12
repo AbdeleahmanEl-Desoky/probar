@@ -176,13 +176,13 @@ class ScheduleShopController extends Controller
 
         return Json::item($presenter->getData());
     }
-    public function holdBooking(UuidInterface $id): JsonResponse
+    public function holdBooking(GetScheduleShopRequest $request): JsonResponse
     {
         $userId = auth('api_barbers')->user()->id;
         $barberId = Uuid::fromString($userId);
         $shop = $this->shopRepository->getMyShop($barberId);
 
-        $shopHold = $this->scheduleShopService->updateHold($id);
+        $shopHold = $this->scheduleShopService->updateHold(Uuid::fromString($request->route('id')));
 
         return Json::done('Shop hold updated successfully');
     }
