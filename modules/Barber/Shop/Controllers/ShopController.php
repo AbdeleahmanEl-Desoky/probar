@@ -92,7 +92,7 @@ class ShopController extends Controller
     {
         $item = $this->shopService->getMyShop(Uuid::fromString(auth('api_barbers')->user()->id));
 
-        $shopStatusServiceUpdated = $this->shopStatusService->updateHold($item->id);
+        $shopStatusServiceUpdated = $this->shopStatusService->updateHold(Uuid::fromString($item->id));
 
         $presenter = new ShopPresenter($shopStatusServiceUpdated);
 
