@@ -17,7 +17,7 @@ use Modules\Client\Schedule\Models\Schedule;
  */
 class ScheduleRepository extends BaseRepository
 {
-    
+
     public function __construct(Schedule $model)
     {
         parent::__construct($model);
@@ -59,12 +59,12 @@ class ScheduleRepository extends BaseRepository
     }
     public function getHoldByShopId(UuidInterface $shopId)
     {
-        $shop = $this->model
+        $schedule = $this->model
             ->where('shop_id', $shopId->toString())
             ->whereNotNull('hold')
             ->where('hold', '!=', 0)
             ->first();
 
-        return $shop ? (int) $shop->hold : 0;
+        return $schedule ? (int) $schedule->hold : 0;
     }
 }
