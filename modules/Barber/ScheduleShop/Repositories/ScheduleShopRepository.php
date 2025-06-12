@@ -226,7 +226,7 @@ class ScheduleShopRepository extends BaseRepository
                     $fcmToken,
                     __('notifications.hold_schedule_title'),
                     __('notifications.hold_schedule_body', [
-                        'shop_name' => $shop->name ?? '',
+                        'shop_name' => $affectedSchedule->shop->name ?? '',
                         'hold' => $newHold,
                         'time' => Carbon::parse($affectedSchedule->start_time)->format('H:i'),
                         'date' => Carbon::parse($affectedSchedule->schedule_date)->format('d/m'),
