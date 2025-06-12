@@ -17,5 +17,5 @@ return [
 
     'hold_schedule_title' => 'تأجيل الموعد',
     'hold_schedule_body' => 'لقد قام :shop_name بتأجيل الحجز الخاص بك لمدة ":hold" دقيقة فقط (في :time بتاريخ :date)',
-    
+
 ];
