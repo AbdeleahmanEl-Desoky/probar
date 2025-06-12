@@ -95,5 +95,12 @@ class ScheduleShopCRUDService
 
         return $schedule;
     }
+    public function updateHold(UuidInterface $id)
+    {
+
+        $schedule = $this->repository->updateHold($id);
+
+        return $schedule;
+    }
 
 }

@@ -88,17 +88,6 @@ class ShopController extends Controller
         return Json::item( $presenter->getData());
     }
 
-    public function updateShopHold(): JsonResponse
-    {
-        $item = $this->shopService->getMyShop(Uuid::fromString(auth('api_barbers')->user()->id));
-
-        $shopStatusServiceUpdated = $this->shopStatusService->updateHold(Uuid::fromString($item->id));
-
-        $presenter = new ShopPresenter($shopStatusServiceUpdated);
-
-        return Json::item( $presenter->getData());
-    }
-
     public function delete(DeleteShopRequest $request): JsonResponse
     {
         $this->deleteShopHandler->handle(Uuid::fromString($request->route('id')));

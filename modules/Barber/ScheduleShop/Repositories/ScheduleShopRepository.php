@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Barber\ScheduleShop\Repositories;
 
 use BasePackage\Shared\Repositories\BaseRepository;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Client\Rate\Models\Rate;
 use Ramsey\Uuid\UuidInterface;
@@ -186,6 +187,24 @@ class ScheduleShopRepository extends BaseRepository
         return $totalCityLedger;
     }
 
+    public function updateHold(UuidInterface $id)
+    {
+        $schedule = $this->model->where('id', $id)->first();
 
+        if (!$schedule) {
+            return null;
+        }
+        $shopId = $schedule->shop_id;
+        $scheduleDate = Carbon::parse($schedule->schedule_date)->toDateString();
+        $startTime = $schedule->start_time;
+        $hold = $schedule->hold ?? 0;
+        // Step 2: Update all schedules on the same date and shop where start_time is after the selected schedule
+        $this->model
+            ->where('shop_id', $shopId)
+            ->whereDate('schedule_date', $scheduleDate)
+            ->where('start_time', '>=', $startTime)
+            ->update(['hold' =>$hold+ 10]);
 
+        return $schedule;
+    }
 }

@@ -26,6 +26,7 @@ use Modules\Client\Schedule\Presenters\SchedulePresenter;
 use Modules\Client\Schedule\Services\GetScheduleSlotsService;
 use Modules\Client\Schedule\Services\ScheduleCheckoutService;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 class ScheduleShopController extends Controller
 {
@@ -174,6 +175,16 @@ class ScheduleShopController extends Controller
         $presenter = new ScheduleShopPresenter($item);
 
         return Json::item($presenter->getData());
+    }
+    public function holdBooking(UuidInterface $id): JsonResponse
+    {
+        $userId = auth('api_barbers')->user()->id;
+        $barberId = Uuid::fromString($userId);
+        $shop = $this->shopRepository->getMyShop($barberId);
+
+        $shopHold = $this->scheduleShopService->updateHold($id);
+
+        return Json::done('Shop hold updated successfully');
     }
 
 }

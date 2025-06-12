@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('shops', function (Blueprint $table) {
+        Schema::table('schedules', function (Blueprint $table) {
             $table->integer('hold')->default(0);
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('hold');
+        Schema::table('schedule_shops', function (Blueprint $table) {
+            $table->dropColumn('hold');
+        });
     }
 };
