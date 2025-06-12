@@ -11,6 +11,7 @@ use Modules\Client\Rate\Models\Rate;
 use Ramsey\Uuid\UuidInterface;
 use Modules\Client\Schedule\Models\Schedule;
 use Modules\Client\Schedule\Models\ScheduleService;
+use Modules\Shared\Notification\Services\FirebaseNotificationService;
 
 /**
  * @property Schedule $model
@@ -194,17 +195,48 @@ class ScheduleShopRepository extends BaseRepository
         if (!$schedule) {
             return null;
         }
+
         $shopId = $schedule->shop_id;
         $scheduleDate = Carbon::parse($schedule->schedule_date)->toDateString();
         $startTime = $schedule->start_time;
         $hold = $schedule->hold ?? 0;
-        // Step 2: Update all schedules on the same date and shop where start_time is after the selected schedule
-        $this->model
+        $newHold = $hold + 10;
+
+        // Step 1: Get all affected schedules (on same shop & date and after or at the current start time)
+        $affectedSchedules = $this->model
             ->where('shop_id', $shopId)
             ->whereDate('schedule_date', $scheduleDate)
             ->where('start_time', '>=', $startTime)
-            ->update(['hold' =>$hold+ 10]);
+            ->get();
+
+        // Step 2: Update the hold for all affected schedules
+        $this->model
+            ->whereIn('id', $affectedSchedules->pluck('id'))
+            ->update(['hold' => $newHold]);
+
+        // Step 3: Notify each affected client
+        foreach ($affectedSchedules as $affectedSchedule) {
+            $fcmToken = $affectedSchedule->client->fcm_token ?? null;
+
+            if ($fcmToken) {
+                FirebaseNotificationService::send(
+                    $fcmToken,
+                    __('notifications.hold_schedule_title'),
+                    __('notifications.hold_schedule_body', [
+                        'shop_name' => $affectedSchedule->shop->name ?? '',
+                        'hold' => $newHold,
+                        'time' => Carbon::parse($affectedSchedule->start_time)->format('H:i'),
+                        'date' => Carbon::parse($affectedSchedule->schedule_date)->format('d/m'),
+                    ]),
+                    [
+                        'type' => 'schedule_hold',
+                        'schedule_id' => $affectedSchedule->id,
+                    ]
+                );
+            }
+        }
 
         return $schedule;
     }
+
 }

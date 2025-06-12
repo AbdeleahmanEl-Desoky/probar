@@ -14,4 +14,8 @@ return [
 
     'new_schedule_title_client' => 'تم حجز الموعد',
     'new_schedule_body_client' => 'لقد قمت بحجز موعد لدى :shop_name الساعة :time بتاريخ :date',
+
+    'hold_schedule_title' => 'تأجيل الموعد',
+    'hold_schedule_body' => 'لقد قام :shop_name بتأجيل الحجز الخاص بك لمدة ":hold" دقيقة فقط (في :time بتاريخ :date)',
+    
 ];
