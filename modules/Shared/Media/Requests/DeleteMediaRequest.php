@@ -13,7 +13,6 @@ class DeleteMediaRequest extends FormRequest
     {
         return [
             'ids' => 'required',
-            'ids.*' => 'uuid',
         ];
     }
 }
