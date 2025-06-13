@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Shared\Help\Handlers;
+namespace Modules\Shared\Media\Handlers;
 
 use Modules\Shared\Media\Repositories\MediaRepository;
 use Ramsey\Uuid\UuidInterface;
