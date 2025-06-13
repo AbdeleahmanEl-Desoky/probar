@@ -13,7 +13,7 @@ return [
     'hold_schedule_body' => 'لقد قمت بتأجيل جميع الحجوزات الخاص بك لمدة ":hold" دقيقة',
 
     'cancel_schedule_title_client' => 'إلغاء الحجز',
-    'cancel_schedule_body_client' => 'تم إلغاء حجزك لدي :shop_name الساعة :time بتاريخ :date.',
+    'cancel_schedule_body_client' => 'تم إلغاء حجزك لدى :shop_name الساعة :time بتاريخ :date.',
 
     'new_schedule_title_client' => 'تم حجز الموعد',
     'new_schedule_body_client' => 'لقد قمت بحجز موعد لدى :shop_name الساعة :time بتاريخ :date',
