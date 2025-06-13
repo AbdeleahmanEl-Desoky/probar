@@ -26,7 +26,7 @@ class ScheduleService extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
-        'schedule_id', 'shop_service_id', 'price', 'time'
+        'schedule_id', 'shop_service_id', 'price'
     ];
     protected $casts = ['id' => 'string'];
 
