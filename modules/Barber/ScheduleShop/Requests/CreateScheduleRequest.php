@@ -23,7 +23,10 @@ class CreateScheduleRequest extends FormRequest
             'services' => 'required|array',
             'services.*' => 'uuid|exists:shop_services,id',
             'guest_name'  => 'required|string|max:255',
-            'guest_phone' => 'required|string|max:20',
+            'guest_phone' => [
+                'required',
+                'regex:/^05\d{8}$/',
+            ],
         ];
     }
 

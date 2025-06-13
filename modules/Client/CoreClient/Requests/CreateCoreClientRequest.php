@@ -16,7 +16,11 @@ class CreateCoreClientRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|email|unique:clients,email',
             'password'=>'required|string',
-            'phone'=> 'required|unique:clients,phone'
+            'phone'=> [
+                'required',
+                'regex:/^05\d{8}$/',
+                'unique:clients,phone',
+            ],
         ];
     }
 

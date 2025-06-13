@@ -16,7 +16,11 @@ class CreateCoreBarberRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|email|unique:barbers,email',
             'password'=>'required|string',
-            'phone'=> 'required|unique:barbers,phone',
+            'phone'=> [
+                'required',
+                'regex:/^05\d{8}$/',
+                'unique:barbers,phone',
+            ],
         ];
     }
 

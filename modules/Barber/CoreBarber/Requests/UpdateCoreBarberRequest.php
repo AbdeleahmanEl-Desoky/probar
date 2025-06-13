@@ -18,7 +18,11 @@ class UpdateCoreBarberRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|email|unique:barbers,email,'. auth('api_barbers')->user()->id,
             'password'=>'nullable',
-            'phone' => 'required|unique:barbers,phone,'. auth('api_barbers')->user()->id,
+            'phone' =>  [
+                'required',
+                'regex:/^05\d{8}$/',
+                'unique:barbers,phone,' . auth('api_barbers')->user()->id,
+            ],
         ];
     }
 

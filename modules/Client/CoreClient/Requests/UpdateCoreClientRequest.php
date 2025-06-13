@@ -15,6 +15,7 @@ class UpdateCoreClientRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'phone' =>'nullable|regex:/^05\d{8}$/',
         ];
     }
 
