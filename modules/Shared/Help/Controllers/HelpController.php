@@ -17,6 +17,8 @@ use Modules\Shared\Help\Requests\GetHelpRequest;
 use Modules\Shared\Help\Requests\UpdateHelpRequest;
 use Modules\Shared\Help\Services\HelpCRUDService;
 use Ramsey\Uuid\Uuid;
+use App\Mail\HelpMessageMail;
+use Illuminate\Support\Facades\Mail;
 
 class HelpController extends Controller
 {
@@ -49,7 +51,15 @@ class HelpController extends Controller
     public function store(CreateHelpRequest $request): JsonResponse
     {
         $createdItem = $this->helpService->create($request->createCreateHelpDTO());
-
+    // Send to your email (replace with your actual admin email)
+        Mail::to('info@probar-ps.com')->send(
+            new HelpMessageMail(
+                name: $request->name,
+                email: $request->email,
+                messageText: $request->message,
+                type: $request->type,
+            )
+        );
         $presenter = new HelpPresenter($createdItem);
 
         return Json::item($presenter->getData());
