@@ -198,7 +198,6 @@ class ScheduleShopRepository extends BaseRepository
         }
 
         $shopId = $schedule->shop_id;
-        $shop = Shop::find($shopId);
 
         $scheduleDate = Carbon::parse($schedule->schedule_date)->toDateString();
         $startTime = $schedule->start_time;
@@ -217,6 +216,7 @@ class ScheduleShopRepository extends BaseRepository
             ->whereIn('id', $affectedSchedules->pluck('id'))
             ->update(['hold' => $newHold]);
 
+
         // Step 3: Notify each affected client
         foreach ($affectedSchedules as $affectedSchedule) {
             $fcmToken = $affectedSchedule->client->fcm_token ?? null;
@@ -224,8 +224,8 @@ class ScheduleShopRepository extends BaseRepository
             if ($fcmToken) {
                 FirebaseNotificationService::send(
                     $fcmToken,
-                    __('notifications.hold_schedule_title'),
-                    __('notifications.hold_schedule_body', [
+                    __('notifications.hold_schedule_title_client'),
+                    __('notifications.hold_schedule_body_client', [
                         'shop_name' => $affectedSchedule->shop->name ?? '',
                         'hold' => $newHold,
                         'time' => Carbon::parse($affectedSchedule->start_time)->format('H:i'),
@@ -237,6 +237,18 @@ class ScheduleShopRepository extends BaseRepository
                     ]
                 );
             }
+                FirebaseNotificationService::send(
+                    $fcmToken,
+                    __('notifications.hold_schedule_title'),
+                    __('notifications.hold_schedule_body', [
+                        'hold' => $newHold,
+                    ]),
+                    [
+                        'type' => 'schedule_hold',
+                        'schedule_id' => $affectedSchedule->id,
+                    ]
+                );
+
         }
 
         return $schedule;

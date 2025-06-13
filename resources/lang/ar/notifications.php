@@ -9,13 +9,16 @@ return [
     'cancel_schedule_title' => 'إلغاء حجز',
     'cancel_schedule_body' => 'تم إلغاء حجزك بواسطة :client_name الساعة :time بتاريخ :date.',
 
+    'hold_schedule_title' => 'تأجيل الموعد',
+    'hold_schedule_body' => 'لقد قمت بتأجيل جميع الحجوزات الخاص بك لمدة ":hold" دقيقة',
+
     'cancel_schedule_title_client' => 'إلغاء الحجز',
     'cancel_schedule_body_client' => 'تم إلغاء حجزك لدي :shop_name الساعة :time بتاريخ :date.',
 
     'new_schedule_title_client' => 'تم حجز الموعد',
     'new_schedule_body_client' => 'لقد قمت بحجز موعد لدى :shop_name الساعة :time بتاريخ :date',
 
-    'hold_schedule_title' => 'تأجيل الموعد',
-    'hold_schedule_body' => 'لقد قام :shop_name بتأجيل الحجز الخاص بك لمدة ":hold" دقيقة فقط (في :time بتاريخ :date)',
+    'hold_schedule_title_client' => 'تأجيل الموعد',
+    'hold_schedule_body_client' => 'لقد قام :shop_name بتأجيل الحجز الخاص بك لمدة ":hold" دقيقة فقط (في :time بتاريخ :date)',
 
 ];

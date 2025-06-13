@@ -16,6 +16,9 @@ return [
     'new_schedule_title_client' => 'Appointment Booked',
     'new_schedule_body_client' => 'You have booked an appointment at :shop_name at :time on :date',
 
+    'hold_schedule_title_client' => 'Schedule Hold',
+    'hold_schedule_body_client' => ':shop_name has delayed your booking by ":hold" minutes only (at :time on :date)',
+
     'hold_schedule_title' => 'Schedule Hold',
-    'hold_schedule_body' => ':shop_name has delayed your booking by ":hold" minutes only (at :time on :date)',
+    'hold_schedule_body' => 'All your bookings have been delayed by ":hold" minutes'
 ];
