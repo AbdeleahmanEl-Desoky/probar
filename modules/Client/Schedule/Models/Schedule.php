@@ -68,4 +68,9 @@ class Schedule extends Model
     {
         return $this->belongsTo(Client::class,'client_id', 'id');
     }
+
+    public function shopServicesHasMany()
+    {
+        return $this->hasMany(ScheduleService::class, 'schedule_id', 'id');
+    }
 }

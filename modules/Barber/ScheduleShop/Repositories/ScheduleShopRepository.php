@@ -57,27 +57,27 @@ class ScheduleShopRepository extends BaseRepository
         return $this->create($data);
     }
 
-    public function updateScheduleShop(UuidInterface $id, array $data): bool
-    {
-        // Get existing schedule shop
-        $schedule = $this->find($id); // you must have a `find` method
+public function updateScheduleShop(UuidInterface $id, array $data): bool
+{
+    // Get the existing schedule shop by ID
+    $schedule = $this->find($id); // Ensure 'find' exists and returns the model
 
-        // Fallback to 0 if not set
-        $addition = $data['addition'] ?? 0;
-        $discount = $data['discount'] ?? 0;
+    // Sum all service prices related to the schedule
+    $baseTotal = $schedule->shopServicesHasMany->sum('price');
 
-        // Calculate new total price
-        $baseTotal = $schedule->total_price ?? 0;
-        $newTotal = ($baseTotal + $addition) - $discount;
+    // Get optional additions and discounts, fallback to 0 if not set
+    $addition = $data['addition'] ?? 0;
+    $discount = $data['discount'] ?? 0;
 
-        // Ensure it doesn't go below 0
-        $newTotal = max(0, $newTotal);
+    // Calculate new total price (prevent negative totals)
+    $newTotal = max(0, ($baseTotal + $addition) - $discount);
 
-        // Add it to the update data
-        $data['total_price'] = $newTotal;
+    // Set total_price into the data array
+    $data['total_price'] = $newTotal;
 
-        return $this->update($id, $data);
-    }
+    // Update the schedule
+    return $this->update($id, $data);
+}
 
 
     public function deleteScheduleShop(UuidInterface $id): bool
