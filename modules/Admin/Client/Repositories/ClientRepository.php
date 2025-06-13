@@ -26,27 +26,16 @@ class ClientRepository extends BaseRepository
         return $this->paginatedList([], $page, $perPage);
     }
 
-    public function paginateds(int $page = 1, int $perPage = 10): array
+    public function paginateds(int $page = 1, int $perPage = 10)
     {
-        $query = Client::query()
+        return Client::query()
             ->withCount([
                 'schedules as canceled_schedules_count' => fn($q) => $q->where('status', 'cancel'),
                 'schedules as active_schedules_count' => fn($q) => $q->whereNotIn('status', ['finished', 'cancel']),
                 'schedules as finished_schedules_count' => fn($q) => $q->where('status', 'finished'),
             ])
-            ->with('media'); // if you're using Spatie Media Library for picture_url
-
-        $paginator = $query->paginate($perPage, ['*'], 'page', $page);
-
-        return [
-            'data' => $paginator->getCollection(),
-            'pagination' => [
-                'total' => $paginator->total(),
-                'per_page' => $paginator->perPage(),
-                'current_page' => $paginator->currentPage(),
-                'last_page' => $paginator->lastPage(),
-            ],
-        ];
+            ->with('media')
+            ->paginate($perPage, ['*'], 'page', $page);
     }
 
 

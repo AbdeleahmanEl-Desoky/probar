@@ -17,7 +17,7 @@ class ClientCRUDService
     ) {
     }
 
-    public function list(int $page = 1, int $perPage = 10): array
+    public function list(int $page = 1, int $perPage = 10)//: array
     {
         return $this->repository->paginateds(
             page: $page,

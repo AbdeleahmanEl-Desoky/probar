@@ -31,9 +31,18 @@ class ClientController extends Controller
             (int) $request->get('page', 1),
             (int) $request->get('per_page', 10)
         );
+
+        $list->setCollection(collect(ClientPresenter::collection($list->items())));
+
+        // extract pagination info
+        $pagination = [
+            'current_page' => $list->currentPage(),
+            'last_page' => $list->lastPage(),
+        ];
+
         return view('client::index', [
-            'clients' => ClientPresenter::collection($list['data']),
-            'pagination' => $list['pagination'],
+            'clients' => $list,
+            'pagination' => $pagination,
         ]);
     }
 

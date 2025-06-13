@@ -14,6 +14,7 @@ class MediaServiceProvider extends ModuleServiceProvider
         return 'Media';
     }
 
+
     public function boot(): void
     {
         $this->registerTranslations();
@@ -26,5 +27,11 @@ class MediaServiceProvider extends ModuleServiceProvider
         $this->registerRoutes();
     }
 
+    public function mapRoutes(): void
+    {
+        Route::prefix('api/v1/media')
+            ->middleware('api')
+            ->group($this->getModulePath() . '/Resources/routes/api.php');
 
+    }
 }

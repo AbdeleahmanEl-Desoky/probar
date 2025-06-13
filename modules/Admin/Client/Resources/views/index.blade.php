@@ -70,7 +70,7 @@
             </table><!-- end of table -->
 
                 <!-- Pagination -->
-                {{-- {{ $clients->appends(request()->query())->links() }} --}}
+                <x-pagination-with-per-page :pagination="$pagination" />
             </div><!-- /.box-body -->
         </div><!-- /.box -->
     </section>
