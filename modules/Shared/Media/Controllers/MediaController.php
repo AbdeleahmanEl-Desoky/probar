@@ -31,7 +31,7 @@ class MediaController extends Controller
 
         $this->deleteHelpHandler->handle($parsedIds);
 
-        return Json::deleted();
+        return Json::done();
     }
 
 }
