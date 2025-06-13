@@ -238,7 +238,7 @@ class ScheduleShopRepository extends BaseRepository
                 );
             }
                 FirebaseNotificationService::send(
-                    auth('api_barbers')->user()->fcm_token,
+                    auth('api_barbers')->user()->fcm_token??'@',
                     __('notifications.hold_schedule_title'),
                     __('notifications.hold_schedule_body', [
                         'hold' => $newHold,
