@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Ramsey\Uuid\Uuid;
 use App\Mail\HelpMessageMail;
 use Illuminate\Support\Facades\Mail;
-use Modules\Shared\Help\Handlers\DeleteMediaHandler;
+use Modules\Shared\Media\Handlers\DeleteMediaHandler;
 use Modules\Shared\Media\Requests\DeleteMediaRequest;
 
 class MediaController extends Controller
