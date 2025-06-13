@@ -1,0 +1,14 @@
+{
+    "name": "ShopsHour",
+    "alias": "shopshour",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Admin\\ShopsHour\\Providers\\ShopsHourServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Admin"
+}

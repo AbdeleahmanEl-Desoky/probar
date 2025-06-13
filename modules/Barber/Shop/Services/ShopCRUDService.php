@@ -39,19 +39,27 @@ class ShopCRUDService
             }
         }
 
-        $this->assignTranslations($shop, $nameTranslations, $descriptionTranslations);
+        if (!empty($nameTranslations)) {
+            $this->assignNameTranslations($shop, $nameTranslations);
+        }
 
+        if (!empty($descriptionTranslations)) {
+            $this->assignDescriptionTranslations($shop, $descriptionTranslations);
+        }
         $shop->save();
 
         return $this->repository->getMyShop($createShopDTO->barber_id) ;
     }
 
-    private function assignTranslations(Shop $shop, array $nameTranslations, array $descriptionTranslations): void
+    private function assignNameTranslations(Shop $shop, array $nameTranslations): void
     {
         foreach ($nameTranslations as $locale => $value) {
             $shop->setTranslation('name', $locale, $value);
         }
+    }
 
+    private function assignDescriptionTranslations(Shop $shop, array $descriptionTranslations): void
+    {
         foreach ($descriptionTranslations as $locale => $value) {
             $shop->setTranslation('description', $locale, $value);
         }

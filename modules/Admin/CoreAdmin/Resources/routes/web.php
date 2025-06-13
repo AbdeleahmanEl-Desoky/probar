@@ -11,6 +11,6 @@ Route::post('login', [AuthController::class, 'store'])->name('login.post');
 // Authenticated routes (require admin login)
 Route::prefix('admin')->middleware('auth:admin')->name('admin.')->group(function () {
     // We will create this controller and view next
-    Route::get('dashboard', [CoreAdminController::class, 'index'])->name('dashboard');
+    Route::get('/', [CoreAdminController::class, 'index'])->name('dashboard');
     Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
 });

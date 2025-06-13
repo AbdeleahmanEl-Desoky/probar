@@ -1,0 +1,14 @@
+{
+    "name": "ScheduleAll",
+    "alias": "scheduleall",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Admin\\ScheduleAll\\Providers\\ScheduleAllServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Admin"
+}

@@ -1,0 +1,14 @@
+{
+    "name": "Barber",
+    "alias": "barber",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Admin\\Barber\\Providers\\BarberServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Admin"
+}

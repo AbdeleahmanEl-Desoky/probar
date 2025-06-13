@@ -1,0 +1,14 @@
+{
+    "name": "HelpAll",
+    "alias": "helpall",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Admin\\HelpAll\\Providers\\HelpAllServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Admin"
+}

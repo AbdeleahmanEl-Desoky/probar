@@ -15,9 +15,12 @@ class AuthController extends Controller
     /**
      * Display the admin login view.
      */
-    public function create(): View
+    public function create()//: View
     {
-        // This will return the login form view
+        if (auth('admin')->check()) {
+            return redirect()->route('admin.dashboard'); 
+        }
+            // This will return the login form view
         return view('admin::auth.login');
     }
 

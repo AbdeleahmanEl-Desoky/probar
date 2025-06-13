@@ -1,0 +1,14 @@
+{
+    "name": "RateAll",
+    "alias": "rateall",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Admin\\RateAll\\Providers\\RateAllServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Admin"
+}

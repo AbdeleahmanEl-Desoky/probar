@@ -1,0 +1,14 @@
+{
+    "name": "ReportAll",
+    "alias": "reportall",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Admin\\ReportAll\\Providers\\ReportAllServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Admin"
+}
