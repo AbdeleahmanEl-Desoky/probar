@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Modules\Client\Schedule\Repositories;
 
 use BasePackage\Shared\Repositories\BaseRepository;
+use GPBMetadata\Google\Api\Service;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\Barber\ShopService\Models\ShopService;
 use Modules\Client\Schedule\Models\ScheduleService;
 use Ramsey\Uuid\UuidInterface;
 use Modules\Client\Schedule\Models\Schedule;
@@ -37,10 +39,11 @@ class ScheduleRepository extends BaseRepository
     {
         $schedule =$this->create($data);
 
-        foreach ($data['services'] as $service){
+        foreach ($data['services'] as $serviceId){
             ScheduleService::create([
                 'schedule_id'=>$schedule->id,
-                'shop_service_id' =>$service
+                'shop_service_id' =>$serviceId,
+                'price' =>  ShopService::find($serviceId)->price ?? 0
             ]);
         }
 
