@@ -31,7 +31,6 @@ class ShopCRUDService
         }
 
         if (is_array($file)) {
-            $shop->clearMediaCollection('shops');
             foreach ($file as $singleFile) {
                 if ($singleFile instanceof \Illuminate\Http\UploadedFile) {
                     $shop->addMedia($singleFile)->toMediaCollection('shops');
