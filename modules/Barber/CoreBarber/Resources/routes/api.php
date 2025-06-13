@@ -13,4 +13,5 @@ Route::group(['middleware' => ['auth:api_barbers']], function () {
     Route::post('/', [CoreBarberController::class, 'update']);
     Route::delete('/', [CoreBarberController::class, 'delete']);
     Route::post('fcm-token', [CoreBarberController::class, 'updateFcmToken']);
+    Route::post('check-password', [CoreBarberController::class, 'checkPassword']);
 });

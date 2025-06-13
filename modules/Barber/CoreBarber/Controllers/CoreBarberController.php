@@ -13,6 +13,7 @@ use Modules\Barber\CoreBarber\Handlers\UpdateCfmTokenHandler;
 use Modules\Barber\CoreBarber\Handlers\UpdateCoreBarberHandler;
 use Modules\Barber\CoreBarber\Presenters\CoreBarberPresenter;
 use Modules\Barber\CoreBarber\Requests\CfmTokenRequest;
+use Modules\Barber\CoreBarber\Requests\CheckPasswordRequest;
 use Modules\Barber\CoreBarber\Requests\CreateCoreBarberRequest;
 use Modules\Barber\CoreBarber\Requests\DeleteCoreBarberRequest;
 use Modules\Barber\CoreBarber\Requests\LoginCoreBarberRequest;
@@ -26,7 +27,7 @@ use Modules\Barber\CoreBarber\Services\DataCompleteService;
 use Modules\Barber\CoreBarber\Services\ForgotPasswordService;
 use Modules\Barber\CoreBarber\Services\ResetPasswordService;
 use Modules\Barber\Shop\Repositories\ShopRepository;
-
+use Illuminate\Support\Facades\Hash;
 class CoreBarberController extends Controller
 {
     public function __construct(
@@ -150,5 +151,20 @@ class CoreBarberController extends Controller
         $this->deleteCoreBarberHandler->handle(Uuid::fromString(auth('api_barbers')->user()->id));
 
         return Json::deleted();
+    }
+
+    public function checkPassword(CheckPasswordRequest $request): JsonResponse
+    {
+        $barber = auth('api_barbers')->user();
+
+        if (!$barber) {
+            return Json::error('Unauthorized', 401);
+        }
+
+        if (Hash::check($request->password, $barber->password)) {
+            return Json::done('Password is correct.');
+        }
+
+        return Json::error('Password is incorrect.', 422);
     }
 }
