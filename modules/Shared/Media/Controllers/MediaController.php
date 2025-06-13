@@ -26,7 +26,7 @@ class MediaController extends Controller
 
         // Support both single UUID and array of UUIDs
         $parsedIds = is_array($ids)
-            ? array_map(fn($id) => Uuid::fromString($id), $ids)
+            ? array_map(fn($id) => $id, $ids)
             : Uuid::fromString($ids);
 
         $this->deleteHelpHandler->handle($parsedIds);

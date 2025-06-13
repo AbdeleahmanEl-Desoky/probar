@@ -23,7 +23,7 @@ class MediaRepository extends BaseRepository
     }
 
 
-    public function deleteMedia(UuidInterface|array $ids): bool
+    public function deleteMedia($ids): bool
     {
         if (is_array($ids)) {
             foreach ($ids as $id) {
