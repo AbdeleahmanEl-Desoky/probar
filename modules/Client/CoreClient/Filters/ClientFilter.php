@@ -6,7 +6,7 @@ namespace Modules\Client\CoreClient\Filters;
 
 use BasePackage\Shared\Filters\SearchModelFilter;
 
-class CoreClientFilter extends SearchModelFilter
+class ClientFilter extends SearchModelFilter
 {
        public $relations = [];
 

@@ -7,7 +7,7 @@
             <h1>clients</h1>
 
             <ol class="breadcrumb">
-                <li><a href="{{ route('admin.home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="{{ route('admin.client.index') }}"> client</a></li>
                 <li class="active">add</li>
             </ol>

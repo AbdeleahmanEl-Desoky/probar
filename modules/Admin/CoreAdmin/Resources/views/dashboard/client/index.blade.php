@@ -9,7 +9,7 @@
             <h1>clients</h1>
 
             <ol class="breadcrumb">
-                <li><a href="{{ route('admin.home') }}"><i class="fa fa-dashboard"></i>Home</a></li>
+                <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>Home</a></li>
                 <li class="active">client</li>
             </ol>
         </section>
@@ -30,11 +30,7 @@
                                 <input type="text" name="search" class="form-control" placeholder="search" value="{{ request()->search }}">
                             </div>
 
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> search</button>
-                                    <a href="{{ route('admin.client.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i>add</a>
-
-                            </div>
+                        
 
                         </div>
                     </form><!-- end of form -->
@@ -67,7 +63,7 @@
                                         <form action="{{route('admin.client.delete',$client->id)}}" method="post">
                                             {{ csrf_field() }}
                                             {{ method_field('delete') }}
-                                            
+
                                         <button type="submit" class="btn btn-primary"></i>Delete</button>
 
                                         </form>

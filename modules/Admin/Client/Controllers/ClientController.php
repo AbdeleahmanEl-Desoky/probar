@@ -22,55 +22,19 @@ class ClientController extends Controller
 {
     public function __construct(
         private ClientCRUDService $clientService,
-        private UpdateClientHandler $updateClientHandler,
-        private DeleteClientHandler $deleteClientHandler,
     ) {
     }
 
-    public function index(GetClientListRequest $request): JsonResponse
+    public function index(GetClientListRequest $request)
     {
         $list = $this->clientService->list(
             (int) $request->get('page', 1),
             (int) $request->get('per_page', 10)
         );
-
-        return Json::items(ClientPresenter::collection($list['data']), paginationSettings: $list['pagination']);
+        return view('client::index', [
+            'clients' => ClientPresenter::collection($list['data']),
+            'pagination' => $list['pagination'],
+        ]);
     }
 
-    public function show(GetClientRequest $request): JsonResponse
-    {
-        $item = $this->clientService->get(Uuid::fromString($request->route('id')));
-
-        $presenter = new ClientPresenter($item);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function store(CreateClientRequest $request): JsonResponse
-    {
-        $createdItem = $this->clientService->create($request->createCreateClientDTO());
-
-        $presenter = new ClientPresenter($createdItem);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function update(UpdateClientRequest $request): JsonResponse
-    {
-        $command = $request->createUpdateClientCommand();
-        $this->updateClientHandler->handle($command);
-
-        $item = $this->clientService->get($command->getId());
-
-        $presenter = new ClientPresenter($item);
-
-        return Json::item( $presenter->getData());
-    }
-
-    public function delete(DeleteClientRequest $request): JsonResponse
-    {
-        $this->deleteClientHandler->handle(Uuid::fromString($request->route('id')));
-
-        return Json::deleted();
-    }
 }

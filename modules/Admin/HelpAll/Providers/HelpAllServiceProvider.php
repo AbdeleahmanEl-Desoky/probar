@@ -30,7 +30,7 @@ class HelpAllServiceProvider extends ModuleServiceProvider
     {
         Route::middleware('web')
             ->prefix('admin/helps')
-            ->name('admin.helps')
+            ->name('admin.helps.')
             ->group($this->getModulePath() . '/Resources/routes/web.php');
 
     }

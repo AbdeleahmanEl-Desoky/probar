@@ -29,13 +29,6 @@
                             <div class="col-md-4">
                                 <input type="text" name="search" class="form-control" placeholder="@lang('site.search')" value="{{ request()->search }}">
                             </div>
-
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> @lang('site.search')</button>
-                                    <a href="{{ route('admin.client.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('site.add')</a>
-
-                            </div>
-
                         </div>
                     </form><!-- end of form -->
 

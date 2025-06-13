@@ -24,6 +24,14 @@ class ShopDetailsPresenter extends AbstractPresenter
         return [
             'id' => $this->shop->id,
             'name' => $this->shop->name,
+            'name_translation' => [
+                'en' => $this->shop->getTranslation('name', 'en'),
+                'ar' => $this->shop->getTranslation('name', 'ar'),
+            ],
+            'description_translation' => [
+                'en' => $this->shop->getTranslation('description', 'en'),
+                'ar' => $this->shop->getTranslation('description', 'ar'),
+            ],
             'description' => $this->shop->description,
             'worker_no'=> $this->shop->worker_no,
             'city_id'=> $this->shop->city_id,

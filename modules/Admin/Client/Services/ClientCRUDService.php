@@ -6,8 +6,8 @@ namespace Modules\Admin\Client\Services;
 
 use Illuminate\Support\Collection;
 use Modules\Admin\Client\DTO\CreateClientDTO;
-use Modules\Admin\Client\Models\Client;
 use Modules\Admin\Client\Repositories\ClientRepository;
+use Modules\Client\CoreClient\Models\Client;
 use Ramsey\Uuid\UuidInterface;
 
 class ClientCRUDService
@@ -17,14 +17,9 @@ class ClientCRUDService
     ) {
     }
 
-    public function create(CreateClientDTO $createClientDTO): Client
-    {
-         return $this->repository->createClient($createClientDTO->toArray());
-    }
-
     public function list(int $page = 1, int $perPage = 10): array
     {
-        return $this->repository->paginated(
+        return $this->repository->paginateds(
             page: $page,
             perPage: $perPage,
         );

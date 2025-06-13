@@ -16,6 +16,7 @@ class ClientServiceProvider extends ModuleServiceProvider
 
     public function boot(): void
     {
+        $this->loadViewsFrom($this->getModulePath() . '/Resources/views', 'client');
         $this->registerTranslations();
         //$this->registerConfig();
         $this->registerMigrations();
