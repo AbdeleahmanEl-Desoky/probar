@@ -35,6 +35,9 @@ class BarberRepository extends BaseRepository
     public function paginateds(int $page = 1, int $perPage = 10)
     {
         return Barber::query()
+            ->withCount([
+                'shops as shops_count',
+            ])
             ->with('media')
             ->paginate($perPage, ['*'], 'page', $page);
     }

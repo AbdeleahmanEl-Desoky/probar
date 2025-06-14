@@ -27,14 +27,23 @@ class ShopsHourController extends Controller
     ) {
     }
 
-    public function index(GetShopsHourListRequest $request): JsonResponse
+    public function index(GetShopsHourListRequest $request)
     {
         $list = $this->shopsHourService->list(
             (int) $request->get('page', 1),
             (int) $request->get('per_page', 10)
         );
+        $list->setCollection(collect(ShopsHourPresenter::collection($list->items())));
 
-        return Json::items(ShopsHourPresenter::collection($list['data']), paginationSettings: $list['pagination']);
+        $pagination = [
+            'current_page' => $list->currentPage(),
+            'last_page' => $list->lastPage(),
+        ];
+
+        return view('shops-hour::index', [
+            'shops' => $list,
+            'pagination' => $pagination,
+        ]);
     }
 
     public function show(GetShopsHourRequest $request): JsonResponse

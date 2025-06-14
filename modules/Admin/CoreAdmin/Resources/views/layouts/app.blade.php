@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Isfahan</title>
+    <title>ProBar</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     {{--<!-- Bootstrap 3.3.7 -->--}}
@@ -784,8 +784,8 @@
         {{--<!-- Logo -->--}}
         <a href="" class="logo">
             {{--<!-- mini logo for sidebar mini 50x50 pixels -->--}}
-            <span class="logo-mini"><b>W</b></span>
-            <span class="logo-lg"><b>WASABI</b></span>
+            <span class="logo-mini"><b>P</b></span>
+            <span class="logo-lg"><b>ProBar</b></span>
 
         </a>
 
@@ -894,10 +894,10 @@
 
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>Version</b> 3.0.0
+            <b>Version</b> 1.0.1
         </div>
         <strong>
-            System Cacher</strong>
+            Negen tech</strong>
     </footer>
 
 </div><!-- end of wrapper -->

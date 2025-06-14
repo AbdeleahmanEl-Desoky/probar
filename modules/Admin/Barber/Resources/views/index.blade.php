@@ -41,10 +41,7 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>active</th>
-                        <th>Canceled Schedules</th>
-                        <th>Active Schedules</th>
-                        <th>Finished Schedules</th>
-
+                        <th>shops</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,9 +66,7 @@
                                     <button class="btn btn-sm btn-danger toggle-status" data-id="{{ $barber['id'] }}">Inactive</button>
                                 @endif
                             </td>
-                            <td>{{ $barber['canceled_schedules_count'] }}</td>
-                            <td>{{ $barber['active_schedules_count'] }}</td>
-                            <td>{{ $barber['finished_schedules_count'] }}</td>
+                            <td>{{ $barber['shops_count'] }}</td>
                         </tr>
                     @endforeach
                 </tbody>

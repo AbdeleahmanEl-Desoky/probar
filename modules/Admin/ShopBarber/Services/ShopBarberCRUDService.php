@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Modules\Admin\ShopBarber\DTO\CreateShopBarberDTO;
 use Modules\Admin\ShopBarber\Models\ShopBarber;
 use Modules\Admin\ShopBarber\Repositories\ShopBarberRepository;
+use Modules\Barber\Shop\Models\Shop;
 use Ramsey\Uuid\UuidInterface;
 
 class ShopBarberCRUDService
@@ -17,18 +18,19 @@ class ShopBarberCRUDService
     ) {
     }
 
-    public function create(CreateShopBarberDTO $createShopBarberDTO): ShopBarber
+    public function create(CreateShopBarberDTO $createShopBarberDTO): Shop
     {
          return $this->repository->createShopBarber($createShopBarberDTO->toArray());
     }
 
-    public function list(int $page = 1, int $perPage = 10): array
+    public function list(int $page = 1, int $perPage = 10)
     {
-        return $this->repository->paginated(
+        return $this->repository->paginateds(
             page: $page,
             perPage: $perPage,
         );
     }
+
 
     public function get(UuidInterface $id): ShopBarber
     {

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Isfahan</title>
+    <title>ProBar</title>
 
     {{--<!-- Bootstrap 3.3.7 -->--}}
     <link rel="stylesheet" href="{{ asset('dashboard_files/css/bootstrap.min.css') }}">
@@ -37,7 +37,7 @@
 
     <div class="login-logo">
         <a href="../../index2.html"></a>
-        <h3>Isfahan</h3>
+        <h3>ProBar</h3>
     </div><!-- end of login lgo -->
 
     <div class="login-box-body">

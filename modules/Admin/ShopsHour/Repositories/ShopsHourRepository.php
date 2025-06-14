@@ -8,6 +8,7 @@ use BasePackage\Shared\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Ramsey\Uuid\UuidInterface;
 use Modules\Admin\ShopsHour\Models\ShopsHour;
+use Modules\Barber\ShopHour\Models\ShopHour;
 
 /**
  * @property ShopsHour $model
@@ -24,6 +25,11 @@ class ShopsHourRepository extends BaseRepository
     public function getShopsHourList(?int $page, ?int $perPage = 10): Collection
     {
         return $this->paginatedList([], $page, $perPage);
+    }
+    public function paginateds(int $page = 1, int $perPage = 10)
+    {
+        return ShopHour::query()
+            ->paginate($perPage, ['*'], 'page', $page);
     }
 
     public function getShopsHour(UuidInterface $id): ShopsHour

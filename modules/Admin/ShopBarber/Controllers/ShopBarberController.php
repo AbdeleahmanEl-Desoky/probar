@@ -27,14 +27,23 @@ class ShopBarberController extends Controller
     ) {
     }
 
-    public function index(GetShopBarberListRequest $request): JsonResponse
+    public function index(GetShopBarberListRequest $request)
     {
         $list = $this->shopBarberService->list(
             (int) $request->get('page', 1),
             (int) $request->get('per_page', 10)
         );
+        $list->setCollection(collect(ShopBarberPresenter::collection($list->items())));
 
-        return Json::items(ShopBarberPresenter::collection($list['data']), paginationSettings: $list['pagination']);
+        $pagination = [
+            'current_page' => $list->currentPage(),
+            'last_page' => $list->lastPage(),
+        ];
+
+        return view('shop::index', [
+            'shops' => $list,
+            'pagination' => $pagination,
+        ]);
     }
 
     public function show(GetShopBarberRequest $request): JsonResponse

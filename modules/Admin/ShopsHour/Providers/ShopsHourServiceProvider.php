@@ -16,6 +16,7 @@ class ShopsHourServiceProvider extends ModuleServiceProvider
 
     public function boot(): void
     {
+        $this->loadViewsFrom($this->getModulePath() . '/Resources/views', 'shops-hour');
         $this->registerTranslations();
         //$this->registerConfig();
         $this->registerMigrations();

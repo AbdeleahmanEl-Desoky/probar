@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Modules\Admin\ShopBarber\Presenters;
 
-use Modules\Admin\ShopBarber\Models\ShopBarber;
+
 use BasePackage\Shared\Presenters\AbstractPresenter;
+use Modules\Barber\Shop\Models\Shop;
 
 class ShopBarberPresenter extends AbstractPresenter
 {
-    private ShopBarber $shopBarber;
+    private Shop $shopBarber;
 
-    public function __construct(ShopBarber $shopBarber)
+    public function __construct(Shop $shopBarber)
     {
         $this->shopBarber = $shopBarber;
     }
@@ -21,6 +22,17 @@ class ShopBarberPresenter extends AbstractPresenter
         return [
             'id' => $this->shopBarber->id,
             'name' => $this->shopBarber->name,
+            'worker_no' => $this->shopBarber->worker_no,
+            'city_name'=> $this->shopBarber->city?->name ?? null,
+            'street' => $this->shopBarber->street,
+            'address_1'=> $this->shopBarber->address_1,
+            'address_2' => $this->shopBarber->address_2,
+            'is_open' => $this->shopBarber->is_open,
+            'featured'=> $this->shopBarber->featured,
+            'picture_url' => $this->shopBarber->getFirstMediaUrl('profile_pictures'),
+            'canceled_schedules_count' => $this->shopBarber->canceled_schedules_count,
+            'active_schedules_count' => $this->shopBarber->active_schedules_count,
+            'finished_schedules_count' => $this->shopBarber->finished_schedules_count,
         ];
     }
 }

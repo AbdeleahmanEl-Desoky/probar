@@ -15,6 +15,7 @@ use Modules\Admin\Barber\Requests\DeleteBarberRequest;
 use Modules\Admin\Barber\Requests\GetBarberListRequest;
 use Modules\Admin\Barber\Requests\GetBarberRequest;
 use Modules\Admin\Barber\Requests\UpdateBarberRequest;
+use Modules\Admin\Barber\Requests\UpdateStutesBarberRequest;
 use Modules\Admin\Barber\Services\BarberCRUDService;
 use Ramsey\Uuid\Uuid;
 
@@ -58,13 +59,12 @@ class BarberController extends Controller
         return Json::item( $presenter->getData());
     }
 
-    public function toggleStatus(string $id, UpdateBarberRequest $request): JsonResponse
+    public function toggleStatus(string $id, UpdateStutesBarberRequest $request): JsonResponse
     {
         $barber = $this->barberService->get(Uuid::fromString($id));
 
         $barber->is_active = !$barber->is_active;
         $barber->save();
-
         return response()->json([
             'message' => 'Status updated successfully',
             'is_active' => $barber->is_active,

@@ -16,9 +16,11 @@ class ShopBarberServiceProvider extends ModuleServiceProvider
 
     public function boot(): void
     {
+        $this->loadViewsFrom($this->getModulePath() . '/Resources/views', 'shop');
         $this->registerTranslations();
         //$this->registerConfig();
         $this->registerMigrations();
+
     }
 
     public function register(): void

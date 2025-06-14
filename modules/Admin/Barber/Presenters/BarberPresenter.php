@@ -25,9 +25,7 @@ class BarberPresenter extends AbstractPresenter
             'phone' => $this->barber->phone,
             'is_active' => $this->barber->is_active,
             'picture_url' => $this->barber->getFirstMediaUrl('profile_pictures'),
-            'canceled_schedules_count' => $this->barber->canceled_schedules_count,
-            'active_schedules_count' => $this->barber->active_schedules_count,
-            'finished_schedules_count' => $this->barber->finished_schedules_count,
+            'shops_count' => $this->barber->shops_count,
         ];
     }
 }
