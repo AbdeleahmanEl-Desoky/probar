@@ -17,6 +17,7 @@ use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Config;
+use Symfony\Component\HttpFoundation\Response;
 
 class ScheduleCRUDService
 {
@@ -146,19 +147,19 @@ class ScheduleCRUDService
     }
 
 
-    public function checkClientScheduleLimit( $clientId): void
+    public function checkClientScheduleLimit( $clientId)
     {
-        $activeStatuses = Config::get('schedule.active_statuses', ['pending', 'confirmed']);
-        $maxAllowed = Config::get('schedule.max_active_schedules_per_client', 3);
+        $activeStatuses = ['pending'];// Config::get('schedule.active_statuses', ['pending']);
+        $maxAllowed = 3;// Config::get('schedule.max_active_schedules_per_client', 3);
 
         $activeSchedulesCount = Schedule::where('client_id', $clientId)
             ->whereIn('status', $activeStatuses)
             ->count();
 
         if ($activeSchedulesCount >= $maxAllowed) {
-            throw ValidationException::withMessages([
-                'limit' => __("لا يمكن الحجز، لقد تجاوزت الحد الأقصى لعدد الحجوزات ($maxAllowed)."),
-            ]);
+            abort(response()->json([
+                'message' => __("لا يمكن الحجز، لقد تجاوزت الحد الأقصى لعدد الحجوزات ($maxAllowed)."),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY));
         }
     }
 }
