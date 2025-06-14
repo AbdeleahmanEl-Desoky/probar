@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Admin\Barber\Database\factories\BarberFactory;
 use BasePackage\Shared\Traits\BaseFilterable;
+use Modules\Client\Schedule\Models\Schedule;
+
 //use BasePackage\Shared\Traits\HasTranslations;
 
 class Barber extends Model
@@ -36,5 +38,10 @@ class Barber extends Model
     protected static function newFactory(): BarberFactory
     {
         return BarberFactory::new();
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class, 'barber_id', 'id');
     }
 }

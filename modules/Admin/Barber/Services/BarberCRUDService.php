@@ -17,14 +17,9 @@ class BarberCRUDService
     ) {
     }
 
-    public function create(CreateBarberDTO $createBarberDTO): Barber
+    public function list(int $page = 1, int $perPage = 10)
     {
-         return $this->repository->createBarber($createBarberDTO->toArray());
-    }
-
-    public function list(int $page = 1, int $perPage = 10): array
-    {
-        return $this->repository->paginated(
+        return $this->repository->paginateds(
             page: $page,
             perPage: $perPage,
         );

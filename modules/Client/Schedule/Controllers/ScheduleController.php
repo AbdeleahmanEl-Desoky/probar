@@ -55,8 +55,11 @@ class ScheduleController extends Controller
 
     public function store(CreateScheduleRequest $request)//: JsonResponse
     {
+        $client_id = auth('api_clients')->user()->id;
+        $this->scheduleService->checkClientScheduleLimit($client_id);
+
         $createScheduleDTO = $request->createCreateScheduleDTO();
-        $createScheduleDTO->client_id =  auth('api_clients')->user()->id;
+        $createScheduleDTO->client_id =  $client_id;
 
         $createdItem = $this->scheduleService->create($createScheduleDTO);
 

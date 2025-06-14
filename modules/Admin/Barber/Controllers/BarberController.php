@@ -27,32 +27,23 @@ class BarberController extends Controller
     ) {
     }
 
-    public function index(GetBarberListRequest $request): JsonResponse
+    public function index(GetBarberListRequest $request)
     {
         $list = $this->barberService->list(
             (int) $request->get('page', 1),
             (int) $request->get('per_page', 10)
         );
+        $list->setCollection(collect(BarberPresenter::collection($list->items())));
 
-        return Json::items(BarberPresenter::collection($list['data']), paginationSettings: $list['pagination']);
-    }
+        $pagination = [
+            'current_page' => $list->currentPage(),
+            'last_page' => $list->lastPage(),
+        ];
 
-    public function show(GetBarberRequest $request): JsonResponse
-    {
-        $item = $this->barberService->get(Uuid::fromString($request->route('id')));
-
-        $presenter = new BarberPresenter($item);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function store(CreateBarberRequest $request): JsonResponse
-    {
-        $createdItem = $this->barberService->create($request->createCreateBarberDTO());
-
-        $presenter = new BarberPresenter($createdItem);
-
-        return Json::item($presenter->getData());
+        return view('barber::index', [
+            'barbers' => $list,
+            'pagination' => $pagination,
+        ]);
     }
 
     public function update(UpdateBarberRequest $request): JsonResponse
@@ -67,10 +58,4 @@ class BarberController extends Controller
         return Json::item( $presenter->getData());
     }
 
-    public function delete(DeleteBarberRequest $request): JsonResponse
-    {
-        $this->deleteBarberHandler->handle(Uuid::fromString($request->route('id')));
-
-        return Json::deleted();
-    }
 }

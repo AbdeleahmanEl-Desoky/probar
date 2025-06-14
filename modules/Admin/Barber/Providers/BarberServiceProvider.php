@@ -16,6 +16,7 @@ class BarberServiceProvider extends ModuleServiceProvider
 
     public function boot(): void
     {
+        $this->loadViewsFrom($this->getModulePath() . '/Resources/views', 'barber');
         $this->registerTranslations();
         //$this->registerConfig();
         $this->registerMigrations();
