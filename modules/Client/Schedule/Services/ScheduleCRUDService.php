@@ -16,6 +16,7 @@ use Modules\Shared\Notification\Services\FirebaseNotificationService;
 use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Config;
 
 class ScheduleCRUDService
 {
@@ -145,15 +146,18 @@ class ScheduleCRUDService
     }
 
 
-    public function checkClientScheduleLimit(int $clientId): void
+    public function checkClientScheduleLimit( $clientId): void
     {
+        $activeStatuses = Config::get('schedule.active_statuses', ['pending', 'confirmed']);
+        $maxAllowed = Config::get('schedule.max_active_schedules_per_client', 3);
+
         $activeSchedulesCount = Schedule::where('client_id', $clientId)
-            ->where('status', '!=', 'done') // عدّل حسب الحالات النشطة
+            ->whereIn('status', $activeStatuses)
             ->count();
 
-        if ($activeSchedulesCount >= 3) {
+        if ($activeSchedulesCount >= $maxAllowed) {
             throw ValidationException::withMessages([
-                'limit' => __('لا يمكن الحجز، لقد تجاوزت الحد الأقصى لعدد الحجوزات (3).'),
+                'limit' => __("لا يمكن الحجز، لقد تجاوزت الحد الأقصى لعدد الحجوزات ($maxAllowed)."),
             ]);
         }
     }
