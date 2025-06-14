@@ -35,11 +35,6 @@ class BarberRepository extends BaseRepository
     public function paginateds(int $page = 1, int $perPage = 10)
     {
         return Barber::query()
-            ->withCount([
-                'schedules as canceled_schedules_count' => fn($q) => $q->where('status', 'cancel'),
-                'schedules as active_schedules_count' => fn($q) => $q->whereNotIn('status', ['finished', 'cancel']),
-                'schedules as finished_schedules_count' => fn($q) => $q->where('status', 'finished'),
-            ])
             ->with('media')
             ->paginate($perPage, ['*'], 'page', $page);
     }

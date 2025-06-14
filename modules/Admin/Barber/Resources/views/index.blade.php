@@ -40,9 +40,11 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
+                        <th>active</th>
                         <th>Canceled Schedules</th>
                         <th>Active Schedules</th>
                         <th>Finished Schedules</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +62,13 @@
                             <td>{{ $barber['name'] }}</td>
                             <td>{{ $barber['email'] }}</td>
                             <td>{{ $barber['phone'] }}</td>
+                            <td>
+                                @if ($barber['is_active'])
+                                    <button class="btn btn-sm btn-success toggle-status" data-id="{{ $barber['id'] }}">Active</button>
+                                @else
+                                    <button class="btn btn-sm btn-danger toggle-status" data-id="{{ $barber['id'] }}">Inactive</button>
+                                @endif
+                            </td>
                             <td>{{ $barber['canceled_schedules_count'] }}</td>
                             <td>{{ $barber['active_schedules_count'] }}</td>
                             <td>{{ $barber['finished_schedules_count'] }}</td>
@@ -75,4 +84,27 @@
         </div><!-- /.box -->
     </section>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.toggle-status').forEach(button => {
+        button.addEventListener('click', function () {
+            const barberId = this.dataset.id;
+
+            fetch(`/admin/barbers/${barberId}/toggle-status`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(res => res.json())
+            .then(data => {
+                location.reload(); // or update the row dynamically
+            });
+        });
+    });
+});
+</script>
 @endsection
+

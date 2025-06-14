@@ -93,4 +93,5 @@ class Barber extends Authenticatable implements JWTSubject , HasMedia//, Auditab
             $barber->notifications()->delete();
         });
     }
+  
 }

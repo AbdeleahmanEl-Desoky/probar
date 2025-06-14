@@ -58,4 +58,16 @@ class BarberController extends Controller
         return Json::item( $presenter->getData());
     }
 
+    public function toggleStatus(string $id, UpdateBarberRequest $request): JsonResponse
+    {
+        $barber = $this->barberService->get(Uuid::fromString($id));
+
+        $barber->is_active = !$barber->is_active;
+        $barber->save();
+
+        return response()->json([
+            'message' => 'Status updated successfully',
+            'is_active' => $barber->is_active,
+        ]);
+    }
 }
