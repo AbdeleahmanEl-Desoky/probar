@@ -75,7 +75,7 @@ class ScheduleCRUDService
 
 
         $this->firebaseNotificationService->send(
-            $client->fcm_token,
+            $client->fcm_token??'@',
             __('notifications.new_schedule_title_client'),
             __('notifications.new_schedule_body_client', [
                 'shop_name' => $shop->name,
