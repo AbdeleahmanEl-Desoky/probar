@@ -7,7 +7,7 @@ namespace Modules\Admin\Barber\Repositories;
 use BasePackage\Shared\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Ramsey\Uuid\UuidInterface;
-use Modules\Admin\Barber\Models\Barber;
+use Modules\Barber\CoreBarber\Models\Barber;
 
 /**
  * @property Barber $model

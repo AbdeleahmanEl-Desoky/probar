@@ -6,7 +6,7 @@ namespace Modules\Admin\Barber\Services;
 
 use Illuminate\Support\Collection;
 use Modules\Admin\Barber\DTO\CreateBarberDTO;
-use Modules\Admin\Barber\Models\Barber;
+use Modules\Barber\CoreBarber\Models\Barber;
 use Modules\Admin\Barber\Repositories\BarberRepository;
 use Ramsey\Uuid\UuidInterface;
 

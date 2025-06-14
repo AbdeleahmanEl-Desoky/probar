@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Modules\Admin\Barber\Database\factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Modules\Admin\Barber\Models\Barber;
+use Modules\Barber\CoreBarber\Models\Barber;
 
 /** @extends Factory<Barber> */
 class BarberFactory extends Factory

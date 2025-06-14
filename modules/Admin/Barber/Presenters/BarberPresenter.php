@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Admin\Barber\Presenters;
 
-use Modules\Admin\Barber\Models\Barber;
 use BasePackage\Shared\Presenters\AbstractPresenter;
+use Modules\Barber\CoreBarber\Models\Barber;
 
 class BarberPresenter extends AbstractPresenter
 {
@@ -21,6 +21,12 @@ class BarberPresenter extends AbstractPresenter
         return [
             'id' => $this->barber->id,
             'name' => $this->barber->name,
+            'email' => $this->barber->email,
+            'phone' => $this->barber->phone,
+            'is_active' => $this->barber->is_active,
+            'canceled_schedules_count' => $this->barber->canceled_schedules_count,
+            'active_schedules_count' => $this->barber->active_schedules_count,
+            'finished_schedules_count' => $this->barber->finished_schedules_count,
         ];
     }
 }
