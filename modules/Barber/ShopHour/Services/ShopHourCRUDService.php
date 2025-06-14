@@ -72,15 +72,24 @@ class ShopHourCRUDService
         }
     }
 
-    public function list(int $page = 1, int $perPage = 10,$shopId): array
+    public function list(int $page = 1, int $perPage = 10, $shopId): array
     {
-        return $this->repository->paginatedRelations(
+        $result = $this->repository->paginatedRelations(
             ['shop_id' => $shopId],
             page: $page,
             perPage: $perPage,
-            orderBy: 'day',
+            orderBy: 'id',
             sortBy: 'ASC'
         );
+
+        $weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+        $result['data'] = collect($result['data'])
+            ->sortBy(fn($item) => array_search($item->day, $weekdays))
+            ->values()
+            ->all();
+
+        return $result;
     }
 
     public function get(UuidInterface $id): ShopHour
