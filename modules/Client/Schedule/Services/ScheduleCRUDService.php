@@ -149,8 +149,8 @@ class ScheduleCRUDService
 
     public function checkClientScheduleLimit( $clientId)
     {
-        $activeStatuses = ['pending'];// Config::get('schedule.active_statuses', ['pending']);
-        $maxAllowed = 3;// Config::get('schedule.max_active_schedules_per_client', 3);
+        $activeStatuses =  Config::get('schedule.active_statuses', ['pending']);
+        $maxAllowed =  Config::get('schedule.max_active_schedules_per_client', 3);
 
         $activeSchedulesCount = Schedule::where('client_id', $clientId)
             ->whereIn('status', $activeStatuses)
