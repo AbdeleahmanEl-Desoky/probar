@@ -48,7 +48,7 @@ class ShopDetailsPresenter extends AbstractPresenter
             'shop_hours' => $this->shop->shopHours
             ? $this->shop->shopHours
                 ->sortBy(fn($item) => array_search($item->day, [
-                    'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+                    'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
                 ]))
                 ->map(fn($hour) => (new ShopHourPresenter($hour))->getData())
                 ->values()
