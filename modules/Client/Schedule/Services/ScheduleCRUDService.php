@@ -154,6 +154,7 @@ class ScheduleCRUDService
 
         $activeSchedulesCount = Schedule::where('client_id', $clientId)
             ->whereIn('status', $activeStatuses)
+            ->where('schedule_date', '>=', Carbon::now()->startOfDay())
             ->count();
 
         if ($activeSchedulesCount >= $maxAllowed) {
