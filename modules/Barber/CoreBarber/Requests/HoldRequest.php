@@ -16,7 +16,7 @@ class HoldRequest extends FormRequest
             'hold' => 'required',
         ];
     }
-    public function updateCfmTokenCommand(): UpdateHoldCommand
+    public function updateHoldCommand(): UpdateHoldCommand
     {
         return new UpdateHoldCommand(
             id: Uuid::fromString(auth('api_barbers')->user()->id),
