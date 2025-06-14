@@ -78,7 +78,7 @@ class ShopHourCRUDService
             ['shop_id' => $shopId],
             page: $page,
             perPage: $perPage,
-            orderBy: 'day', // 👈 order by day
+            orderBy: 'day',
             sortBy: 'ASC'
         );
     }
