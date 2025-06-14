@@ -47,9 +47,11 @@ class ShopDetailsPresenter extends AbstractPresenter
             'rates' => $this->shop->rates? RatePresenter::collection($this->shop->rates): [],
             'shop_hours' => $this->shop->shopHours
             ? $this->shop->shopHours
-                ->sortBy('day') // ✅ sort by day before mapping
+                ->sortBy(fn($item) => array_search($item->day, [
+                    'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+                ]))
                 ->map(fn($hour) => (new ShopHourPresenter($hour))->getData())
-                ->values() // reset keys
+                ->values()
                 ->toArray()
             : [],
             'whatsapp' => $this->shop->whatsapp,
