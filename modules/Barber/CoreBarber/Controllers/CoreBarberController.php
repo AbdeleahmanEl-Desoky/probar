@@ -28,6 +28,9 @@ use Modules\Barber\CoreBarber\Services\ForgotPasswordService;
 use Modules\Barber\CoreBarber\Services\ResetPasswordService;
 use Modules\Barber\Shop\Repositories\ShopRepository;
 use Illuminate\Support\Facades\Hash;
+use Modules\Barber\CoreBarber\Handlers\UpdateHoldHandler;
+use Modules\Barber\CoreBarber\Requests\HoldRequest;
+
 class CoreBarberController extends Controller
 {
     public function __construct(
@@ -40,6 +43,7 @@ class CoreBarberController extends Controller
         private ShopRepository $shopRepository,
         private DataCompleteService $dataCompleteService,
         private UpdateCfmTokenHandler $updateCfmTokenHandler,
+        private UpdateHoldHandler $updateHoldHandler
     ) {
     }
 
@@ -112,6 +116,18 @@ class CoreBarberController extends Controller
     {
         $command = $request->updateCfmTokenCommand();
         $this->updateCfmTokenHandler->handle($command);
+
+        $item = $this->coreBarberService->get($command->getId());
+
+        $presenter = new CoreBarberPresenter($item);
+
+        return Json::item(item: $presenter->getData());
+    }
+
+    public function updateHold(HoldRequest $request): JsonResponse
+    {
+        $command = $request->updateHoldCommand();
+        $this->updateHoldHandler->handle($command);
 
         $item = $this->coreBarberService->get($command->getId());
 

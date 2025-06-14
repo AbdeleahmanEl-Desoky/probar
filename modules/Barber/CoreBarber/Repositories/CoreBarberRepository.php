@@ -78,4 +78,5 @@ class CoreBarberRepository extends BaseRepository
 
         return true;
     }
+    
 }

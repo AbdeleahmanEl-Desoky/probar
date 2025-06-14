@@ -80,5 +80,4 @@ class GetScheduleSlotsService
         return $timeSlots;
     }
 
-
 }

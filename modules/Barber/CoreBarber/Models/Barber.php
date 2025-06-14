@@ -44,6 +44,7 @@ class Barber extends Authenticatable implements JWTSubject , HasMedia//, Auditab
         'password',
         'phone',
         'is_active',
+        'hold'
     ];
 
     protected $casts = [
@@ -93,5 +94,5 @@ class Barber extends Authenticatable implements JWTSubject , HasMedia//, Auditab
             $barber->notifications()->delete();
         });
     }
-  
+
 }
