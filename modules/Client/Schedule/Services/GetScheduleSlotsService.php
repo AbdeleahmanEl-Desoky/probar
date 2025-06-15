@@ -65,11 +65,7 @@ class GetScheduleSlotsService
                     ->select('id', 'start_time', 'end_time', 'schedule_date', 'shop_id', 'client_id', 'status', 'note')
                     ->get();
 
-                $bookingCount = Schedule::where('shop_id', $shopId)
-                    ->whereDate('schedule_date', $date)
-                    ->whereTime('start_time', $slotStartFormatted)
-                    ->select('id', 'start_time', 'end_time', 'schedule_date', 'shop_id', 'client_id', 'status', 'note')
-                    ->count();
+                $bookingCount = $booking->count();
 
                 $workerNo = $shop->worker_no;
                 $timeSlots[] = [
