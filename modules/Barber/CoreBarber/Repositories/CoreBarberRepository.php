@@ -71,7 +71,6 @@ class CoreBarberRepository extends BaseRepository
             return false;
         }
 
-
         $barber->update(array_filter([
             'fcm_token' => $data['fcm_token'],
         ]));

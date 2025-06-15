@@ -183,4 +183,5 @@ class CoreBarberController extends Controller
 
         return Json::error('Password is incorrect.', 422);
     }
+
 }

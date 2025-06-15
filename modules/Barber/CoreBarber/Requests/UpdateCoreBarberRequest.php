@@ -23,6 +23,7 @@ class UpdateCoreBarberRequest extends FormRequest
                 'regex:/^05\d{8}$/',
                 'unique:barbers,phone,' . auth('api_barbers')->user()->id,
             ],
+            'hold' => 'nullable|numeric|min:0',
         ];
     }
 
@@ -36,6 +37,7 @@ class UpdateCoreBarberRequest extends FormRequest
             phone: $this->get('phone'),
             password:$this->get('password')?? null,
             file:$this->file('file')?? null,
+            hold: $this->get('hold') ?? null
         );
     }
 }

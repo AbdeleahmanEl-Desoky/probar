@@ -23,7 +23,7 @@ class ShopBarberPresenter extends AbstractPresenter
             'id' => $this->shopBarber->id,
             'name' => $this->shopBarber->name,
             'worker_no' => $this->shopBarber->worker_no,
-            'city_name'=> $this->shopBarber->city?->name ?? null,
+            'city_name'=> $this->shopBarber->city_id ,
             'street' => $this->shopBarber->street,
             'address_1'=> $this->shopBarber->address_1,
             'address_2' => $this->shopBarber->address_2,
@@ -33,6 +33,7 @@ class ShopBarberPresenter extends AbstractPresenter
             'canceled_schedules_count' => $this->shopBarber->canceled_schedules_count,
             'active_schedules_count' => $this->shopBarber->active_schedules_count,
             'finished_schedules_count' => $this->shopBarber->finished_schedules_count,
+            'shop_hours' => $this->shopBarber->shopHours,
         ];
     }
 }

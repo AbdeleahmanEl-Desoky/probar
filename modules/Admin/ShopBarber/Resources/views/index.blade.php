@@ -49,7 +49,7 @@
                         @foreach ($shops as $key => $shop)
                             <tr>
                                 <td>{{ ++$key }}</td>
-                            
+
                                 <td>{{ $shop['name'] }}</td>
                                 <td>{{ $shop['is_open'] ? 'Open' : 'Closed' }}</td>
                                 <td>
@@ -70,6 +70,18 @@
                                     <strong>Street:</strong> {{ $shop['street'] }}<br>
                                     <strong>Address 1:</strong> {{ $shop['address_1'] }}<br>
                                     <strong>Address 2:</strong> {{ $shop['address_2'] }}<br>
+
+                                    <hr>
+                                    <strong>Shop Hours:</strong>
+                                    <ul>
+                                        @foreach ($shop['shop_hours'] as $hour)
+                                            <li>
+                                                {{ ucfirst($hour->day) }}:
+                                                {{ \Carbon\Carbon::parse($hour->opening_time)->format('h:i A') }} -
+                                                {{ \Carbon\Carbon::parse($hour->closing_time)->format('h:i A') }}
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </td>
                             </tr>
                         @endforeach

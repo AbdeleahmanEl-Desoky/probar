@@ -102,5 +102,12 @@ class ScheduleShopCRUDService
 
         return $schedule;
     }
+    public function updateHoldAll(UuidInterface $id)
+    {
+
+        $schedule = $this->repository->updateHoldAll($id);
+
+        return $schedule;
+    }
 
 }

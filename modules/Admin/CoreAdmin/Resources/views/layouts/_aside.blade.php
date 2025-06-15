@@ -39,9 +39,6 @@
                     <li class="{{ request()->routeIs('admin.shops.index') ? 'active' : '' }}">
                         <a href="{{ route('admin.shops.index') }}"><i class="fa fa-circle-o"></i> Shop</a>
                     </li>
-                    <li class="{{ request()->routeIs('admin.shops-hours.index') ? 'active' : '' }}">
-                        <a href="{{ route('admin.shops-hours.index') }}"><i class="fa fa-clock-o"></i> Shop Hours</a>
-                    </li>
                     <li class="{{ request()->routeIs('admin.shops-services.index') ? 'active' : '' }}">
                         <a href="{{ route('admin.shops-services.index') }}"><i class="fa fa-cut"></i> Shop Services</a>
                     </li>

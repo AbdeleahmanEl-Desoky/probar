@@ -18,4 +18,5 @@ Route::group(['middleware' => ['auth:api_barbers']], function () {
     Route::post('/booking', [ScheduleShopController::class, 'store']);
     Route::get('/time', [ScheduleShopController::class, 'index']);
     Route::post('/booking/{id}/hold', [ScheduleShopController::class, 'holdBooking']);
+    Route::get('/booking/hold/all', [ScheduleShopController::class, 'holdAllBooking']);
 });
