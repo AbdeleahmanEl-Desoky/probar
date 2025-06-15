@@ -32,11 +32,11 @@ class GetScheduleSlotsService
             ->first();
         $shop = Shop::find($shopId);
         if (!$shop || $shop->is_open != 1) {
-            return ['message' => 'Shop is closed today'];
+            return [];
         }
 
         if (!$shopHour) {
-            return ['message' => 'Shop is closed today'];
+            return [];
         }
 
         $strtoTime = $shopHour->strto_time ?? '+30 minutes'; // default fallback
