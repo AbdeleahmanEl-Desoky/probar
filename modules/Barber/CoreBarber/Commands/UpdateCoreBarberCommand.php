@@ -15,7 +15,6 @@ class UpdateCoreBarberCommand
         private string $phone,
         private ?string $password,
         private  $file,
-        private ?int $hold = null
     ) {
     }
 
@@ -37,7 +36,6 @@ class UpdateCoreBarberCommand
             'password' => $this->password,
             'phone' => $this->phone,
             'file' => $this->file,
-            'hold' => $this->hold,
         ]);
     }
 }
