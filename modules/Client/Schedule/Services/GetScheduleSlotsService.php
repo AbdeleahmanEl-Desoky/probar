@@ -72,7 +72,7 @@ class GetScheduleSlotsService
                     'from' => $slotStartFormatted,
                     'to' => $slotEndFormatted,
                     'status' => $bookingCount >= $workerNo ? 'pending' : 'available',
-                    'booking' => $booking ?? null,
+                    'booking' => $booking ?? [],
                 ];
 
                 $start = $slotEnd;
