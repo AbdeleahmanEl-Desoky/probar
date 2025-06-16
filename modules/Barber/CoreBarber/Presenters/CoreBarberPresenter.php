@@ -25,7 +25,6 @@ class CoreBarberPresenter extends AbstractPresenter
             'phone' => $this->coreBarber->phone,
             'picture_url' => $this->coreBarber->getFirstMediaUrl('profile_pictures'),
             'is_active' => $this->coreBarber->is_active,
-            'hold' => $this->coreBarber->hold,
         ];
     }
 }
