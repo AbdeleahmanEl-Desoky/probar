@@ -16,6 +16,7 @@ class ScheduleAllServiceProvider extends ModuleServiceProvider
 
     public function boot(): void
     {
+        $this->loadViewsFrom($this->getModulePath() . '/Resources/views', 'schedule');
         $this->registerTranslations();
         //$this->registerConfig();
         $this->registerMigrations();

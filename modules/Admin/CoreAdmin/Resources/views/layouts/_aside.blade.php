@@ -48,28 +48,32 @@
             <!-- Schedules Dropdown -->
             @php
                 $scheduleActive = request()->routeIs('admin.schedules.*');
+                    $tab = $tab ?? (request('active') === 'yes' ? 'active' :
+            (request('upcoming') === 'yes' ? 'upcoming' :
+            (request('history') === 'yes' ? 'history' : 'all')));
+
             @endphp
             <li class="treeview {{ $scheduleActive ? 'active menu-open' : '' }}">
                 <a href="#">
                     <i class="fa fa-calendar"></i> <span>Schedules</span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
-                <ul class="treeview-menu" style="{{ $scheduleActive ? 'display: block;' : '' }}">
-                    <li class="{{ request()->routeIs('admin.schedules.index') ? 'active' : '' }}">
+
+                <ul class="treeview-menu" style="{{ $scheduleActive ? in_array($tab, ['all', 'active', 'upcoming', 'history']) ? 'display: block;' : '' :'' }}">
+                    <li class="{{ $tab === 'all' ? 'active' : '' }}">
                         <a href="{{ route('admin.schedules.index') }}"><i class="fa fa-circle-o"></i> All</a>
                     </li>
-                    <li class="{{ request()->routeIs('admin.schedules.active') ? 'active' : '' }}">
-                        <a href="{{ route('admin.schedules.active') }}"><i class="fa fa-circle-o"></i> Active</a>
+                    <li class="{{ $tab === 'active' ? 'active' : '' }}">
+                        <a href="{{ route('admin.schedules.index', ['active' => 'yes']) }}"><i class="fa fa-circle-o"></i> Active</a>
                     </li>
-                    <li class="{{ request()->routeIs('admin.schedules.incoming') ? 'active' : '' }}">
-                        <a href="{{ route('admin.schedules.incoming') }}"><i class="fa fa-circle-o"></i> Incoming</a>
+                    <li class="{{ $tab === 'upcoming' ? 'active' : '' }}">
+                        <a href="{{ route('admin.schedules.index', ['upcoming' => 'yes']) }}"><i class="fa fa-circle-o"></i> Upcoming</a>
                     </li>
-                    <li class="{{ request()->routeIs('admin.schedules.history') ? 'active' : '' }}">
-                        <a href="{{ route('admin.schedules.history') }}"><i class="fa fa-circle-o"></i> History</a>
+                    <li class="{{ $tab === 'history' ? 'active' : '' }}">
+                        <a href="{{ route('admin.schedules.index', ['history' => 'yes']) }}"><i class="fa fa-circle-o"></i> History</a>
                     </li>
                 </ul>
             </li>
-
             <!-- Clients & Reports Dropdown -->
             @php
                 $reportsActive = request()->routeIs('admin.favorites.*') || request()->routeIs('admin.rates.*') || request()->routeIs('admin.reports.*');

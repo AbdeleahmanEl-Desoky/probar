@@ -16,6 +16,8 @@ class FavoriteClientServiceProvider extends ModuleServiceProvider
 
     public function boot(): void
     {
+        $this->mapRoutes();
+        $this->loadViewsFrom($this->getModulePath() . '/Resources/views', 'favorite');
         $this->registerTranslations();
         //$this->registerConfig();
         $this->registerMigrations();

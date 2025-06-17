@@ -8,6 +8,7 @@ use BasePackage\Shared\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Ramsey\Uuid\UuidInterface;
 use Modules\Admin\ScheduleAll\Models\ScheduleAll;
+use Modules\Client\Schedule\Models\Schedule;
 
 /**
  * @property ScheduleAll $model
@@ -16,7 +17,7 @@ use Modules\Admin\ScheduleAll\Models\ScheduleAll;
  */
 class ScheduleAllRepository extends BaseRepository
 {
-    public function __construct(ScheduleAll $model)
+    public function __construct(Schedule $model)
     {
         parent::__construct($model);
     }
@@ -24,6 +25,21 @@ class ScheduleAllRepository extends BaseRepository
     public function getScheduleAllList(?int $page, ?int $perPage = 10): Collection
     {
         return $this->paginatedList([], $page, $perPage);
+    }
+
+    public function paginateds(int $page = 1, int $perPage = 10, array $conditions = [])
+    {
+        $query = $this->model->newQuery()
+            ->with(['shopServices', 'shop', 'client']);
+
+        if (method_exists($this->model, 'scopeFilter')) {
+            $query = $query->filter(request()->all())->where($conditions);
+        } else {
+            $query = $query->where($conditions);
+        }
+
+        return $query->orderBy('schedule_date', 'desc')
+                    ->paginate($perPage, ['*'], 'page', $page);
     }
 
     public function getScheduleAll(UuidInterface $id): ScheduleAll

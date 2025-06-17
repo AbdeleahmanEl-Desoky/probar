@@ -22,55 +22,27 @@ class HelpAllController extends Controller
 {
     public function __construct(
         private HelpAllCRUDService $helpAllService,
-        private UpdateHelpAllHandler $updateHelpAllHandler,
-        private DeleteHelpAllHandler $deleteHelpAllHandler,
+
     ) {
     }
 
-    public function index(GetHelpAllListRequest $request): JsonResponse
+
+    public function index(GetHelpAllListRequest $request)
     {
         $list = $this->helpAllService->list(
             (int) $request->get('page', 1),
             (int) $request->get('per_page', 10)
         );
+        $list->setCollection(collect(HelpAllPresenter::collection($list->items())));
 
-        return Json::items(HelpAllPresenter::collection($list['data']), paginationSettings: $list['pagination']);
-    }
+        $pagination = [
+            'current_page' => $list->currentPage(),
+            'last_page' => $list->lastPage(),
+        ];
 
-    public function show(GetHelpAllRequest $request): JsonResponse
-    {
-        $item = $this->helpAllService->get(Uuid::fromString($request->route('id')));
-
-        $presenter = new HelpAllPresenter($item);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function store(CreateHelpAllRequest $request): JsonResponse
-    {
-        $createdItem = $this->helpAllService->create($request->createCreateHelpAllDTO());
-
-        $presenter = new HelpAllPresenter($createdItem);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function update(UpdateHelpAllRequest $request): JsonResponse
-    {
-        $command = $request->createUpdateHelpAllCommand();
-        $this->updateHelpAllHandler->handle($command);
-
-        $item = $this->helpAllService->get($command->getId());
-
-        $presenter = new HelpAllPresenter($item);
-
-        return Json::item( $presenter->getData());
-    }
-
-    public function delete(DeleteHelpAllRequest $request): JsonResponse
-    {
-        $this->deleteHelpAllHandler->handle(Uuid::fromString($request->route('id')));
-
-        return Json::deleted();
+        return view('help::index', [
+            'helpMessages' => $list,
+            'pagination' => $pagination,
+        ]);
     }
 }

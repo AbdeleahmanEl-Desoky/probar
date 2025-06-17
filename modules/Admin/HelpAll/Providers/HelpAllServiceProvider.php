@@ -16,6 +16,7 @@ class HelpAllServiceProvider extends ModuleServiceProvider
 
     public function boot(): void
     {
+        $this->loadViewsFrom($this->getModulePath() . '/Resources/views', 'help');
         $this->registerTranslations();
         //$this->registerConfig();
         $this->registerMigrations();

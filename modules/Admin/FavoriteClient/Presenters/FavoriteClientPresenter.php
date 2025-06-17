@@ -6,12 +6,13 @@ namespace Modules\Admin\FavoriteClient\Presenters;
 
 use Modules\Admin\FavoriteClient\Models\FavoriteClient;
 use BasePackage\Shared\Presenters\AbstractPresenter;
+use Modules\Client\Favorite\Models\Favorite;
 
 class FavoriteClientPresenter extends AbstractPresenter
 {
-    private FavoriteClient $favoriteClient;
+    private Favorite $favoriteClient;
 
-    public function __construct(FavoriteClient $favoriteClient)
+    public function __construct(Favorite $favoriteClient)
     {
         $this->favoriteClient = $favoriteClient;
     }
@@ -20,7 +21,12 @@ class FavoriteClientPresenter extends AbstractPresenter
     {
         return [
             'id' => $this->favoriteClient->id,
-            'name' => $this->favoriteClient->name,
+            'client' => $this->favoriteClient->client?->name,
+            'shop_name' => $this->favoriteClient->shop?->name,
+            'worker_no' => $this->favoriteClient->shop?->worker_no,
+            'city_name'=> $this->favoriteClient->shop?->city_id ,
+            'average_rating' => $this->favoriteClient?->shop?->average_rating,
+
         ];
     }
 }

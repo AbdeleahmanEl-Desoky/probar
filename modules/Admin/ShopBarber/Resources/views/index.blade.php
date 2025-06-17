@@ -6,32 +6,31 @@
         <h1>Shops</h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">shops</li>
+            <li class="active">Shops</li>
         </ol>
     </section>
 
     <section class="content">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title" style="margin-bottom: 15px">shops <small></small></h3>
+                <h3 class="box-title">Shops</h3>
 
-                <form action="{{ route('admin.shops.index') }}" method="get">
+                <form action="{{ route('admin.shops.index') }}" method="get" class="mt-3">
                     <div class="row">
                         <div class="col-md-4">
-                            <input type="text" name="search" class="form-control" placeholder="Search" value="{{ request()->search }}">
+                            <input type="text" name="search" class="form-control" placeholder="Search"
+                                   value="{{ request()->search }}">
                         </div>
-
                         <div class="col-md-4">
                             <button type="submit" class="btn btn-primary">
                                 <i class="fa fa-search"></i> Search
                             </button>
-
                         </div>
                     </div>
                 </form>
-            </div><!-- /.box-header -->
+            </div>
 
-            <div class="box-body">
+            <div class="box-body table-responsive">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -39,17 +38,17 @@
                             <th>Name</th>
                             <th>Open</th>
                             <th>Featured</th>
-                            <th>Canceled Schedules</th>
-                            <th>Active Schedules</th>
-                            <th>Finished Schedules</th>
+                            <th>Cancelled</th>
+                            <th>Active</th>
+                            <th>Finished</th>
+                            <th>Rating</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($shops as $key => $shop)
+                        @forelse ($shops as $key => $shop)
                             <tr>
-                                <td>{{ ++$key }}</td>
-
+                                <td>{{ $key + 1 }}</td>
                                 <td>{{ $shop['name'] }}</td>
                                 <td>{{ $shop['is_open'] ? 'Open' : 'Closed' }}</td>
                                 <td>
@@ -57,16 +56,19 @@
                                         {{ $shop['featured'] ? 'Yes' : 'No' }}
                                     </span>
                                 </td>
-                                <td>{{ $shop['canceled_schedules_count'] }}</td> <br>
-                                <td>{{ $shop['active_schedules_count'] }}</td> <br>
+                                <td>{{ $shop['canceled_schedules_count'] }}</td>
+                                <td>{{ $shop['active_schedules_count'] }}</td>
                                 <td>{{ $shop['finished_schedules_count'] }}</td>
+                                <td>{{ number_format($shop['average_rating'], 1) }}</td>
                                 <td>
-                                    <button class="btn btn-xs btn-info toggle-details" data-id="{{ $shop['id'] }}">Show Details</button>
+                                    <button class="btn btn-xs btn-info toggle-details" data-id="{{ $shop['id'] }}">
+                                        Show Details
+                                    </button>
                                 </td>
                             </tr>
                             <tr class="shop-details" id="details-{{ $shop['id'] }}" style="display: none;">
-                                <td colspan="7">
-                                    <strong>City: </strong> {{ $shop['city_name'] }}<br>
+                                <td colspan="9">
+                                    <strong>City:</strong> {{ $shop['city_name'] }}<br>
                                     <strong>Street:</strong> {{ $shop['street'] }}<br>
                                     <strong>Address 1:</strong> {{ $shop['address_1'] }}<br>
                                     <strong>Address 2:</strong> {{ $shop['address_2'] }}<br>
@@ -84,19 +86,22 @@
                                     </ul>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="9" class="text-center">No shops found.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
 
-
                 <!-- Pagination -->
                 <x-pagination-with-per-page :pagination="$pagination" />
-            </div><!-- /.box-body -->
-        </div><!-- /.box -->
+            </div>
+        </div>
     </section>
 </div>
 
-
+@push('scripts')
 <script>
     document.querySelectorAll('.toggle-details').forEach(button => {
         button.addEventListener('click', function () {
@@ -112,4 +117,5 @@
         });
     });
 </script>
+@endpush
 @endsection
