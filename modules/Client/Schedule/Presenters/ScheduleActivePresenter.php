@@ -76,7 +76,7 @@ class ScheduleActivePresenter extends AbstractPresenter
             'shop_rate' => $this->schedule->shop->rate,
             'payment' =>$this->schedule->payment,
             'picture_url' => $this->schedule->shop->getFirstMediaUrl('shops'),
-            'rote' => $this->schedule->rate,
+            'rote' => $this->schedule->rate?->rate??null,
             'shop_services' => $this->schedule->shopServices->map(function ($service) {
                 return [
                     'price' => $service->price,

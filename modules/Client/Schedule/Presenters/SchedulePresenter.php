@@ -74,6 +74,8 @@ class SchedulePresenter extends AbstractPresenter
             'picture_url' => $this->schedule->shop->getFirstMediaUrl('shops'),
             'longitude' => $this->schedule->shop?->longitude,
             'latitude' => $this->schedule->shop?->latitude,
+            'rote' => $this->schedule->rate?->rate??null,
+
         ];
     }
 
