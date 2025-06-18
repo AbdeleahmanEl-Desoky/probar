@@ -202,10 +202,17 @@ class CoreClientController extends Controller
 
     public function test()
     {
-        $fcmTokens = Client::whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+        $clients = Client::whereNotNull('fcm_token')->get();
+        foreach($clients as $client){
+            $title = __('notifications.reminder_title');
+            $body = __('notifications.reminder_body');
 
-        // Dispatch job with current tokens
-        SendScheduleReminderJob::dispatch($fcmTokens);
+            FirebaseNotificationService::send(
+                $client->fcm_token,
+                $title,
+                $body
+            );
+        }
 
         return Json::done('Test notification dispatched successfully.');
     }
