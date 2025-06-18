@@ -29,7 +29,8 @@ class ShopHourDetail extends Model
         'shop_hour_id',
         'start_time',
         'end_time',
-        'day'
+        'day',
+        'shop_id'
     ];
 
     protected $casts = [
