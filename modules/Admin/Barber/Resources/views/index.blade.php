@@ -52,7 +52,7 @@
                             <td>
                                 @if($barber['picture_url'])
                                 <img src="{{ $barber['picture_url'] }}"
-                                    class="rounded-circle"
+                                    style="border-radius: 50%; object-fit: cover;"
                                     width="40"
                                     height="40"
                                     alt="Barber Image">                                @else
