@@ -206,7 +206,7 @@ class CoreClientController extends Controller
         foreach($clients as $client){
             $title = __('notifications.reminder_title');
             $body = __('notifications.reminder_body');
-
+            
             FirebaseNotificationService::send(
                 $client->fcm_token,
                 $title,
