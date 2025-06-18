@@ -28,7 +28,8 @@ class ShopHourDetail extends Model
     protected $fillable = [
         'shop_hour_id',
         'start_time',
-        'end_time'
+        'end_time',
+        'day'
     ];
 
     protected $casts = [
