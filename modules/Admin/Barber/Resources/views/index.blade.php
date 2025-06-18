@@ -51,8 +51,11 @@
                             <td>{{ ++$key }}</td>
                             <td>
                                 @if($barber['picture_url'])
-                                    <img src="{{ $barber['picture_url'] }}" alt="barber Image" width="40" height="40" class="img-circle">
-                                @else
+                                <img src="{{ $barber['picture_url'] }}"
+                                    class="rounded-circle"
+                                    width="40"
+                                    height="40"
+                                    alt="Barber Image">                                @else
                                     <img src="{{ asset('default-user.png') }}" alt="Default" width="40" height="40" class="img-circle">
                                 @endif
                             </td>
