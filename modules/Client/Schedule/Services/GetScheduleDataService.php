@@ -39,7 +39,7 @@ class GetScheduleDataService
             $subtotal += $service->price;
             $servicesDetails[] = [
                 'service_name' => $service->name,
-                'service_description' => $service->shopService->description,
+                'service_description' => $service->description,
                 'price' => $service->price,
                 'picture_url' => $service->getFirstMediaUrl('shop_service')
             ];
