@@ -28,7 +28,7 @@ class LoginCoreClientService
 
         // Check if account is active
         if ($user->is_active != 1) {
-            // auth('api_clients')->logout();
+            auth('api_clients')->logout();
 
             throw new \Exception('Your account is inactive. Please contact support.', 403);
         }

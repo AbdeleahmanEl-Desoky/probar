@@ -57,22 +57,20 @@ class CoreClientController extends Controller
     public function login(LoginCoreClientRequest $request): JsonResponse
     {
         $command = $request->toCommand();
-
         try {
             [$token, $user] = $this->loginCoreClientService->login($command);
+
         } catch (\Exception $e) {
-            $code = $e->getCode();
-
-            $httpCode = ($code >= 100 && $code <= 599) ? $code : 400;
-
-            return Json::error($e->getMessage(), $httpCode);
+            return Json::error( $e->getMessage(),$e->getCode());
         }
 
         $userPresenter = (new CoreClientPresenter($user))->getData();
 
+
         return Json::item(item: [
             'token' => $token,
             'users' => $userPresenter,
+
         ]);
     }
     public function me(): JsonResponse
