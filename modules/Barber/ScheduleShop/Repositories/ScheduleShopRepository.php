@@ -258,10 +258,10 @@ public function updateScheduleShop(UuidInterface $id, array $data): bool
     {
         $now = Carbon::now();
 
-        $scheduleDate = $now->toDateString(); // Today
+        $scheduleDate = $now->toDateString();                             oday
         $startTime = $now->toTimeString();    // Current time
         $newHold = Shop::find($shopId)->hold ?? 0; // Get the shop's hold value
-        
+
         // Step 1: Get all today's schedules after now for the shop
         $affectedSchedules = $this->model->with(['shop', 'client'])
             ->where('shop_id', $shopId)

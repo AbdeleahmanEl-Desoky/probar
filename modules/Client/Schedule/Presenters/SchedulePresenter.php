@@ -69,13 +69,11 @@ class SchedulePresenter extends AbstractPresenter
             'city' => $this->schedule->shop?->city?->name ?? null,
             'address_1' => $this->schedule->shop?->address_1,
             'address_2' => $this->schedule->shop?->address_2,
-            'shop_rate' => $this->schedule->shop?->rate,
+            'shop_rate' => $this->schedule->rate?->rate??null,
             'payment' => $this->schedule->payment,
             'picture_url' => $this->schedule->shop->getFirstMediaUrl('shops'),
             'longitude' => $this->schedule->shop?->longitude,
             'latitude' => $this->schedule->shop?->latitude,
-            'rote' => $this->schedule->rate?->rate??null,
-
         ];
     }
 

@@ -73,7 +73,7 @@ class ScheduleActivePresenter extends AbstractPresenter
             'address_2' => $this->schedule->shop?->address_2,
             'longitude' => $this->schedule->shop?->longitude,
             'latitude' => $this->schedule->shop?->latitude,
-            'shop_rate' => $this->schedule->shop->rate,
+            'shop_rate' => $this->schedule->rate?->rate??null,
             'payment' =>$this->schedule->payment,
             'picture_url' => $this->schedule->shop->getFirstMediaUrl('shops'),
             'rote' => $this->schedule->rate?->rate??null,
