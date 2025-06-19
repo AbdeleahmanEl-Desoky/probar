@@ -37,7 +37,7 @@ public function paginated(
     } else {
         $query = $this->model->where($conditions);
     }
-    $query->whereHas('shop.barber', function ($q) {
+    $query->whereHas('barber', function ($q) {
         $q->where('is_active', 1);
     });
 
