@@ -36,7 +36,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Image</th>
+                    {{-- <th>Image</th> --}}
                     <th>Service Name</th>
                     <th>Description</th>
                     <th>Price</th>
@@ -48,13 +48,13 @@
                     @foreach ($shopsServices as $key => $service)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>
+                            {{-- <td>
                                 @if($service['picture_url'])
                                     <img src="{{ $service['picture_url'] }}" alt="Service Image" width="40" height="40" class="img-circle">
                                 @else
                                     <img src="{{ asset('default-user.png') }}" alt="Default" width="40" height="40" class="img-circle">
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>{{ $service['name'] }}</td>
                             <td>{{ $service['description'] }}</td>
                             <td>{{ $service['price'] }}</td>

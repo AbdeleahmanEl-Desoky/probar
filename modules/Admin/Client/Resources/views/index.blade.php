@@ -36,7 +36,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Image</th> <!-- New -->
+                        {{-- <th>Image</th> <!-- New --> --}}
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
@@ -50,13 +50,13 @@
                         <tr>
 
                             <td>{{ ++$key }}</td>
-                            <td>
+                            {{-- <td>
                                 @if($client['picture_url'])
                                     <img src="{{ $client['picture_url'] }}" alt="Client Image" width="40" height="40" class="img-circle">
                                 @else
                                     <img src="{{ asset('default-user.png') }}" alt="Default" width="40" height="40" class="img-circle">
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>{{ $client['name'] }}</td>
                             <td>{{ $client['email'] }}</td>
                             <td>{{ $client['phone'] }}</td>
