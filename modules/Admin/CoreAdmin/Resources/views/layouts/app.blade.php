@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ProBar</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
+    <link rel="icon" type="image/png" href="{{ asset('probar.jpg') }}">
     {{--<!-- Bootstrap 3.3.7 -->--}}
     <link rel="stylesheet" href="{{ asset('dashboard_files/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_files/css/ionicons.min.css') }}">
@@ -678,7 +678,7 @@
 
 </style>
 
-{{--        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">--}}
+{{--        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">--}}
 
 {{--        <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">--}}
 
@@ -782,7 +782,7 @@
     <header class="main-header">
 
         {{--<!-- Logo -->--}}
-        <a href="" class="logo">
+        <a href="{{ asset('probar.jpg') }}" class="logo">
             {{--<!-- mini logo for sidebar mini 50x50 pixels -->--}}
             <span class="logo-mini"><b>P</b></span>
             <span class="logo-lg"><b>ProBar</b></span>
@@ -879,9 +879,23 @@
 
                     {{--<!-- User Account: style can be found in dropdown.less -->--}}
 
+                    <!-- START: Logout Button -->
+                    <li>
+                        <a href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Logout">
+                            <i class="fa fa-sign-out"></i> <span>Logout</span>
+                        </a>
                     </li>
+                    <!-- END: Logout Button -->
                 </ul>
             </div>
+
+            <!-- Hidden Logout Form -->
+            <!-- IMPORTANT: Make sure the action points to your logout route. -->
+            <form id="logout-form" action="{{ route('admin.logout') }}" method="get" style="display: none;">
+                {{-- For Laravel, uncomment the line below and update the action above --}}
+                {{-- @csrf --}}
+            </form>
+
         </nav>
 
     </header>

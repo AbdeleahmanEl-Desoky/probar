@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('dashboard_files/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_files/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_files/css/skin-blue.min.css') }}">
+    <link rel="icon" type="image/png" href="{{ asset('probar.jpg') }}">
 
     @if (app()->getLocale() == 'ar')
         <link rel="stylesheet" href="{{ asset('dashboard_files/css/font-awesome-rtl.min.css') }}">
@@ -36,7 +37,7 @@
 <div class="login-box">
 
     <div class="login-logo">
-        <a href="../../index2.html"></a>
+        <a href="{{ asset('probar.jpg') }}"></a>
         <h3>ProBar</h3>
     </div><!-- end of login lgo -->
 

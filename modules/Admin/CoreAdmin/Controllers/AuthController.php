@@ -18,7 +18,7 @@ class AuthController extends Controller
     public function create()//: View
     {
         if (auth('admin')->check()) {
-            return redirect()->route('admin.dashboard'); 
+            return redirect()->route('admin.dashboard');
         }
             // This will return the login form view
         return view('admin::auth.login');
@@ -50,7 +50,7 @@ class AuthController extends Controller
     /**
      * Destroy an authenticated session (logout).
      */
-    public function destroy(Request $request): RedirectResponse
+    public function logout(Request $request): RedirectResponse
     {
         Auth::guard('admin')->logout();
 

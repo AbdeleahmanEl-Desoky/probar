@@ -12,5 +12,5 @@ Route::post('login', [AuthController::class, 'store'])->name('login.post');
 Route::prefix('admin')->middleware('auth:admin')->name('admin.')->group(function () {
     // We will create this controller and view next
     Route::get('/', [CoreAdminController::class, 'index'])->name('dashboard');
-    Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 });
