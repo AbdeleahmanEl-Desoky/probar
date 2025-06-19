@@ -258,7 +258,7 @@ public function updateScheduleShop(UuidInterface $id, array $data): bool
     {
         $now = Carbon::now();
 
-        $scheduleDate = $now->toDateString();                             oday
+        $scheduleDate = $now->toDateString();                             
         $startTime = $now->toTimeString();    // Current time
         $newHold = Shop::find($shopId)->hold ?? 0; // Get the shop's hold value
 
