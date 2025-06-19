@@ -14,6 +14,12 @@
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
 
+            <li class="{{ request()->routeIs('admin.dashboard.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.dashboard') }}">
+                    <i class="fa fa-building"></i> <span>Home</span>
+                </a>
+            </li>
+
             <li class="{{ request()->routeIs('admin.clients.*') ? 'active' : '' }}">
                 <a href="{{ route('admin.clients.index') }}">
                     <i class="fa fa-users"></i> <span>Clients</span>

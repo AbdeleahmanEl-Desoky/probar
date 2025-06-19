@@ -46,4 +46,15 @@ class ClientController extends Controller
         ]);
     }
 
+    public function toggleStatus(string $id, GetClientListRequest $request): JsonResponse
+    {
+        $client = $this->clientService->get(Uuid::fromString($id));
+
+        $client->is_active = !$client->is_active;
+        $client->save();
+        return response()->json([
+            'message' => 'Status updated successfully',
+            'is_active' => $client->is_active,
+        ]);
+    }
 }

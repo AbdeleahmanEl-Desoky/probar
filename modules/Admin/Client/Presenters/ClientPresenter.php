@@ -29,6 +29,7 @@ class ClientPresenter extends AbstractPresenter
             'canceled_schedules_count' => $this->client->canceled_schedules_count,
             'active_schedules_count' => $this->client->active_schedules_count,
             'finished_schedules_count' => $this->client->finished_schedules_count,
+            'is_active'=> $this->client->is_active
 
         ];
     }
