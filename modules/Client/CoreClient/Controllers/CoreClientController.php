@@ -60,19 +60,10 @@ class CoreClientController extends Controller
         try {
             [$token, $user] = $this->loginCoreClientService->login($command);
 
+        } catch (\Exception $e) {
+            return Json::error( $e->getMessage(),$e->getCode());
         }
-        catch (\Exception $e) {
 
-            $statusCode = $e->getCode();
-
-            if (!is_int($statusCode) || $statusCode < 100 || $statusCode > 599) {
-
-                $statusCode = 500;
-            }
-
-            return Json::error($e->getMessage(), $statusCode);
-
-        }
         $userPresenter = (new CoreClientPresenter($user))->getData();
 
 
