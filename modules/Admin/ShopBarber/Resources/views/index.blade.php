@@ -56,6 +56,12 @@
                                         {{ $shop['featured'] ? 'Yes' : 'No' }}
                                     </span>
                                 </td>
+                                <td>
+                                    <button class="btn btn-xs toggle-featured {{ $shop['featured'] ? 'btn-success' : 'btn-default' }}"
+                                            data-id="{{ $shop['id'] }}">
+                                        {{ $shop['featured'] ? 'Featured' : 'Not Featured' }}
+                                    </button>
+                                </td>
                                 <td>{{ $shop['canceled_schedules_count'] }}</td>
                                 <td>{{ $shop['active_schedules_count'] }}</td>
                                 <td>{{ $shop['finished_schedules_count'] }}</td>
@@ -117,5 +123,39 @@
         });
     });
 </script>
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.toggle-featured').forEach(button => {
+            button.addEventListener('click', function () {
+                const shopId = this.dataset.id;
+
+                fetch(`/admin/shops/${shopId}/toggle-featured`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.featured) {
+                        this.classList.remove('btn-default');
+                        this.classList.add('btn-success');
+                        this.textContent = 'Featured';
+                    } else {
+                        this.classList.remove('btn-success');
+                        this.classList.add('btn-default');
+                        this.textContent = 'Not Featured';
+                    }
+                });
+            });
+        });
+    });
+</script>
+@endpush
+
 @endpush
 @endsection
