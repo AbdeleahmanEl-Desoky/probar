@@ -52,11 +52,6 @@
                                 <td>{{ $shop['name'] }}</td>
                                 <td>{{ $shop['is_open'] ? 'Open' : 'Closed' }}</td>
                                 <td>
-                                    <span class="label label-{{ $shop['featured'] ? 'success' : 'default' }}">
-                                        {{ $shop['featured'] ? 'Yes' : 'No' }}
-                                    </span>
-                                </td>
-                                <td>
                                     <button class="btn btn-xs toggle-featured {{ $shop['featured'] ? 'btn-success' : 'btn-default' }}"
                                             data-id="{{ $shop['id'] }}">
                                         {{ $shop['featured'] ? 'Featured' : 'Not Featured' }}
