@@ -18,20 +18,22 @@ class LoginCoreClientService
             'email' => $command->getEmail(),
             'password' => $command->getPassword(),
         ];
+
         // Attempt login
         if (!$token = auth('api_clients')->attempt($credentials)) {
             throw new \Exception('Unauthorized: Invalid email or password.', 401);
         }
-        // Get the authenticated user
+
         $user = auth('api_clients')->user();
 
+        // Check if account is active
         if ($user->is_active != 1) {
-
             auth('api_clients')->logout();
 
             throw new \Exception('Your account is inactive. Please contact support.', 403);
         }
-        // Return the token and user
+
+        // Return token and user
         return [$this->respondWithToken($token), $user];
     }
 
