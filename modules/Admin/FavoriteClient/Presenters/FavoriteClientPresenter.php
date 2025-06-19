@@ -26,7 +26,7 @@ class FavoriteClientPresenter extends AbstractPresenter
             'worker_no' => $this->favoriteClient->shop?->worker_no,
             'city_name'=> $this->favoriteClient->shop?->city_id ,
             'average_rating' => $this->favoriteClient?->shop?->average_rating,
-
+            'total_rates' => $this->favoriteClient->total_rates,
         ];
     }
 }

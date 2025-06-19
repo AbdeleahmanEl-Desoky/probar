@@ -51,6 +51,7 @@ class ShopsPresenter extends AbstractPresenter
             'address_2' => $this->shop->address_2,
             'picture_url' => $this->shop->getFirstMediaUrl('shops'),
             'rate' =>       $this->shop->average_rating,
+            'total_rates' => $this->shop->total_rates,
             'is_open' => $this->shop->is_open,
             'is_favorited' => $this->shop->is_favorited,
             'longitude' => $this->shop->longitude,

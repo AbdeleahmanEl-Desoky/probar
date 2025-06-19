@@ -35,6 +35,7 @@ class ShopBarberPresenter extends AbstractPresenter
             'finished_schedules_count' => $this->shopBarber->finished_schedules_count,
             'shop_hours' => $this->shopBarber->shopHours,
             'average_rating' => $this->shopBarber->average_rating,
+            'total_rates' => $this->shopBarber->total_rates,
         ];
     }
 }
