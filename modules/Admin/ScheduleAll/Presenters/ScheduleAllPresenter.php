@@ -39,7 +39,8 @@ class ScheduleAllPresenter extends AbstractPresenter
             'city'=> $this->schedule->shop?->city?->name??null,
             'address_1' => $this->schedule->shop?->address_1,
             'address_2' => $this->schedule->shop?->address_2,
-            'shop_rate' => $this->schedule->shop->rate,
+            'shop_rate' => $this->schedule->shop->average_rating,
+            'rate' => $this->schedule->rate,
             'payment' =>$this->schedule->payment,
 
             'shop_services' => $this->schedule->shopServices->map(function ($service) {
