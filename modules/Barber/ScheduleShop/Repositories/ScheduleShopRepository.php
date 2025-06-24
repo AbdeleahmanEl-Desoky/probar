@@ -254,4 +254,55 @@ public function updateScheduleShop(UuidInterface $id, array $data): bool
         return $schedule;
     }
 
+
+    public function updateHoldOneSchedule(UuidInterface $id)
+    {
+        $schedule = $this->model->where('id', $id)->first();
+
+        if (!$schedule) {
+            return null;
+        }
+
+        $hold = $schedule->hold ?? 0;
+        $newHold = $hold + 10;
+
+        $fcmToken = $schedule->client->fcm_token ?? null;
+
+        $schedule->update([
+            'hold'=>$newHold
+        ]);
+
+        if ($fcmToken) {
+            FirebaseNotificationService::send(
+                $fcmToken,
+                __('notifications.hold_schedule_title_client'),
+                __('notifications.hold_schedule_body_client', [
+                    'shop_name' => $affectedSchedule->shop->name ?? '',
+                    'hold' => $newHold,
+                    'time' => Carbon::parse($schedule->start_time)->format('H:i'),
+                    'date' => Carbon::parse($schedule->schedule_date)->format('d/m'),
+                ]),
+                [
+                    'type' => 'schedule_hold',
+                    'schedule_id' => $schedule->id,
+                ]
+            );
+        }
+        FirebaseNotificationService::send(
+            auth('api_barbers')->user()->fcm_token??'@',
+            __('notifications.hold_schedule_title'),
+            __('notifications.hold_schedule_body', [
+                'hold' => $newHold,
+            ]),
+            [
+                'type' => 'schedule_hold',
+                'schedule_id' => $schedule->id,
+            ]
+        );
+
+    
+
+        return $schedule;
+    }
+
 }
