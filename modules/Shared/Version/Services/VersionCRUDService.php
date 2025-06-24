@@ -23,7 +23,7 @@ class VersionCRUDService
         );
     }
 
-    public function get(): Version
+    public function get()
     {
         return $this->repository->getVersion();
     }
