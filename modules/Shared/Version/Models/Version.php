@@ -26,7 +26,7 @@ class Version extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'name',
+        'version',
     ];
 
     protected $casts = [
