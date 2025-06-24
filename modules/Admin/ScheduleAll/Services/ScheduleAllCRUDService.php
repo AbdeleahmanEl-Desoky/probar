@@ -22,11 +22,12 @@ class ScheduleAllCRUDService
          return $this->repository->createScheduleAll($createScheduleAllDTO->toArray());
     }
 
-    public function list(int $page = 1, int $perPage = 10): array
+    public function list(int $page = 1, int $perPage = 10, array $conditions = [])
     {
-        return $this->repository->paginated(
+        return $this->repository->paginateds(
             page: $page,
             perPage: $perPage,
+            conditions: $conditions
         );
     }
 

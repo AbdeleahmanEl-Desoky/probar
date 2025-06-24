@@ -47,17 +47,6 @@ class BarberController extends Controller
         ]);
     }
 
-    public function update(UpdateBarberRequest $request): JsonResponse
-    {
-        $command = $request->createUpdateBarberCommand();
-        $this->updateBarberHandler->handle($command);
-
-        $item = $this->barberService->get($command->getId());
-
-        $presenter = new BarberPresenter($item);
-
-        return Json::item( $presenter->getData());
-    }
 
     public function toggleStatus(string $id, UpdateStutesBarberRequest $request): JsonResponse
     {

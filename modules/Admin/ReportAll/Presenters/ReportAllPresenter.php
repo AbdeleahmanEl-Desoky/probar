@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Admin\ReportAll\Presenters;
 
-use Modules\Admin\ReportAll\Models\ReportAll;
+use Modules\Client\Report\Models\Report;
 use BasePackage\Shared\Presenters\AbstractPresenter;
 
 class ReportAllPresenter extends AbstractPresenter
 {
-    private ReportAll $reportAll;
+    private Report $reportAll;
 
-    public function __construct(ReportAll $reportAll)
+    public function __construct(Report $reportAll)
     {
         $this->reportAll = $reportAll;
     }
@@ -20,7 +20,13 @@ class ReportAllPresenter extends AbstractPresenter
     {
         return [
             'id' => $this->reportAll->id,
-            'name' => $this->reportAll->name,
+            'shop_name' => $this->reportAll->shop->name ?? null,
+            'client_name' => $this->reportAll->client->name ?? null,
+            'schedule_date' => $this->reportAll->schedule->schedule_date ?? null,
+            'schedule_start_time' => $this->reportAll->schedule->start_time ?? null,
+            'schedule_end_time' => $this->reportAll->schedule->end_time ?? null,
+            'note' => $this->reportAll->note,
+            'type' => $this->reportAll->type,
         ];
     }
 }

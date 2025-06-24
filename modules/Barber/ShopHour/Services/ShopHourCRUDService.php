@@ -9,6 +9,7 @@ use Modules\Barber\ShopHour\Models\ShopHour;
 use Modules\Barber\ShopHour\Repositories\ShopHourDetailRepository;
 use Modules\Barber\ShopHour\Repositories\ShopHourRepository;
 use Ramsey\Uuid\UuidInterface;
+use Ramsey\Uuid\Uuid;
 
 class ShopHourCRUDService
 {
@@ -23,7 +24,7 @@ class ShopHourCRUDService
         $days = ['Saturday', 'Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
         $data = $createShopHourDTO->toArray();
 
-        $data['shop_id'] = $createShopHourDTO->shop_id;
+        $data['shop_id'] =  $createShopHourDTO->shop_id;
 
         $this->repository->deleteShopHour($data['shop_id']);
 
@@ -37,7 +38,7 @@ class ShopHourCRUDService
             $closingTime = date("H:i", strtotime($closingTime));
 
             $shopHour = $this->repository->createShopHour([
-                'shop_id' => $createShopHourDTO->shop_id,
+                'shop_id' => $data['shop_id'],
                 'day' => $day,
                 'opening_time' => $openingTime,
                 'closing_time' => $closingTime,
@@ -45,32 +46,51 @@ class ShopHourCRUDService
                 'strto_time' => $strtoTime
             ]);
 
-            $this->generateTimeSlots($shopHour->id, $openingTime, $closingTime,$strtoTime);
+            $this->generateTimeSlots($data['shop_id'],$shopHour->id, $openingTime, $closingTime, $strtoTime, $day);
         }
     }
-
-    private function generateTimeSlots(string $shopHourId, string $openingTime, string $closingTime,string $strtoTime): void
+    private function generateTimeSlots(string $shopId,string $shopHourId, string $openingTime, string $closingTime, string $strtoTime, string $baseDay): void
     {
         $startTime = strtotime($openingTime);
         $endTime = strtotime($closingTime);
 
-        while ($startTime < $endTime) {
-            $slotStart = date("H:i", $startTime);
-            $slotEnd = date("H:i", strtotime($strtoTime, $startTime));
+        $crossesMidnight = $endTime <= $startTime;
 
-            if (strtotime($slotEnd) > $endTime) {
+        $daysOfWeek = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+        $baseDayIndex = array_search($baseDay, $daysOfWeek);
+        $nextDay = $daysOfWeek[($baseDayIndex + 1) % 7];
+
+        while (true) {
+            $slotStart = date("H:i", $startTime);
+            $nextSlotTime = strtotime($strtoTime, $startTime);
+            $slotEnd = date("H:i", $nextSlotTime);
+
+            if (!$crossesMidnight && $nextSlotTime > $endTime) {
                 break;
             }
 
+            $day = ($crossesMidnight && $nextSlotTime > strtotime("23:59")) ? $nextDay : $baseDay;
+
             $this->repositoryShopHourDetail->create([
                 'shop_hour_id' => $shopHourId,
+                'shop_id' => $shopId,
                 'start_time' => $slotStart,
                 'end_time' => $slotEnd,
+                'day' => $day
             ]);
 
-            $startTime = strtotime($strtoTime, $startTime);
+            if (!$crossesMidnight && $nextSlotTime >= $endTime) {
+                break;
+            }
+
+            if ($crossesMidnight && $nextSlotTime >= strtotime($closingTime . " +1 day")) {
+                break;
+            }
+
+            $startTime = $nextSlotTime;
         }
     }
+
 
     public function list(int $page = 1, int $perPage = 10, $shopId): array
     {

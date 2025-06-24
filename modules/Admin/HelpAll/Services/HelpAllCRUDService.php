@@ -22,9 +22,9 @@ class HelpAllCRUDService
          return $this->repository->createHelpAll($createHelpAllDTO->toArray());
     }
 
-    public function list(int $page = 1, int $perPage = 10): array
+    public function list(int $page = 1, int $perPage = 10)
     {
-        return $this->repository->paginated(
+        return $this->repository->paginateds(
             page: $page,
             perPage: $perPage,
         );

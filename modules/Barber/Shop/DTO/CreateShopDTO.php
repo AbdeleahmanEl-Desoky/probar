@@ -19,6 +19,7 @@ class CreateShopDTO
         public ?string $whatsapp = null,
         public ?string $facebook = null,
         public ?string $instagram = null,
+        public ?int $hold = null,
     ) {}
 
     public function toArray(): array
@@ -36,6 +37,7 @@ class CreateShopDTO
             'whatsapp' => $this->whatsapp,
             'facebook' => $this->facebook,
             'instagram' => $this->instagram,
+            'hold' => $this->hold,
         ], fn ($value) => !is_null($value));
     }
 }

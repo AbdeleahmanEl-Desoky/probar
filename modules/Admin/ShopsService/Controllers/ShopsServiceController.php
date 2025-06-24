@@ -27,16 +27,26 @@ class ShopsServiceController extends Controller
     ) {
     }
 
-    public function index(GetShopsServiceListRequest $request): JsonResponse
+    public function index(GetShopsServiceListRequest $request)
     {
         $list = $this->shopsServiceService->list(
             (int) $request->get('page', 1),
             (int) $request->get('per_page', 10)
         );
 
-        return Json::items(ShopsServicePresenter::collection($list['data']), paginationSettings: $list['pagination']);
-    }
+        $list->setCollection(collect(ShopsServicePresenter::collection($list->items())));
 
+        // extract pagination info
+        $pagination = [
+            'current_page' => $list->currentPage(),
+            'last_page' => $list->lastPage(),
+        ];
+
+        return view('shops-service::index', [
+            'shopsServices' => $list,
+            'pagination' => $pagination,
+        ]);
+    }
     public function show(GetShopsServiceRequest $request): JsonResponse
     {
         $item = $this->shopsServiceService->get(Uuid::fromString($request->route('id')));

@@ -6,7 +6,7 @@ namespace Modules\Client\Favorite\Presenters;
 
 use Modules\Client\Favorite\Models\Favorite;
 use BasePackage\Shared\Presenters\AbstractPresenter;
-use Modules\Barber\Shop\Presenters\ShopPresenter;
+use Modules\Client\Shops\Presenters\ShopsPresenter;
 
 class FavoritePresenter extends AbstractPresenter
 {
@@ -21,7 +21,7 @@ class FavoritePresenter extends AbstractPresenter
     {
         return [
             'id' => $this->favorite->id,
-            'shop' => $this->favorite->shop ? (new ShopPresenter($this->favorite->shop))->getData() : null,
+            'shop' => $this->favorite->shop ? (new ShopsPresenter($this->favorite->shop))->getData() : null,
 
         ];
     }

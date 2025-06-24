@@ -22,55 +22,25 @@ class RateAllController extends Controller
 {
     public function __construct(
         private RateAllCRUDService $rateAllService,
-        private UpdateRateAllHandler $updateRateAllHandler,
-        private DeleteRateAllHandler $deleteRateAllHandler,
     ) {
     }
 
-    public function index(GetRateAllListRequest $request): JsonResponse
+    public function index(GetRateAllListRequest $request)
     {
         $list = $this->rateAllService->list(
             (int) $request->get('page', 1),
             (int) $request->get('per_page', 10)
         );
+        $list->setCollection(collect(RateAllPresenter::collection($list->items())));
 
-        return Json::items(RateAllPresenter::collection($list['data']), paginationSettings: $list['pagination']);
-    }
+        $pagination = [
+            'current_page' => $list->currentPage(),
+            'last_page' => $list->lastPage(),
+        ];
 
-    public function show(GetRateAllRequest $request): JsonResponse
-    {
-        $item = $this->rateAllService->get(Uuid::fromString($request->route('id')));
-
-        $presenter = new RateAllPresenter($item);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function store(CreateRateAllRequest $request): JsonResponse
-    {
-        $createdItem = $this->rateAllService->create($request->createCreateRateAllDTO());
-
-        $presenter = new RateAllPresenter($createdItem);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function update(UpdateRateAllRequest $request): JsonResponse
-    {
-        $command = $request->createUpdateRateAllCommand();
-        $this->updateRateAllHandler->handle($command);
-
-        $item = $this->rateAllService->get($command->getId());
-
-        $presenter = new RateAllPresenter($item);
-
-        return Json::item( $presenter->getData());
-    }
-
-    public function delete(DeleteRateAllRequest $request): JsonResponse
-    {
-        $this->deleteRateAllHandler->handle(Uuid::fromString($request->route('id')));
-
-        return Json::deleted();
+        return view('rate::index', [
+            'rates' => $list,
+            'pagination' => $pagination,
+        ]);
     }
 }

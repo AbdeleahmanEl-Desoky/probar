@@ -13,6 +13,7 @@ use BasePackage\Shared\Traits\BaseFilterable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Modules\Barber\Shop\Models\Shop;
 use Modules\Barber\ShopService\Models\ShopService;
+use Modules\Client\Rate\Models\Rate;
 
 //use BasePackage\Shared\Traits\HasTranslations;
 
@@ -72,5 +73,9 @@ class Schedule extends Model
     public function shopServicesHasMany()
     {
         return $this->hasMany(ScheduleService::class, 'schedule_id', 'id');
+    }
+    public  function rate()
+    {
+        return $this->hasOne(Rate::class);
     }
 }

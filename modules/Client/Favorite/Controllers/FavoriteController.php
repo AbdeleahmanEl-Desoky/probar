@@ -30,7 +30,6 @@ class FavoriteController extends Controller
     public function index(GetFavoriteListRequest $request): JsonResponse
     {
         $list = $this->favoriteService->list(
-            
             (int) $request->get('page', 1),
             (int) $request->get('per_page', 10)
         );

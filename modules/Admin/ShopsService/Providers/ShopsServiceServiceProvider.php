@@ -16,6 +16,8 @@ class ShopsServiceServiceProvider extends ModuleServiceProvider
 
     public function boot(): void
     {
+        $this->mapRoutes();
+        $this->loadViewsFrom($this->getModulePath() . '/Resources/views', 'shops-service');
         $this->registerTranslations();
         //$this->registerConfig();
         $this->registerMigrations();

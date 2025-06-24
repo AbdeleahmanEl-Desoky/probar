@@ -52,6 +52,7 @@ class Shop extends Model implements HasMedia
         'whatsapp',
         'facebook',
         'instagram',
+        'hold'
     ];
 
     protected $casts = [

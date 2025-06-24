@@ -24,6 +24,7 @@ class ScheduleCheckoutService
             $subtotal += $service->shopService->price;
             $servicesDetails[] = [
                 'service_name' => $service->shopService->name,
+                'service_description' => $service->shopService->description,
                 'price' => $service->shopService->price,
             ];
         }

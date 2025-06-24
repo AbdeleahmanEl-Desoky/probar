@@ -36,7 +36,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Image</th> <!-- New -->
+                        {{-- <th>Image</th> <!-- New --> --}}
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
@@ -49,13 +49,16 @@
                         <tr>
 
                             <td>{{ ++$key }}</td>
-                            <td>
+                            {{-- <td>
                                 @if($barber['picture_url'])
-                                    <img src="{{ $barber['picture_url'] }}" alt="barber Image" width="40" height="40" class="img-circle">
-                                @else
+                                <img src="{{ $barber['picture_url'] }}"
+                                    class="rounded-circle"
+                                    width="40"
+                                    height="40"
+                                    alt="Barber Image">                                @else
                                     <img src="{{ asset('default-user.png') }}" alt="Default" width="40" height="40" class="img-circle">
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>{{ $barber['name'] }}</td>
                             <td>{{ $barber['email'] }}</td>
                             <td>{{ $barber['phone'] }}</td>

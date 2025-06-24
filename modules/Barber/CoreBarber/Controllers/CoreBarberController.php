@@ -29,7 +29,9 @@ use Modules\Barber\CoreBarber\Services\ResetPasswordService;
 use Modules\Barber\Shop\Repositories\ShopRepository;
 use Illuminate\Support\Facades\Hash;
 use Modules\Barber\CoreBarber\Handlers\UpdateHoldHandler;
+use Modules\Barber\CoreBarber\Models\Barber;
 use Modules\Barber\CoreBarber\Requests\HoldRequest;
+use Modules\Shared\Notification\Services\FirebaseNotificationService;
 
 class CoreBarberController extends Controller
 {
@@ -182,5 +184,21 @@ class CoreBarberController extends Controller
         }
 
         return Json::error('Password is incorrect.', 422);
+    }
+    public function test()
+    {
+        $clients = Barber::whereNotNull('fcm_token')->get();
+        foreach($clients as $client){
+            $title = __('test :) ;(');
+            $body = __('test test');
+
+            FirebaseNotificationService::send(
+                $client->fcm_token,
+                $title,
+                $body
+            );
+        }
+
+        return Json::done('Test notification dispatched successfully.');
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Barber\ShopService\Database\factories\ShopServiceFactory;
 use BasePackage\Shared\Traits\BaseFilterable;
 use BasePackage\Shared\Traits\HasTranslations;
+use Modules\Barber\Shop\Models\Shop;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 class ShopService extends Model implements HasMedia
@@ -52,5 +53,10 @@ class ShopService extends Model implements HasMedia
     public function getPicturesAttribute()
     {
         return $this->getFirstMedia('shop_service');
+    }
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class, 'shop_id', 'id');
     }
 }

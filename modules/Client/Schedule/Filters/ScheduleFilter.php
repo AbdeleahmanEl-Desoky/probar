@@ -33,7 +33,8 @@ class ScheduleFilter extends SearchModelFilter
             });
         }else{
             return $this->when($active == 'yes',function($q){
-                        $q->whereNotIn('status', ['finished', 'cancel']);
+                        $q->whereNotIn('status', ['finished', 'cancel'])
+                        ->whereDate('schedule_date',now()->toDateString());
                     });
         }
 

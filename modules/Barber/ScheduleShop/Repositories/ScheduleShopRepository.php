@@ -202,7 +202,8 @@ public function updateScheduleShop(UuidInterface $id, array $data): bool
         $scheduleDate = Carbon::parse($schedule->schedule_date)->toDateString();
         $startTime = $schedule->start_time;
         $hold = $schedule->hold ?? 0;
-        $newHold = $hold + 10;
+        $shopHold =$schedule->shop->hold ?? 0;
+        $newHold = $hold + $shopHold;
 
         // Step 1: Get all affected schedules (on same shop & date and after or at the current start time)
         $affectedSchedules = $this->model->with('shop')
@@ -253,6 +254,67 @@ public function updateScheduleShop(UuidInterface $id, array $data): bool
 
         return $schedule;
     }
+    public function updateHoldAll(UuidInterface $shopId)
+    {
+        $now = Carbon::now();
+
+        $scheduleDate = $now->toDateString();                             
+        $startTime = $now->toTimeString();    // Current time
+        $newHold = Shop::find($shopId)->hold ?? 0; // Get the shop's hold value
+
+        // Step 1: Get all today's schedules after now for the shop
+        $affectedSchedules = $this->model->with(['shop', 'client'])
+            ->where('shop_id', $shopId)
+            ->whereDate('schedule_date', $scheduleDate)
+            ->where('start_time', '>=', $startTime)
+            ->get();
+
+        // Step 2: Update the hold for all affected schedules
+        foreach ($affectedSchedules as $schedule) {
+            $schedule->hold = ($schedule->hold ?? 0) + $newHold;
+            $schedule->save();
+
+            // Step 3: Notify the client
+            $fcmToken = $schedule->client->fcm_token ?? null;
+
+            if ($fcmToken) {
+                FirebaseNotificationService::send(
+                    $fcmToken,
+                    __('notifications.hold_schedule_title_client'),
+                    __('notifications.hold_schedule_body_client', [
+                        'shop_name' => $schedule->shop->name ?? '',
+                        'hold' => $schedule->hold,
+                        'time' => Carbon::parse($schedule->start_time)->format('H:i'),
+                        'date' => Carbon::parse($schedule->schedule_date)->format('d/m'),
+                    ]),
+                    [
+                        'type' => 'schedule_hold',
+                        'schedule_id' => $schedule->id,
+                    ]
+                );
+            }
+
+            // Step 4: Notify the barber (auth user)
+            FirebaseNotificationService::send(
+                auth('api_barbers')->user()->fcm_token ?? '@',
+                __('notifications.hold_schedule_title'),
+                __('notifications.hold_schedule_body', [
+                    'hold' => $schedule->hold,
+                ]),
+                [
+                    'type' => 'schedule_hold',
+                    'schedule_id' => $schedule->id,
+                ]
+            );
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Hold time updated for all future schedules today.',
+            'count' => $affectedSchedules->count(),
+        ]);
+    }
+
 
 
     public function updateHoldOneSchedule(UuidInterface $id)

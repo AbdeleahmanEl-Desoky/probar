@@ -8,15 +8,16 @@ use BasePackage\Shared\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Ramsey\Uuid\UuidInterface;
 use Modules\Admin\HelpAll\Models\HelpAll;
+use Modules\Shared\Help\Models\Help;
 
 /**
- * @property HelpAll $model
- * @method HelpAll findOneOrFail($id)
- * @method HelpAll findOneByOrFail(array $data)
+ * @property Help $model
+ * @method Help findOneOrFail($id)
+ * @method Help findOneByOrFail(array $data)
  */
 class HelpAllRepository extends BaseRepository
 {
-    public function __construct(HelpAll $model)
+    public function __construct(Help $model)
     {
         parent::__construct($model);
     }
@@ -25,15 +26,20 @@ class HelpAllRepository extends BaseRepository
     {
         return $this->paginatedList([], $page, $perPage);
     }
-
-    public function getHelpAll(UuidInterface $id): HelpAll
+    public function paginateds(int $page = 1, int $perPage = 10)
+    {
+        return Help::query()
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage, ['*'], 'page', $page);
+    }
+    public function getHelpAll(UuidInterface $id): Help
     {
         return $this->findOneByOrFail([
             'id' => $id->toString(),
         ]);
     }
 
-    public function createHelpAll(array $data): HelpAll
+    public function createHelpAll(array $data): Help
     {
         return $this->create($data);
     }

@@ -6,8 +6,8 @@ namespace Modules\Admin\ShopsService\Services;
 
 use Illuminate\Support\Collection;
 use Modules\Admin\ShopsService\DTO\CreateShopsServiceDTO;
-use Modules\Admin\ShopsService\Models\ShopsService;
 use Modules\Admin\ShopsService\Repositories\ShopsServiceRepository;
+use Modules\Barber\ShopService\Models\ShopService;
 use Ramsey\Uuid\UuidInterface;
 
 class ShopsServiceCRUDService
@@ -17,20 +17,20 @@ class ShopsServiceCRUDService
     ) {
     }
 
-    public function create(CreateShopsServiceDTO $createShopsServiceDTO): ShopsService
+    public function create(CreateShopsServiceDTO $createShopsServiceDTO): ShopService
     {
          return $this->repository->createShopsService($createShopsServiceDTO->toArray());
     }
 
-    public function list(int $page = 1, int $perPage = 10): array
+    public function list(int $page = 1, int $perPage = 10)
     {
-        return $this->repository->paginated(
+        return $this->repository->paginateds(
             page: $page,
             perPage: $perPage,
         );
     }
 
-    public function get(UuidInterface $id): ShopsService
+    public function get(UuidInterface $id): ShopService
     {
         return $this->repository->getShopsService(
             id: $id,

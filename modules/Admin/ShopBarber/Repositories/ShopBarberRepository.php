@@ -28,7 +28,7 @@ class ShopBarberRepository extends BaseRepository
                 'schedules as active_schedules_count' => fn($q) => $q->whereNotIn('status', ['finished', 'cancel']),
                 'schedules as finished_schedules_count' => fn($q) => $q->where('status', 'finished'),
             ])
-            ->with('media')
+            ->with(['media', 'shopHours'])
             ->paginate($perPage, ['*'], 'page', $page);
     }
     public function getShopBarberList(?int $page, ?int $perPage = 10): Collection

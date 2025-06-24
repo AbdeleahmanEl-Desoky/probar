@@ -22,55 +22,25 @@ class ReportAllController extends Controller
 {
     public function __construct(
         private ReportAllCRUDService $reportAllService,
-        private UpdateReportAllHandler $updateReportAllHandler,
-        private DeleteReportAllHandler $deleteReportAllHandler,
     ) {
     }
 
-    public function index(GetReportAllListRequest $request): JsonResponse
+    public function index(GetReportAllListRequest $request)
     {
         $list = $this->reportAllService->list(
             (int) $request->get('page', 1),
             (int) $request->get('per_page', 10)
         );
+        $list->setCollection(collect(ReportAllPresenter::collection($list->items())));
 
-        return Json::items(ReportAllPresenter::collection($list['data']), paginationSettings: $list['pagination']);
-    }
+        $pagination = [
+            'current_page' => $list->currentPage(),
+            'last_page' => $list->lastPage(),
+        ];
 
-    public function show(GetReportAllRequest $request): JsonResponse
-    {
-        $item = $this->reportAllService->get(Uuid::fromString($request->route('id')));
-
-        $presenter = new ReportAllPresenter($item);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function store(CreateReportAllRequest $request): JsonResponse
-    {
-        $createdItem = $this->reportAllService->create($request->createCreateReportAllDTO());
-
-        $presenter = new ReportAllPresenter($createdItem);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function update(UpdateReportAllRequest $request): JsonResponse
-    {
-        $command = $request->createUpdateReportAllCommand();
-        $this->updateReportAllHandler->handle($command);
-
-        $item = $this->reportAllService->get($command->getId());
-
-        $presenter = new ReportAllPresenter($item);
-
-        return Json::item( $presenter->getData());
-    }
-
-    public function delete(DeleteReportAllRequest $request): JsonResponse
-    {
-        $this->deleteReportAllHandler->handle(Uuid::fromString($request->route('id')));
-
-        return Json::deleted();
+        return view('report::index', [
+            'reports' => $list,
+            'pagination' => $pagination,
+        ]);
     }
 }

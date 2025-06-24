@@ -22,55 +22,37 @@ class ScheduleAllController extends Controller
 {
     public function __construct(
         private ScheduleAllCRUDService $scheduleAllService,
-        private UpdateScheduleAllHandler $updateScheduleAllHandler,
-        private DeleteScheduleAllHandler $deleteScheduleAllHandler,
     ) {
     }
 
-    public function index(GetScheduleAllListRequest $request): JsonResponse
+    public function index(GetScheduleAllListRequest $request)
     {
         $list = $this->scheduleAllService->list(
             (int) $request->get('page', 1),
             (int) $request->get('per_page', 10)
         );
+            $tab = 'all';
+            if ($request->get('active') === 'yes') {
+                $tab = 'active';
+            } elseif ($request->get('upcoming') === 'yes') {
+                $tab = 'upcoming';
+            } elseif ($request->get('history') === 'yes') {
+                $tab = 'history';
+            }
 
-        return Json::items(ScheduleAllPresenter::collection($list['data']), paginationSettings: $list['pagination']);
+        $list->setCollection(collect(ScheduleAllPresenter::collection($list->items())));
+
+        // extract pagination info
+        $pagination = [
+            'current_page' => $list->currentPage(),
+            'last_page' => $list->lastPage(),
+        ];
+
+        return view('schedule::index', [
+            'schedules' => $list,
+            'pagination' => $pagination,
+            'tab' => $tab,
+        ]);
     }
 
-    public function show(GetScheduleAllRequest $request): JsonResponse
-    {
-        $item = $this->scheduleAllService->get(Uuid::fromString($request->route('id')));
-
-        $presenter = new ScheduleAllPresenter($item);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function store(CreateScheduleAllRequest $request): JsonResponse
-    {
-        $createdItem = $this->scheduleAllService->create($request->createCreateScheduleAllDTO());
-
-        $presenter = new ScheduleAllPresenter($createdItem);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function update(UpdateScheduleAllRequest $request): JsonResponse
-    {
-        $command = $request->createUpdateScheduleAllCommand();
-        $this->updateScheduleAllHandler->handle($command);
-
-        $item = $this->scheduleAllService->get($command->getId());
-
-        $presenter = new ScheduleAllPresenter($item);
-
-        return Json::item( $presenter->getData());
-    }
-
-    public function delete(DeleteScheduleAllRequest $request): JsonResponse
-    {
-        $this->deleteScheduleAllHandler->handle(Uuid::fromString($request->route('id')));
-
-        return Json::deleted();
-    }
 }

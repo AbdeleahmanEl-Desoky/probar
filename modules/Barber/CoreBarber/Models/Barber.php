@@ -44,7 +44,7 @@ class Barber extends Authenticatable implements JWTSubject , HasMedia//, Auditab
         'password',
         'phone',
         'is_active',
-        'hold'
+        'fcm_token'
     ];
 
     protected $casts = [

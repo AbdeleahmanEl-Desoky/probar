@@ -27,50 +27,25 @@ class FavoriteClientController extends Controller
     ) {
     }
 
-    public function index(GetFavoriteClientListRequest $request): JsonResponse
+
+    public function index(GetFavoriteClientListRequest $request)
     {
         $list = $this->favoriteClientService->list(
             (int) $request->get('page', 1),
             (int) $request->get('per_page', 10)
         );
+        $list->setCollection(collect(FavoriteClientPresenter::collection($list->items())));
 
-        return Json::items(FavoriteClientPresenter::collection($list['data']), paginationSettings: $list['pagination']);
+        $pagination = [
+            'current_page' => $list->currentPage(),
+            'last_page' => $list->lastPage(),
+        ];
+
+        return view('favorite::index', [
+            'favorites' => $list,
+            'pagination' => $pagination,
+        ]);
     }
 
-    public function show(GetFavoriteClientRequest $request): JsonResponse
-    {
-        $item = $this->favoriteClientService->get(Uuid::fromString($request->route('id')));
 
-        $presenter = new FavoriteClientPresenter($item);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function store(CreateFavoriteClientRequest $request): JsonResponse
-    {
-        $createdItem = $this->favoriteClientService->create($request->createCreateFavoriteClientDTO());
-
-        $presenter = new FavoriteClientPresenter($createdItem);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function update(UpdateFavoriteClientRequest $request): JsonResponse
-    {
-        $command = $request->createUpdateFavoriteClientCommand();
-        $this->updateFavoriteClientHandler->handle($command);
-
-        $item = $this->favoriteClientService->get($command->getId());
-
-        $presenter = new FavoriteClientPresenter($item);
-
-        return Json::item( $presenter->getData());
-    }
-
-    public function delete(DeleteFavoriteClientRequest $request): JsonResponse
-    {
-        $this->deleteFavoriteClientHandler->handle(Uuid::fromString($request->route('id')));
-
-        return Json::deleted();
-    }
 }

@@ -7,18 +7,24 @@ namespace Modules\Admin\ShopsService\Repositories;
 use BasePackage\Shared\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Ramsey\Uuid\UuidInterface;
-use Modules\Admin\ShopsService\Models\ShopsService;
+use Modules\Barber\ShopService\Models\ShopService;
 
 /**
- * @property ShopsService $model
+ * @property ShopService $model
  * @method ShopsService findOneOrFail($id)
  * @method ShopsService findOneByOrFail(array $data)
  */
 class ShopsServiceRepository extends BaseRepository
 {
-    public function __construct(ShopsService $model)
+    public function __construct(ShopService $model)
     {
         parent::__construct($model);
+    }
+    public function paginateds(int $page = 1, int $perPage = 10)
+    {
+        return ShopService::query()
+            ->with('media', 'shop')
+            ->paginate($perPage, ['*'], 'page', $page);
     }
 
     public function getShopsServiceList(?int $page, ?int $perPage = 10): Collection
@@ -26,14 +32,14 @@ class ShopsServiceRepository extends BaseRepository
         return $this->paginatedList([], $page, $perPage);
     }
 
-    public function getShopsService(UuidInterface $id): ShopsService
+    public function getShopsService(UuidInterface $id): ShopService
     {
         return $this->findOneByOrFail([
             'id' => $id->toString(),
         ]);
     }
 
-    public function createShopsService(array $data): ShopsService
+    public function createShopsService(array $data): ShopService
     {
         return $this->create($data);
     }

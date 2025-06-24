@@ -15,7 +15,7 @@ class CreateShopHourRequest extends FormRequest
         return [
             'custom_hours' => 'nullable|array',
             'default_hours.opening_time' => 'nullable|date_format:H:i',
-            'default_hours.closing_time' => 'nullable|date_format:H:i|after:default_hours.opening_time',
+            'default_hours.closing_time' => 'nullable|date_format:H:i',
             'strto_time'=> 'required'
         ];
     }

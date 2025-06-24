@@ -16,6 +16,7 @@ use Modules\Admin\ShopBarber\Requests\GetShopBarberListRequest;
 use Modules\Admin\ShopBarber\Requests\GetShopBarberRequest;
 use Modules\Admin\ShopBarber\Requests\UpdateShopBarberRequest;
 use Modules\Admin\ShopBarber\Services\ShopBarberCRUDService;
+use Modules\Barber\Shop\Models\Shop;
 use Ramsey\Uuid\Uuid;
 
 class ShopBarberController extends Controller
@@ -45,41 +46,15 @@ class ShopBarberController extends Controller
             'pagination' => $pagination,
         ]);
     }
+        public function toggleFeatured(string $id): JsonResponse
+        {
+            $shop = Shop::findOrFail($id);
+            $shop->featured = !$shop->featured;
+            $shop->save();
 
-    public function show(GetShopBarberRequest $request): JsonResponse
-    {
-        $item = $this->shopBarberService->get(Uuid::fromString($request->route('id')));
-
-        $presenter = new ShopBarberPresenter($item);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function store(CreateShopBarberRequest $request): JsonResponse
-    {
-        $createdItem = $this->shopBarberService->create($request->createCreateShopBarberDTO());
-
-        $presenter = new ShopBarberPresenter($createdItem);
-
-        return Json::item($presenter->getData());
-    }
-
-    public function update(UpdateShopBarberRequest $request): JsonResponse
-    {
-        $command = $request->createUpdateShopBarberCommand();
-        $this->updateShopBarberHandler->handle($command);
-
-        $item = $this->shopBarberService->get($command->getId());
-
-        $presenter = new ShopBarberPresenter($item);
-
-        return Json::item( $presenter->getData());
-    }
-
-    public function delete(DeleteShopBarberRequest $request): JsonResponse
-    {
-        $this->deleteShopBarberHandler->handle(Uuid::fromString($request->route('id')));
-
-        return Json::deleted();
-    }
+            return response()->json([
+                'message' => 'Featured status updated',
+                'featured' => $shop->featured,
+            ]);
+        }
 }

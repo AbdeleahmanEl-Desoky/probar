@@ -28,6 +28,7 @@ class CreateShopRequest extends FormRequest
             'whatsapp' => 'nullable',
             'facebook' => 'nullable',
             'instagram' => 'nullable',
+            'hold' => 'nullable|min:0',
         ];
     }
 
@@ -46,6 +47,7 @@ class CreateShopRequest extends FormRequest
             whatsapp: $this->filled('whatsapp') ? $this->get('whatsapp') : null,
             facebook: $this->filled('facebook') ? $this->get('facebook') : null,
             instagram: $this->filled('instagram') ? $this->get('instagram') : null,
+            hold: $this->filled('hold') ? (int) $this->get('hold') : null,
         );
     }
 }

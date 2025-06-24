@@ -36,13 +36,14 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Image</th> <!-- New -->
+                        {{-- <th>Image</th> <!-- New --> --}}
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Canceled Schedules</th>
                         <th>Active Schedules</th>
                         <th>Finished Schedules</th>
+                        <th>Active</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,19 +51,26 @@
                         <tr>
 
                             <td>{{ ++$key }}</td>
-                            <td>
+                            {{-- <td>
                                 @if($client['picture_url'])
                                     <img src="{{ $client['picture_url'] }}" alt="Client Image" width="40" height="40" class="img-circle">
                                 @else
                                     <img src="{{ asset('default-user.png') }}" alt="Default" width="40" height="40" class="img-circle">
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>{{ $client['name'] }}</td>
                             <td>{{ $client['email'] }}</td>
                             <td>{{ $client['phone'] }}</td>
                             <td>{{ $client['canceled_schedules_count'] }}</td>
                             <td>{{ $client['active_schedules_count'] }}</td>
                             <td>{{ $client['finished_schedules_count'] }}</td>
+                            <td>
+                                @if ($client['is_active'])
+                                    <button class="btn btn-sm btn-success toggle-status" data-id="{{ $client['id'] }}">Active</button>
+                                @else
+                                    <button class="btn btn-sm btn-danger toggle-status" data-id="{{ $client['id'] }}">Inactive</button>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -75,4 +83,26 @@
         </div><!-- /.box -->
     </section>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.toggle-status').forEach(button => {
+        button.addEventListener('click', function () {
+            const barberId = this.dataset.id;
+
+            fetch(`/admin/clients/${barberId}/toggle-status`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(res => res.json())
+            .then(data => {
+                location.reload(); // or update the row dynamically
+            });
+        });
+    });
+});
+</script>
 @endsection
