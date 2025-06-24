@@ -1,0 +1,14 @@
+{
+    "name": "Version",
+    "alias": "version",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Shared\\Version\\Providers\\VersionServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules\\Shared"
+}
