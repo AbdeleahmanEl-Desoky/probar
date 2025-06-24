@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Modules\Shared\Version\Handlers\DeleteVersionHandler;
 use Modules\Shared\Version\Handlers\UpdateVersionHandler;
+use Modules\Shared\Version\Models\Version;
 use Modules\Shared\Version\Presenters\VersionPresenter;
 use Modules\Shared\Version\Requests\CreateVersionRequest;
 use Modules\Shared\Version\Requests\DeleteVersionRequest;
@@ -27,11 +28,28 @@ class VersionController extends Controller
 
     public function index(GetVersionListRequest $request): JsonResponse
     {
-        $list = $this->versionService->get();
-
-        return Json::items(VersionPresenter::collection($list['data']), paginationSettings: $list['pagination']);
+        $item = $this->versionService->get();
+        $presenter = new VersionPresenter($item);
+        return Json::item($presenter->getData());
     }
 
+    public function update(GetVersionRequest $request): JsonResponse
+    {
+        $version = Version::first();
+
+        if($version){
+            $version->update([
+                'version'=>$request->version
+            ]);
+            
+        }else{
+            Version::create([
+                'version' => $request->version
+            ]);
+        }
+
+        return Json::done('done');
+    }
 
 
 }
