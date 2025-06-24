@@ -24,7 +24,7 @@ class ShopDetailsPresenter extends AbstractPresenter
     {
         $today = Carbon::now()->locale('en')->englishDayOfWeek;
         $now = Carbon::now()->format('H:i');
-
+        
         $todayHours = $this->shop->shopHours
             ? $this->shop->shopHours->firstWhere('day', $today)
             : null;
@@ -52,6 +52,7 @@ class ShopDetailsPresenter extends AbstractPresenter
             'street'=> $this->shop->street,
             'address_1'=> $this->shop->address_1,
             'address_2'=> $this->shop->address_2,
+            'time_now'=>   Carbon::now()->format('Y-m-d H:i'),
             'files' => MediaPresenter::collection($this->shop->getMedia('shops')), //array
             'average_rates' => $this->shop->average_rating,
             'total_rates' => $this->shop->total_rates,
