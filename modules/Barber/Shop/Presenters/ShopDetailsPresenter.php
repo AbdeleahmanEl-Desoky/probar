@@ -43,7 +43,7 @@ class ShopDetailsPresenter extends AbstractPresenter
 
             $isOpenNow = $nowTime->between($opening, $closing);
         }
-
+        dd($isOpenNow);
 
         return [
             'id' => $this->shop->id,
