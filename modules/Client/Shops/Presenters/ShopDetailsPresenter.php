@@ -9,6 +9,7 @@ use BasePackage\Shared\Presenters\AbstractPresenter;
 use Modules\Barber\ShopHour\Presenters\ShopHourPresenter;
 use Modules\Client\Rate\Presenters\RatePresenter;
 use Modules\Shared\Media\Presenters\MediaPresenter;
+use Carbon\Carbon;
 
 class ShopDetailsPresenter extends AbstractPresenter
 {
@@ -21,6 +22,27 @@ class ShopDetailsPresenter extends AbstractPresenter
 
     protected function present(bool $isListing = false): array
     {
+        $today = Carbon::now()->locale('en')->englishDayOfWeek;
+        $now = Carbon::now()->format('H:i');
+
+        $todayHours = $this->shop->shopHours
+            ? $this->shop->shopHours->firstWhere('day', $today)
+            : null;
+
+        $isOpenNow = false;
+
+        if ($todayHours && $todayHours->status == 1) {
+            $opening = Carbon::createFromFormat('H:i', $todayHours->opening_time);
+            $closing = Carbon::createFromFormat('H:i', $todayHours->closing_time);
+
+            $nowTime = Carbon::now();
+            if ($closing->lessThan($opening)) {
+                $closing->addDay();
+            }
+
+            $isOpenNow = $nowTime->between($opening, $closing);
+        }
+
         return [
             'id' => $this->shop->id,
             'name' => $this->shop->name,
@@ -34,6 +56,7 @@ class ShopDetailsPresenter extends AbstractPresenter
             'average_rates' => $this->shop->average_rating,
             'total_rates' => $this->shop->total_rates,
             'is_open' => $this->shop->is_open,
+            'is_open_now' => $isOpenNow,
             'longitude'=> $this->shop->longitude,
             'latitude'=> $this->shop->latitude,
             'is_favorited' => $this->shop->is_favorited,
