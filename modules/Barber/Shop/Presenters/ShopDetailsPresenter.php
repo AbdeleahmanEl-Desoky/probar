@@ -43,7 +43,6 @@ class ShopDetailsPresenter extends AbstractPresenter
 
             $isOpenNow = $nowTime->between($opening, $closing);
         }
-        dd($isOpenNow);
 
         return [
             'id' => $this->shop->id,
@@ -63,8 +62,7 @@ class ShopDetailsPresenter extends AbstractPresenter
             'address_1'=> $this->shop->address_1,
             'address_2'=> $this->shop->address_2,
             'files' => MediaPresenter::collection(mediaItems: $this->shop->getMedia('shops')), //array
-             'is_open_now' => $isOpenNow,
-
+            'is_open_now' => (int) $isOpenNow,
             'average_rates' => $this->shop->average_rating,
             'total_rates' => $this->shop->total_rates,
             'is_open' => $this->shop->is_open,
