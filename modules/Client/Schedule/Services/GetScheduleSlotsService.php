@@ -36,7 +36,7 @@ class GetScheduleSlotsService
         ->orderBy('start_time', 'asc');
     
         if ($date->isToday()) {
-            $detailsQuery->where('start_time', '>', Carbon::now()->format('H:i:s'));
+            $detailsQuery->where('start_time', '>=', Carbon::now()->format('H:i'));
         }
         
         $details = $detailsQuery->get();
