@@ -30,13 +30,17 @@ class GetScheduleSlotsService
         if (!$shopHour) {
             return [];
         }
-
-        $details = ShopHourDetail::where('shop_id', $shopId)
-            ->where('day', $dayOfWeek)
-            ->where('status', 1)
-            ->orderBy('start_time', 'asc')
-            ->get();
-
+        $detailsQuery = ShopHourDetail::where('shop_id', $shopId)
+        ->where('day', $dayOfWeek)
+        ->where('status', 1)
+        ->orderBy('start_time', 'asc');
+    
+        if ($date->isToday()) {
+            $detailsQuery->where('start_time', '>', Carbon::now()->format('H:i:s'));
+        }
+        
+        $details = $detailsQuery->get();
+    
         if ($details->isEmpty()) {
             return [];
         }
