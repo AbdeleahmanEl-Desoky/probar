@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::type('versions', function (Blueprint $table) {
+        Schema::table('versions', function (Blueprint $table) {
             $table->string('type')->default('client');
         });
 
