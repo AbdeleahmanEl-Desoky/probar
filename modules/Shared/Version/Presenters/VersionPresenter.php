@@ -21,6 +21,7 @@ class VersionPresenter extends AbstractPresenter
         return [
             'id' => $this->version->id,
             'version' => $this->version->version,
+            'type' => $this->version->type, 
         ];
     }
 }
