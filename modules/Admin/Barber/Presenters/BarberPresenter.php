@@ -24,7 +24,7 @@ class BarberPresenter extends AbstractPresenter
             'email' => $this->barber->email,
             'phone' => $this->barber->phone,
             'is_active' => $this->barber->is_active,
-            'picture_url' => $this->barber->getFirstMediaUrl('profile_pictures'),
+            'picture_url' => $this->barber?->getFirstMediaUrl('profile_pictures')??null,
             'shops_count' => $this->barber->shops_count,
         ];
     }

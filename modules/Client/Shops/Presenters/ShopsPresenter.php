@@ -49,7 +49,7 @@ class ShopsPresenter extends AbstractPresenter
             'street' => $this->shop->street,
             'address_1' => $this->shop->address_1,
             'address_2' => $this->shop->address_2,
-            'picture_url' => $this->shop->getFirstMediaUrl('shops'),
+            'picture_url' => $this->shop?->getFirstMediaUrl('shops'),
             'rate' =>       $this->shop->average_rating,
             'total_rates' => $this->shop->total_rates,
             'is_open' => $this->shop->is_open,

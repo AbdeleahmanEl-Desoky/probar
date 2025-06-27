@@ -108,7 +108,7 @@ public function updateScheduleShop(UuidInterface $id, array $data): bool
                 $services[$serviceId] = [
                     'name' => $service->translations->firstWhere('locale', 'en')->content ?? 'N/A',
                     'description'=> $service->description,
-                    'picture_url' => $service->getFirstMediaUrl('shop_service'),
+                    'picture_url' => $service?->getFirstMediaUrl('shop_service'),
                     'count' => 0
                 ];
             }

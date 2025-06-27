@@ -49,7 +49,7 @@ class ScheduleAllPresenter extends AbstractPresenter
                     'price' => $service->price,
                     'name' => $service->name,
                     'description' => $service->description,
-                    'picture_url' => $service->getFirstMediaUrl('shop_service')
+                    'picture_url' => $service?->getFirstMediaUrl('shop_service')
                 ];
             }),
         ];

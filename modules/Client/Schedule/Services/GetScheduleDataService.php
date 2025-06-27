@@ -41,7 +41,7 @@ class GetScheduleDataService
                 'service_name' => $service->name,
                 'service_description' => $service->description,
                 'price' => $service->price,
-                'picture_url' => $service->getFirstMediaUrl('shop_service')
+                'picture_url' => $service?->getFirstMediaUrl('shop_service')
             ];
         }
 
