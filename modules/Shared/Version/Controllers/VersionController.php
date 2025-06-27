@@ -28,14 +28,14 @@ class VersionController extends Controller
 
     public function index(GetVersionListRequest $request): JsonResponse
     {
-        $item = $this->versionService->get();
+        $item = $this->versionService->get($request->input('type','client'));
         $presenter = new VersionPresenter($item);
         return Json::item($presenter->getData());
     }
 
     public function update(GetVersionRequest $request): JsonResponse
     {
-        $version = Version::first();
+        $version = Version::where('type',$request->input('type','client'))->first();
 
         if($version){
             $version->update([

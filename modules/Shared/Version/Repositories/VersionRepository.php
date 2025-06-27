@@ -26,9 +26,9 @@ class VersionRepository extends BaseRepository
         return $this->paginatedList([], $page, $perPage);
     }
 
-    public function getVersion()
+    public function getVersion($type)
     {
-        return $this->model->first();
+        return $this->model->where('type',$type)->first();
     }
 
     public function createVersion(array $data): Version

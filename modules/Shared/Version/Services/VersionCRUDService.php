@@ -23,8 +23,8 @@ class VersionCRUDService
         );
     }
 
-    public function get()
+    public function get($type)
     {
-        return $this->repository->getVersion();
+        return $this->repository->getVersion($type);
     }
 }
