@@ -50,8 +50,8 @@ class GetScheduleDataService
 
         return [
             'schedule_date' => $scheduleDate,
-            'start_time' => $this->formatTime($startTime,Uuid::fromString($shopId)),
-            'end_time' =>  $this->formatTime($endTime,Uuid::fromString($shopId)),
+            'start_time' => $this->formatTime($startTime,Uuid::fromString($shopId),$scheduleDate),
+            'end_time' =>  $this->formatTime($endTime,Uuid::fromString($shopId),$scheduleDate),
             'services' => $servicesDetails,
             'subtotal' => $subtotal,
             'discount' => $discount,
@@ -60,9 +60,9 @@ class GetScheduleDataService
     }
 
 
-    private function formatTime(string $time, UuidInterface $shopId): string
+    private function formatTime(string $time, UuidInterface $shopId,$scheduleDate): string
     {
-        $hold = $this->scheduleRepository->getHoldByShopId($shopId);
+        $hold = $this->scheduleRepository->getHoldByShopId($shopId,$scheduleDate);
 
         return Carbon::parse($time)
             ->addMinutes($hold)

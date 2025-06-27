@@ -61,28 +61,30 @@ class ScheduleRepository extends BaseRepository
     {
         return $this->delete($id);
     }
-    public function getHoldByShopId(UuidInterface $shopId)
+    public function getHoldByShopId(UuidInterface $shopId,$scheduleDate)
     {
-        $scheduleCount = $this->model->where('shop_id', $shopId->toString())
-            ->where('schedule_date', Carbon::now()->format('Y-m-d'))
-            ->count();
-    
-        $scheduleCountHold = $this->model->where('shop_id', $shopId->toString())
-            ->whereNotNull('hold')
-            ->where('hold', '!=', 0)
-            ->where('schedule_date', Carbon::now()->format('Y-m-d'))
-            ->count();
-    
         $schedule = null;
-    
-        if ($scheduleCount == $scheduleCountHold) {
-            $schedule = $this->model->where('shop_id', $shopId->toString())
+
+        if ($scheduleDate == Carbon::now()->format('Y-m-d')) {
+            $scheduleCount = $this->model->where('shop_id', $shopId->toString())
+                ->where('schedule_date', Carbon::now()->format('Y-m-d'))
+                ->count();
+
+            $scheduleCountHold = $this->model->where('shop_id', $shopId->toString())
                 ->whereNotNull('hold')
                 ->where('hold', '!=', 0)
                 ->where('schedule_date', Carbon::now()->format('Y-m-d'))
-                ->first();
+                ->count();
+
+
+            if ($scheduleCount == $scheduleCountHold) {
+                $schedule = $this->model->where('shop_id', $shopId->toString())
+                    ->whereNotNull('hold')
+                    ->where('hold', '!=', 0)
+                    ->where('schedule_date', Carbon::now()->format('Y-m-d'))
+                    ->first();
+            }
         }
-    
         return $schedule ? (int) $schedule->hold : 0;
     }
 }
