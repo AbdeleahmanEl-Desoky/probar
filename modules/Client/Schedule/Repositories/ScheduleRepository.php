@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Client\Schedule\Repositories;
 
 use BasePackage\Shared\Repositories\BaseRepository;
+use Carbon\Carbon;
 use GPBMetadata\Google\Api\Service;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Barber\ShopService\Models\ShopService;
@@ -62,12 +63,26 @@ class ScheduleRepository extends BaseRepository
     }
     public function getHoldByShopId(UuidInterface $shopId)
     {
-        $schedule = $this->model
-            ->where('shop_id', $shopId->toString())
+        $scheduleCount = $this->model->where('shop_id', $shopId->toString())
+            ->where('schedule_date', Carbon::now()->format('Y-m-d'))
+            ->count();
+    
+        $scheduleCountHold = $this->model->where('shop_id', $shopId->toString())
             ->whereNotNull('hold')
             ->where('hold', '!=', 0)
-            ->first();
-
+            ->where('schedule_date', Carbon::now()->format('Y-m-d'))
+            ->count();
+    
+        $schedule = null;
+    
+        if ($scheduleCount == $scheduleCountHold) {
+            $schedule = $this->model->where('shop_id', $shopId->toString())
+                ->whereNotNull('hold')
+                ->where('hold', '!=', 0)
+                ->where('schedule_date', Carbon::now()->format('Y-m-d'))
+                ->first();
+        }
+    
         return $schedule ? (int) $schedule->hold : 0;
     }
 }
