@@ -39,12 +39,13 @@ class VersionController extends Controller
 
         if($version){
             $version->update([
-                'version'=>$request->version
+                'version'=>$request->version 
             ]);
             
         }else{
             Version::create([
-                'version' => $request->version
+                'version' => $request->version,
+                'type' => $request->type
             ]);
         }
 
