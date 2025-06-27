@@ -29,7 +29,7 @@ class ShopBarberPresenter extends AbstractPresenter
             'address_2' => $this->shopBarber->address_2,
             'is_open' => $this->shopBarber->is_open,
             'featured'=> $this->shopBarber->featured,
-            'picture_url' => $this->shopBarber?->getFirstMediaUrl('profile_pictures'),
+            'picture_url' => $this->shopBarber?->getFirstMediaUrl('profile_pictures') ?? null,
             'canceled_schedules_count' => $this->shopBarber->canceled_schedules_count,
             'active_schedules_count' => $this->shopBarber->active_schedules_count,
             'finished_schedules_count' => $this->shopBarber->finished_schedules_count,

@@ -25,7 +25,7 @@ class ClientPresenter extends AbstractPresenter
             'phone' => $this->client->phone,
             'gender' => $this->client->gender,
             'schedules'=>$this->client->schedules,
-            'picture_url' => $this->client?->getFirstMediaUrl('profile_pictures')??null,
+            'picture_url' => $this->client?->getFirstMediaUrl('profile_pictures') ?? null,
             'canceled_schedules_count' => $this->client->canceled_schedules_count,
             'active_schedules_count' => $this->client->active_schedules_count,
             'finished_schedules_count' => $this->client->finished_schedules_count,

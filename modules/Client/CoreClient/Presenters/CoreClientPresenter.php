@@ -23,7 +23,7 @@ class CoreClientPresenter extends AbstractPresenter
             'name' => $this->client->name,
             'email' => $this->client->email,
             'phone' => $this->client->phone,
-            'picture_url' => $this->client?->getFirstMediaUrl('profile_pictures'),
+            'picture_url' => $this->client?->getFirstMediaUrl('profile_pictures') ?? null,
             'gender' => $this->client->gender,
             'longitude' => $this->client->longitude,
             'latitude' => $this->client->latitude,

@@ -25,7 +25,7 @@ class RatePresenter extends AbstractPresenter
             'schedule_id' => $this->rate->schedule_id,
             'client_id' => $this->rate->client_id,
             'client_name' => $this->rate->client->name,
-            'client_picture' => $this->rate->client?->getFirstMediaUrl('profile_pictures'),
+            'client_picture' => $this->rate->client?->getFirstMediaUrl('profile_pictures') ?? null,
             'note' => $this->rate->note,
             'rate' => $this->rate->rate,
         ];
