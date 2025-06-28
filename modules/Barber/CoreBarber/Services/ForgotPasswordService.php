@@ -21,7 +21,7 @@ class ForgotPasswordService
         // Retrieve the user by email
         $user = $this->repository->getCoreBarberByEmail($email);
 
-        $otp = Str::random(6); // Or use a numeric OTP, e.g., random_int(100000, 999999);
+        $otp = random_int(100000, 999999); // Or use a numeric OTP, e.g., random_int(100000, 999999);
 
         $user->otp = $otp;
         $user->otp_expires_at = now()->addMinutes(10); // OTP expires in 10 minutes
