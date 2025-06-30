@@ -11,7 +11,7 @@ class UpdateShopServiceCommand
     public function __construct(
         private UuidInterface $id,
         private array $name,
-        private array $description,
+        private ?array $description,
         private int $price,
         private int $time,
         public ?string $shop_id = null // Make shop_id optional

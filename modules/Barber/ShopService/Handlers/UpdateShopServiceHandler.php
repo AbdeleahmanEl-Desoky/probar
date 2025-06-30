@@ -15,7 +15,7 @@ class UpdateShopServiceHandler
     ) {
     }
 
-    public function handle(UpdateShopServiceCommand $updateShopServiceCommand, array $nameTranslations, array $descriptionTranslations,$file): void
+    public function handle(UpdateShopServiceCommand $updateShopServiceCommand, array $nameTranslations, array $descriptionTranslations = [],$file): void
     {
         $shopService = $this->repository->updateShopService(
             $updateShopServiceCommand->getId(),
@@ -26,12 +26,12 @@ class UpdateShopServiceHandler
             $shopService->addMedia($file)->toMediaCollection('shop_service');
         }
 
-        $this->updateTranslations($shopService, $nameTranslations, $descriptionTranslations);
+        $this->updateTranslations($shopService, $nameTranslations, $descriptionTranslations??[]);
 
         $shopService->save();
     }
 
-    private function updateTranslations(ShopService $shopService, array $nameTranslations, array $descriptionTranslations): void
+    private function updateTranslations(ShopService $shopService, array $nameTranslations, array $descriptionTranslations=[]): void
     {
         foreach ($nameTranslations as $locale => $value) {
             $shopService->setTranslation('name', $locale, $value);

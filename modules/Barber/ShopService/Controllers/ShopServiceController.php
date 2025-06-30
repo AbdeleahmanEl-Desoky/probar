@@ -79,7 +79,7 @@ class ShopServiceController extends Controller
     {
         $command = $request->createUpdateShopServiceCommand();
         $nameTranslations = $request->input('name');
-        $descriptionTranslations = $request->input('description');
+        $descriptionTranslations = $request->input('description',[]);
         $file = $request->file('file');
 
         $this->updateShopServiceHandler->handle($command,$nameTranslations, $descriptionTranslations,$file);
