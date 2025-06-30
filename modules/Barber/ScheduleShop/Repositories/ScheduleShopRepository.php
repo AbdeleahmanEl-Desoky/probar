@@ -152,7 +152,7 @@ class ScheduleShopRepository extends BaseRepository
     }
     public function totalEarning(string $shopId, ?string $startDate = null, ?string $endDate = null, int $page = 1, int $perPage = 10)//: array
     {
-        $query = $this->model->where('shop_id', $shopId);
+        $query = $this->model->where('shop_id', $shopId)->whereIn('payment',['city_ledger','cash_payed']);
 
         if ($startDate) {
             $query->where('created_at', '>=', $startDate);
