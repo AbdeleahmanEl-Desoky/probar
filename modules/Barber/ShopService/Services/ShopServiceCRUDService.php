@@ -36,7 +36,7 @@ class ShopServiceCRUDService
         return $shopService;
     }
 
-    private function assignTranslations(ShopService $shopService, array $nameTranslations, array $descriptionTranslations): void
+    private function assignTranslations(ShopService $shopService, array $nameTranslations = [], array $descriptionTranslations = []): void
     {
         foreach ($nameTranslations as $locale => $value) {
             $shopService->setTranslation('name', $locale, $value);
