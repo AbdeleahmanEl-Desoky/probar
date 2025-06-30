@@ -40,7 +40,9 @@ class UpdateShopServiceHandler
         }
 
         foreach ($descriptionTranslations as $locale => $value) {
+if (!is_null($value)) {
             $shopService->setTranslation('description', $locale, $value);
+}
         }
     }
 }
