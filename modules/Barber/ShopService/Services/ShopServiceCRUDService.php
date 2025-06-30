@@ -42,9 +42,11 @@ class ShopServiceCRUDService
             $shopService->setTranslation('name', $locale, $value);
         }
 
-        foreach ($descriptionTranslations as $locale => $value) {
-            $shopService->setTranslation('description', $locale, $value);
+    foreach ($descriptionTranslations as $locale => $value) {
+        if (!is_null($value)) {
+            $shopService->setTranslation('description', $locale, (string) $value);
         }
+    }
     }
 
     public function list(int $page = 1, int $perPage = 10,$shop): array
