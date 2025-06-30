@@ -30,7 +30,7 @@ class ShopServiceCRUDService
             $shopService->clearMediaCollection('shop_service');
             $shopService->addMedia($file)->toMediaCollection('shop_service');
         }
-        $this->assignTranslations($shopService, $nameTranslations, $descriptionTranslations);
+        $this->assignTranslations($shopService, $nameTranslations ?? [], $descriptionTranslations ?? []);
 
         $shopService->save();
         return $shopService;
