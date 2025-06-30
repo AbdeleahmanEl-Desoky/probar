@@ -7,6 +7,6 @@ Route::group(['middleware' => ['auth:api_barbers']], function () {
     Route::get('/', [ShopServiceController::class, 'index']);
     Route::post('/', [ShopServiceController::class, 'store']);
     Route::get('/{id}', [ShopServiceController::class, 'show']);
-    Route::put('/{id}', [ShopServiceController::class, 'update']);
+    Route::post('/{id}', [ShopServiceController::class, 'update']);
     Route::delete('/{id}', [ShopServiceController::class, 'delete']);
 });
