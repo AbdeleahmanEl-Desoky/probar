@@ -34,7 +34,9 @@ class UpdateShopServiceHandler
     private function updateTranslations(ShopService $shopService, array $nameTranslations, array $descriptionTranslations=[]): void
     {
         foreach ($nameTranslations as $locale => $value) {
+        if (!is_null($value)) {
             $shopService->setTranslation('name', $locale, $value);
+        }
         }
 
         foreach ($descriptionTranslations as $locale => $value) {
