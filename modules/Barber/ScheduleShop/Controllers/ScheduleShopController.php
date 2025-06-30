@@ -197,4 +197,17 @@ class ScheduleShopController extends Controller
         return Json::done('Shop hold updated successfully');
     }
 
+    public function updatePaymentBooking(GetScheduleShopRequest $request): JsonResponse
+    {
+        $userId = auth('api_barbers')->user()->id;
+        $barberId = Uuid::fromString($userId);
+        $shop = $this->shopRepository->getMyShop($barberId);
+
+        $shopHold = $this->scheduleShopService->updateScheduleShopPaymentBooking(Uuid::fromString($request->route('id')));
+
+        return Json::done('Shop hold updated successfully');
+    }
+
+
+
 }

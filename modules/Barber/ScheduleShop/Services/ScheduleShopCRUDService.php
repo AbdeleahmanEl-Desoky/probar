@@ -109,5 +109,8 @@ class ScheduleShopCRUDService
 
         return $schedule;
     }
-
+    public function updateScheduleShopPaymentBooking(UuidInterface $id)
+    {
+      return  $schedule = $this->repository->updateScheduleShopPaymentBooking($id);
+    }
 }

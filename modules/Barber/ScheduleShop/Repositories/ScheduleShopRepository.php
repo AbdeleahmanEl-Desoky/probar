@@ -57,27 +57,36 @@ class ScheduleShopRepository extends BaseRepository
         return $this->create($data);
     }
 
-public function updateScheduleShop(UuidInterface $id, array $data): bool
-{
-    // Get the existing schedule shop by ID
-    $schedule = $this->find($id); // Ensure 'find' exists and returns the model
+    public function updateScheduleShop(UuidInterface $id, array $data): bool
+    {
+        // Get the existing schedule shop by ID
+        $schedule = $this->find($id); // Ensure 'find' exists and returns the model
 
-    // Sum all service prices related to the schedule
-    $baseTotal = $schedule->shopServicesHasMany->sum('price');
+        // Sum all service prices related to the schedule
+        $baseTotal = $schedule->shopServicesHasMany->sum('price');
 
-    // Get optional additions and discounts, fallback to 0 if not set
-    $addition = $data['addition'] ?? 0;
-    $discount = $data['discount'] ?? 0;
+        // Get optional additions and discounts, fallback to 0 if not set
+        $addition = $data['addition'] ?? 0;
+        $discount = $data['discount'] ?? 0;
 
-    // Calculate new total price (prevent negative totals)
-    $newTotal = max(0, ($baseTotal + $addition) - $discount);
+        // Calculate new total price (prevent negative totals)
+        $newTotal = max(0, ($baseTotal + $addition) - $discount);
 
-    // Set total_price into the data array
-    $data['total_price'] = $newTotal;
+        // Set total_price into the data array
+        $data['total_price'] = $newTotal;
 
-    // Update the schedule
-    return $this->update($id, $data);
-}
+        // Update the schedule
+        return $this->update($id, $data);
+    }
+
+
+    public function updateScheduleShopPaymentBooking(UuidInterface $id): bool
+    {
+        $schedule = $this->find($id);
+      return  $schedule->update([
+            'payment' => 'cash_payed'
+        ]);
+    }
 
 
     public function deleteScheduleShop(UuidInterface $id): bool
@@ -258,7 +267,7 @@ public function updateScheduleShop(UuidInterface $id, array $data): bool
     {
         $now = Carbon::now();
 
-        $scheduleDate = $now->toDateString();                             
+        $scheduleDate = $now->toDateString();
         $startTime = $now->toTimeString();    // Current time
         $newHold = Shop::find($shopId)->hold ?? 0; // Get the shop's hold value
 
@@ -362,7 +371,7 @@ public function updateScheduleShop(UuidInterface $id, array $data): bool
             ]
         );
 
-    
+
 
         return $schedule;
     }

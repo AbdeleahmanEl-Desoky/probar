@@ -13,6 +13,7 @@ Route::group(['middleware' => ['auth:api_barbers']], function () {
     Route::get('/booking/{id}/checkout', [ScheduleShopController::class, 'checkout']);
 
     Route::put('/booking/{id}/status', [ScheduleShopController::class, 'statusBooking']);
+    Route::put('/booking/{id}/status/payment', [ScheduleShopController::class, 'updatePaymentBooking']);
 
     Route::put('/booking/{id}/payments', [ScheduleShopController::class, 'paymentsBooking']);
     Route::post('/booking', [ScheduleShopController::class, 'store']);
