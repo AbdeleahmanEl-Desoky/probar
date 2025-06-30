@@ -15,7 +15,7 @@ class CreateShopServiceRequest extends FormRequest
         return [
             'name' => 'required|array',
             'name.*' => 'required|string|max:255',
-            'description' => 'required|array',  // 'description' is an array of translations
+            'description' => 'nullable|array',  // 'description' is an array of translations
             'description.*' => 'required|string|max:255', // Each translation must be a string
             'price' => 'required|numeric',
             'time' => 'required|numeric',

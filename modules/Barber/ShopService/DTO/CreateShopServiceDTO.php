@@ -10,7 +10,7 @@ class CreateShopServiceDTO
 {
     public function __construct(
         public array  $name,
-        private array  $description,
+        private ?array  $description,
         private int $time,
         private int $price,
     ) {
