@@ -18,7 +18,7 @@ class ShopServiceCRUDService
     ) {
     }
 
-    public function create(CreateShopServiceDTO $createShopServiceDTO,$nameTranslations, $descriptionTranslations,$file): ShopService
+    public function create(CreateShopServiceDTO $createShopServiceDTO,$nameTranslations, $descriptionTranslations = [],$file): ShopService
     {
         $data = $createShopServiceDTO->toArray();
 
