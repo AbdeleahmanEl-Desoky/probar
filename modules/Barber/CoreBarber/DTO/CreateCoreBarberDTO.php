@@ -12,7 +12,7 @@ class CreateCoreBarberDTO
         public string $name,
         public string $email,
         public string $password,
-        public string $phone,
+        public ?string $phone,
     ) {
     }
 

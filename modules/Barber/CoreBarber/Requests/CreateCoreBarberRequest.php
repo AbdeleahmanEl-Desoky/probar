@@ -17,7 +17,7 @@ class CreateCoreBarberRequest extends FormRequest
             'email' => 'required|email|unique:barbers,email',
             'password'=>'required|string',
             'phone'=> [
-                'required',
+                'nullable',
                 'regex:/^05\d{8}$/',
                 'unique:barbers,phone',
             ],
