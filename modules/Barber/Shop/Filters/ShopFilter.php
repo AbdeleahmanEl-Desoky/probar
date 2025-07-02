@@ -95,4 +95,13 @@ class ShopFilter extends SearchModelFilter
             ", [$latitude, $longitude, $latitude])
             ->orderBy('distance');
     }
+
+    public function top_rated($value)
+    {
+        if ($value !== 'yes') {
+            return $this;
+        }
+
+        return $this->withAvg('rates', 'rate')->orderBy('rates_avg_rate', 'desc');
+    }
 }
