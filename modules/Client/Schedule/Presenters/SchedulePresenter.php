@@ -28,10 +28,10 @@ class SchedulePresenter extends AbstractPresenter
 
         $now = Carbon::now();
 
-        if ($now->greaterThanOrEqualTo($endTime)) {
+        if ($now->greaterThanOrEqualTo($startTime)) {
             $remainingTime = __('schedule.ended');
         } else {
-            $diff = $now->diff($endTime);
+            $diff = $now->diff($startTime);
 
             $days = $diff->d;
             $hours = $diff->h;
