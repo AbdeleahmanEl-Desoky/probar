@@ -96,7 +96,7 @@ class ShopFilter extends SearchModelFilter
             ->orderBy('distance');
     }
 
-    public function top_rated($value)
+    public function rated($value)
     {
         if ($value !== 'yes') {
             return $this;
