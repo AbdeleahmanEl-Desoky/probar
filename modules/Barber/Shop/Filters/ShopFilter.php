@@ -101,7 +101,6 @@ class ShopFilter extends SearchModelFilter
         if ($value !== 'yes') {
             return $this;
         }
-        dd($value);
         return $this->withAvg('rates', 'rate')->orderBy('rates_avg_rate', 'desc');
     }
 }
