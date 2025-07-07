@@ -329,13 +329,14 @@ class ScheduleShopRepository extends BaseRepository
     public function updateHoldOneSchedule(UuidInterface $id)
     {
         $schedule = $this->model->where('id', $id)->first();
+        $shopHold = Shop::find($schedule->shop_id)->hold;
 
         if (!$schedule) {
             return null;
         }
 
         $hold = $schedule->hold ?? 0;
-        $newHold = $hold + 10;
+        $newHold = $hold + $shopHold;
 
         $fcmToken = $schedule->client->fcm_token ?? null;
 
