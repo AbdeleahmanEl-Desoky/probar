@@ -7,12 +7,17 @@ namespace Modules\Barber\ScheduleShop\Repositories;
 use BasePackage\Shared\Repositories\BaseRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\Barber\CoreBarber\Repositories\CoreBarberRepository;
 use Modules\Barber\Shop\Models\Shop;
+use Modules\Client\CoreClient\Models\Client;
 use Modules\Client\Rate\Models\Rate;
 use Ramsey\Uuid\UuidInterface;
 use Modules\Client\Schedule\Models\Schedule;
 use Modules\Client\Schedule\Models\ScheduleService;
+use Modules\Client\Schedule\Repositories\ScheduleRepository;
+use Modules\Client\Shops\Repositories\ShopsRepository;
 use Modules\Shared\Notification\Services\FirebaseNotificationService;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @property Schedule $model
@@ -21,9 +26,18 @@ use Modules\Shared\Notification\Services\FirebaseNotificationService;
  */
 class ScheduleShopRepository extends BaseRepository
 {
-    public function __construct(Schedule $model)
-    {
+    public function __construct(
+        Schedule $model,
+        public ScheduleRepository $repository,
+        public FirebaseNotificationService $firebaseNotificationService,
+        public ShopsRepository $shopsRepository,
+        public CoreBarberRepository $coreBarberRepository,
+    ) {
         parent::__construct($model);
+        $this->repository = $repository;
+        $this->firebaseNotificationService = $firebaseNotificationService;
+        $this->shopsRepository = $shopsRepository;
+        $this->coreBarberRepository = $coreBarberRepository;
     }
 
     public function getScheduleShopList(?int $page, ?int $perPage = 10): Collection
@@ -75,6 +89,26 @@ class ScheduleShopRepository extends BaseRepository
         // Set total_price into the data array
         $data['total_price'] = $newTotal;
 
+        if($data['status'] === 'cancel'){
+            $shop = $this->shopsRepository->getShops(Uuid::fromString($schedule->shop_id));
+
+            $barber = $this->coreBarberRepository->getCoreBarber(Uuid::fromString($shop->barber_id));
+            $client = Client::find($schedule->client_id);
+
+            $this->firebaseNotificationService->send(
+                 $barber->fcm_token??"@",
+           __('notifications.cancel_schedule_title'),
+            __('notifications.cancel_schedule_body', [
+                'client_name' => $client->name,
+                'time' => Carbon::parse($schedule->start_time)->format('H:i'),
+                'date' => Carbon::parse($schedule->schedule_date)->format('d/m'),
+            ]),
+                [
+                    'type' => 'schedule_cancel',
+                    'schedule_id' => $schedule->id,
+                ]
+            );
+        }
         // Update the schedule
         return $this->update($id, $data);
     }
