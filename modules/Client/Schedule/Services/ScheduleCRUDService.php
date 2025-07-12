@@ -93,11 +93,10 @@ class ScheduleCRUDService
     {
         $shop = $this->shopsRepository->getShops(Uuid::fromString($schedule->shop_id));
 
-        $barber = $this->coreBarberRepository->getCoreBarber(Uuid::fromString($shop->barber_id));
         $client = auth('api_clients')->user();
 
         $this->firebaseNotificationService->send(
-             $barber->fcm_token??"@",
+             $shop->barber->fcm_token??"@",
        __('notifications.cancel_schedule_title'),
         __('notifications.cancel_schedule_body', [
             'client_name' => $client->name,
