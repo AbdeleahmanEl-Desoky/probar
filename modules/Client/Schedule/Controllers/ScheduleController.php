@@ -64,7 +64,7 @@ class ScheduleController extends Controller
         }
         $shop = Shop::with('barber')->findOrFail($request->get('shop_id'));
 
-        if($shop->barber->is_active !== 1 || $shop->barber->is_active !== true) {
+        if(!$shop->barber->is_active === 1 || !$shop->barber->is_active === true) {
             return Json::error('Barber is not active', 403);
         }
 
