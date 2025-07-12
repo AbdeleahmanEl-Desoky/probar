@@ -41,6 +41,10 @@ class ScheduleShopPresenter extends AbstractPresenter
             'total_rates' => $this->schedule->shop->total_rates,
             'rate' => $this->schedule->rate,
             'payment' => $this->schedule->payment,
+            'total_price' => $this->schedule->total_price,
+            'addition' => $this->schedule->addition,
+            'discount' => $this->schedule->discount,
+            'hold' => $this->schedule->hold ?? 0,
             'picture_url' => $this->schedule->client?->getFirstMediaUrl('profile_pictures') ?? null,
             'shop_services' => $this->schedule->shopServices->map(function ($service) {
                 return [
