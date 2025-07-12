@@ -17,7 +17,7 @@ use Modules\Admin\Client\Requests\GetClientRequest;
 use Modules\Admin\Client\Requests\UpdateClientRequest;
 use Modules\Admin\Client\Services\ClientCRUDService;
 use Ramsey\Uuid\Uuid;
-
+use Tymon\JWTAuth\Facades\JWTAuth;
 class ClientController extends Controller
 {
     public function __construct(
@@ -50,8 +50,14 @@ class ClientController extends Controller
     {
         $client = $this->clientService->get(Uuid::fromString($id));
 
-        $client->is_active = !$client->is_active;
+        $newStatus = !$client->is_active;
+        $client->is_active = $newStatus;
         $client->save();
+
+        if (!$newStatus) {
+            JWTAuth::invalidate(JWTAuth::fromUser($client));
+        }
+
         return response()->json([
             'message' => 'Status updated successfully',
             'is_active' => $client->is_active,

@@ -96,10 +96,10 @@ class ScheduleShopRepository extends BaseRepository
             $client = Client::find($schedule->client_id);
 
             $this->firebaseNotificationService->send(
-                 $barber->fcm_token??"@",
+                 $client->fcm_token??"@",
            __('notifications.cancel_schedule_title'),
-            __('notifications.cancel_schedule_body', [
-                'client_name' => $client->name,
+            __('notifications.cancel_schedule_body_berber', [
+                'shop_name' => $shop->name,
                 'time' => Carbon::parse($schedule->start_time)->format('H:i'),
                 'date' => Carbon::parse($schedule->schedule_date)->format('d/m'),
             ]),

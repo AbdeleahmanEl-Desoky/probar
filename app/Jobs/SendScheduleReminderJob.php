@@ -30,7 +30,7 @@ class SendScheduleReminderJob implements ShouldQueue
         $body = __('notifications.reminder_body');
 
         FirebaseNotificationService::send(
-            $client->fcm_token,
+            $client->fcm_token??'@',
             $title,
             $body,
             [

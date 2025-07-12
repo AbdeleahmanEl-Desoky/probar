@@ -7,6 +7,7 @@ namespace Modules\Client\Schedule\Controllers;
 use App\Presenters\Json;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Modules\Barber\Shop\Models\Shop;
 use Modules\Client\Schedule\Handlers\DeleteScheduleHandler;
 use Modules\Client\Schedule\Handlers\UpdateScheduleHandler;
 use Modules\Client\Schedule\Presenters\ScheduleActivePresenter;
@@ -53,9 +54,20 @@ class ScheduleController extends Controller
         return Json::items(SchedulePresenter::collection($list['data']), paginationSettings: $list['pagination']);
     }
 
-    public function store(CreateScheduleRequest $request)//: JsonResponse
+    public function store(CreateScheduleRequest $request): JsonResponse
     {
-        $client_id = auth('api_clients')->user()->id;
+        $client = auth('api_clients')->user();
+        $client_id = $client->id;
+
+        if(!$client->is_active===1 ||!$client->is_active===true) {
+            return Json::error('Client is not active', 403);
+        }
+        $shop = Shop::with('barber')->findOrFail($request->get('shop_id'));
+
+        if($shop->barber->is_active !== 1 || $shop->barber->is_active !== true) {
+            return Json::error('Barber is not active', 403);
+        }
+
         $this->scheduleService->checkClientScheduleLimit($client_id);
 
         $createScheduleDTO = $request->createCreateScheduleDTO();

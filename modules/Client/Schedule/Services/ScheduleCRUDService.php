@@ -38,8 +38,8 @@ class ScheduleCRUDService
         self::sendNotificationBookingToBarber($schedule);
         self::sendNotificationBookingToClient($schedule);
 
-        $reminderTime = Carbon::parse($schedule->start_time)->subMinutes(10);
-
+        $reminderTime = Carbon::parse($schedule->schedule_date . ' ' . $schedule->start_time)
+        ->subMinutes(10);
         SendScheduleReminderJob::dispatch($schedule)->delay($reminderTime);
 
         return $schedule;

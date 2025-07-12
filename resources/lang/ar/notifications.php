@@ -9,6 +9,8 @@ return [
     'cancel_schedule_title' => 'إلغاء حجز',
     'cancel_schedule_body' => 'تم إلغاء حجزك بواسطة :client_name الساعة :time بتاريخ :date.',
 
+    'cancel_schedule_body_berber' => 'تم إلغاء حجزك بواسطة :shop_name الساعة :time بتاريخ :date.',
+
     'hold_schedule_title' => 'تأجيل الموعد',
     'hold_schedule_body' => 'لقد قمت بتأجيل جميع الحجوزات الخاص بك لمدة ":hold" دقيقة',
 
