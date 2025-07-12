@@ -45,6 +45,7 @@ class Schedule extends Model
         'total_price',
         'addition',
         'discount',
+        'hold'
     ];
 
     protected $casts = [
