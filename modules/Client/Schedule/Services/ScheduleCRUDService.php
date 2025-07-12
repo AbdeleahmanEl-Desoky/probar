@@ -40,7 +40,7 @@ class ScheduleCRUDService
 
         $reminderTime = Carbon::parse($schedule->schedule_date . ' ' . $schedule->start_time)
         ->subMinutes(10);
-        SendScheduleReminderJob::dispatch($schedule)->delay($reminderTime);
+        SendScheduleReminderJob::dispatch($schedule->id)->delay($reminderTime);
 
         return $schedule;
     }
