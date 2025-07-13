@@ -89,7 +89,7 @@ class ScheduleShopRepository extends BaseRepository
         // Set total_price into the data array
         $data['total_price'] = $newTotal;
 
-        if($data['status'] === 'cancel'){
+        if (isset($data['status']) && $data['status'] === 'cancel') {
             $shop = $this->shopsRepository->getShops(Uuid::fromString($schedule->shop_id));
 
             $barber = $this->coreBarberRepository->getCoreBarber(Uuid::fromString($shop->barber_id));
