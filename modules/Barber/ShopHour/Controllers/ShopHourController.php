@@ -75,14 +75,10 @@ class ShopHourController extends Controller
 
     public function update(UpdateShopHourRequest $request): JsonResponse
     {
-        $command = $request->createUpdateShopHourCommand();
-        $this->updateShopHourHandler->handle($command);
+        $command = $request->all();
+        $this->shopHourService->update($command);
 
-        $item = $this->shopHourService->get($command->getId());
-
-        $presenter = new ShopHourPresenter($item);
-
-        return Json::item( $presenter->getData());
+        return Json::done(message: "");
     }
 
     public function delete(DeleteShopHourRequest $request): JsonResponse

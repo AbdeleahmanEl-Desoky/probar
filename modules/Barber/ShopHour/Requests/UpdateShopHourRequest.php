@@ -5,24 +5,28 @@ declare(strict_types=1);
 namespace Modules\Barber\ShopHour\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Ramsey\Uuid\Uuid;
-use Modules\Barber\ShopHour\Commands\UpdateShopHourCommand;
-use Modules\Barber\ShopHour\Handlers\UpdateShopHourHandler;
 
 class UpdateShopHourRequest extends FormRequest
 {
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-        ];
-    }
+            '' => ['required', 'array', 'min:1'],
 
-    public function createUpdateShopHourCommand(): UpdateShopHourCommand
-    {
-        return new UpdateShopHourCommand(
-            id: Uuid::fromString($this->route('id')),
-            name: $this->get('name'),
-        );
+            '*.id' => [
+                'required',
+                'exists:shop_hour_details,id',
+            ],
+            '*.status' => [
+                'required',
+                'integer',
+                'in:0,1',
+            ],
+        ];
     }
 }

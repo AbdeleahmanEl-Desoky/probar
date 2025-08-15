@@ -6,6 +6,7 @@ namespace Modules\Barber\ShopHour\Services;
 
 use Modules\Barber\ShopHour\DTO\CreateShopHourDTO;
 use Modules\Barber\ShopHour\Models\ShopHour;
+use Modules\Barber\ShopHour\Models\ShopHourDetail;
 use Modules\Barber\ShopHour\Repositories\ShopHourDetailRepository;
 use Modules\Barber\ShopHour\Repositories\ShopHourRepository;
 use Ramsey\Uuid\UuidInterface;
@@ -115,6 +116,14 @@ class ShopHourCRUDService
     public function get(UuidInterface $id): ShopHour
     {
         return $this->repository->getShopHour(id: $id);
+    }
+
+
+    public function update($request)
+    {
+        foreach($request as $item) {
+            ShopHourDetail::where('id', $item['id'])->update(['status' => $item['status']]);
+        }
     }
 
 }
