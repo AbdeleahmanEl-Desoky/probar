@@ -16,8 +16,6 @@ class UpdateShopHourRequest extends FormRequest
     public function rules(): array
     {
         return [
-            '' => ['required', 'array', 'min:1'],
-
             '*.id' => [
                 'required',
                 'exists:shop_hour_details,id',
