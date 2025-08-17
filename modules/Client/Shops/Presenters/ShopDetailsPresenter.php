@@ -24,7 +24,7 @@ class ShopDetailsPresenter extends AbstractPresenter
     {
         $today = Carbon::now()->locale('en')->englishDayOfWeek;
         $now = Carbon::now()->format('H:i');
-        
+
         $todayHours = $this->shop->shopHours
             ? $this->shop->shopHours->firstWhere('day', $today)
             : null;
@@ -56,7 +56,7 @@ class ShopDetailsPresenter extends AbstractPresenter
             'files' => MediaPresenter::collection($this->shop->getMedia('shops')), //array
             'average_rates' => $this->shop->average_rating,
             'total_rates' => $this->shop->total_rates,
-            'is_open' => $this->shop->is_open,
+            'is_open' => $this->shop->is_open ==1? (int) $isOpenNow : $this->shop->is_open,
             'is_open_now' => (int) $isOpenNow,
             'longitude'=> $this->shop->longitude,
             'latitude'=> $this->shop->latitude,
@@ -66,7 +66,7 @@ class ShopDetailsPresenter extends AbstractPresenter
             'whatsapp' => $this->shop->whatsapp,
             'facebook' => $this->shop->facebook,
             'instagram' => $this->shop->instagram,
-            
+
         ];
     }
 }
