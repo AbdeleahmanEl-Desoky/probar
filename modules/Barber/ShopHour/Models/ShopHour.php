@@ -46,7 +46,7 @@ class ShopHour extends Model
     }
     public function details()
     {
-        return $this->hasMany(ShopHourDetail::class);
+        return $this->hasMany(ShopHourDetail::class)->orderBy('start_time', 'asc');
     }
 
     public function shop()
