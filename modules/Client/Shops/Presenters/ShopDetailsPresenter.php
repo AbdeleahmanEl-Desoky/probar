@@ -65,7 +65,7 @@ class ShopDetailsPresenter extends AbstractPresenter
             'is_open_now' => (int) $isOpenNow,
             'average_rates' => $this->shop->average_rating,
             'total_rates' => $this->shop->total_rates,
-            'is_open' => $this->shop->is_open,
+            'is_open' => $this->shop->is_open ==1 ? (int) $isOpenNow : $this->shop->is_open,
             'longitude'=> $this->shop->longitude,
             'latitude'=> $this->shop->latitude,
             'is_favorited' => $this->shop->is_favorited,
