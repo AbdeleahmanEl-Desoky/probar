@@ -22,6 +22,7 @@ class ShopDetailsPresenter extends AbstractPresenter
 
     protected function present(bool $isListing = false): array
     {
+
         $today = Carbon::now()->locale('en')->englishDayOfWeek;
         $now = Carbon::now()->format('H:i');
 
@@ -47,26 +48,42 @@ class ShopDetailsPresenter extends AbstractPresenter
             'id' => $this->shop->id,
             'name' => $this->shop->name,
             'description' => $this->shop->description,
+
+            'name_en' => $this->shop->getTranslation('name', 'en'),
+            'name_ar' => $this->shop->getTranslation('name', 'ar'),
+
+            'description_en' => $this->shop->getTranslation('description', 'en'),
+            'description_ar'=> $this->shop->getTranslation('description', 'ar'),
+
+            'time_now'=>   Carbon::now()->format('Y-m-d H:i'),
             'worker_no'=> $this->shop->worker_no,
             'city_id'=> $this->shop->city_id,
             'street'=> $this->shop->street,
             'address_1'=> $this->shop->address_1,
             'address_2'=> $this->shop->address_2,
-            'time_now'=>   Carbon::now()->format('Y-m-d H:i'),
-            'files' => MediaPresenter::collection($this->shop->getMedia('shops')), //array
+            'files' => MediaPresenter::collection(mediaItems: $this->shop->getMedia('shops')), //array
+            'is_open_now' => (int) $isOpenNow,
             'average_rates' => $this->shop->average_rating,
             'total_rates' => $this->shop->total_rates,
-            'is_open' => $this->shop->is_open ==1? (int) $isOpenNow : $this->shop->is_open,
-            'is_open_now' => (int) $isOpenNow,
+            'is_open' => $this->shop->is_open,
             'longitude'=> $this->shop->longitude,
             'latitude'=> $this->shop->latitude,
             'is_favorited' => $this->shop->is_favorited,
             'rates' => $this->shop->rates? RatePresenter::collection($this->shop->rates): [],
-            'shop_hours' => $this->shop->shopHours ? $this->shop->shopHours->map(fn($hour) => (new ShopHourPresenter($hour))->getData())->toArray() : [],
+            'shop_hours' => $this->shop->shopHours
+            ? $this->shop->shopHours
+                ->sortBy(fn($item) => array_search($item->day, [
+                    'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
+                ]))
+                ->where('status', 1)
+                ->map(fn($hour) => (new ShopHourPresenter($hour))->getData())
+                ->values()
+                ->toArray()
+            : [],
             'whatsapp' => $this->shop->whatsapp,
             'facebook' => $this->shop->facebook,
             'instagram' => $this->shop->instagram,
-
+            'hold' => $this->shop->hold,
         ];
     }
 }
